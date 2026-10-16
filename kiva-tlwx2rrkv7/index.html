@@ -1,0 +1,587 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Kiva Impact Stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF; --paper:#F4F8F5; --surface:#EAF2ED; --ink:#1F3326; --ink-2:#4A5D51; --ink-3:#77887D; --line:#DCE7E0; --line-2:#C7D8CE;
+  --primary:#276A43; --primary-ink:#FFFFFF; --accent:#2AA967; --accent-soft:#DCF0E4; --deep:#16402A;
+  --shadow:0 14px 40px rgba(22,64,42,.16); --shadow-sm:0 3px 12px rgba(22,64,42,.10);
+  --serif:"Fraunces","Dovetail MVB",Georgia,"Times New Roman",serif; --sans:"Hanken Grotesk","Post Grotesk","Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1712; --paper:#121F17; --surface:#18281F; --ink:#E7F0EA; --ink-2:#B9C9BF; --ink-3:#8C9E93; --line:#25392D; --line-2:#30493A;
+  --primary:#4CC384; --primary-ink:#0B140F; --accent:#2AA967; --accent-soft:#173426; --deep:#0B2416;
+  --shadow:0 14px 40px rgba(0,0,0,.5); --shadow-sm:0 3px 12px rgba(0,0,0,.4); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1712; --paper:#121F17; --surface:#18281F; --ink:#E7F0EA; --ink-2:#B9C9BF; --ink-3:#8C9E93; --line:#25392D; --line-2:#30493A;
+  --primary:#4CC384; --primary-ink:#0B140F; --accent:#2AA967; --accent-soft:#173426; --deep:#0B2416;
+  --shadow:0 14px 40px rgba(0,0,0,.5); --shadow-sm:0 3px 12px rgba(0,0,0,.4); color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--primary)}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;letter-spacing:-.012em;margin:0;line-height:1.1;text-wrap:balance}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:clamp(16px,3.2vw,40px)}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;min-height:60px}
+.logo{color:var(--accent);width:58px;display:inline-flex}
+.logo svg{width:100%;height:auto}
+.top .t{font-family:var(--serif);font-size:18px;border-left:1px solid var(--line-2);padding-left:14px}
+.top nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.top nav::-webkit-scrollbar{display:none}
+.top nav a{text-decoration:none;color:var(--ink-2);font-weight:600;font-size:14px;padding:8px 12px;border-radius:999px;white-space:nowrap}
+.top nav a:hover{background:var(--surface);color:var(--ink)}
+@media (max-width:560px){.top .t{display:none}}
+/* hero: the lenders */
+.hero{position:relative;background:radial-gradient(120% 140% at 85% 0%,#1E5236 0%,#0F2E1D 45%,#08180F 100%);color:#fff;overflow:hidden}
+.hero .wrap{position:relative;z-index:1;padding-block:clamp(32px,4.5vw,56px) clamp(36px,5vw,64px)}
+.hero .top2{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px clamp(24px,4vw,64px);align-items:end;margin-bottom:clamp(20px,3vw,32px)}
+@media (max-width:860px){.hero .top2{grid-template-columns:1fr}.hero .acts{flex-direction:row;flex-wrap:wrap;align-items:center}.hero .acts .stat{flex-basis:100%}.cta{padding:12px 18px;font-size:15px}}
+.hero .kicker{color:#9FE0BC}
+.hero h1{font-size:clamp(44px,6vw,84px);margin:10px 0 12px}
+.hero h1 em{font-style:normal;color:#8EE0B2}
+.hero p{font-size:clamp(16px,1.4vw,19px);line-height:1.5;color:rgba(255,255,255,.86);margin:0;max-width:52ch}
+.hero .acts{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.hero .stat{font-size:14px;color:rgba(255,255,255,.75);line-height:1.4}
+.hero .stat b{font-family:var(--serif);font-weight:500;font-size:22px;color:#fff}
+.cta{display:inline-flex;align-items:center;gap:10px;background:#2AA967;color:#fff;border:0;border-radius:999px;padding:14px 24px;font-weight:700;font-size:16px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.cta:hover{filter:brightness(1.06)}
+.cta.ghost{background:transparent;border:1.5px solid rgba(255,255,255,.45);box-shadow:none}
+.cta.ghost:hover{border-color:#fff}
+.lrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.4vw,18px)}
+@media (max-width:860px){.lrow{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:calc(-1 * clamp(16px,3.2vw,40px));padding-inline:clamp(16px,3.2vw,40px);padding-bottom:6px;scrollbar-width:none}.lrow::-webkit-scrollbar{display:none}}
+.lc{all:unset;box-sizing:border-box;cursor:pointer;position:relative;aspect-ratio:9/14;border-radius:18px;overflow:hidden;background:#0B2216;box-shadow:0 12px 30px rgba(0,0,0,.35);transition:transform .3s}
+@media (max-width:860px){.lc{flex:0 0 68%;scroll-snap-align:start}}
+.lc:hover{transform:translateY(-4px)}
+.lc:focus-visible{outline:3px solid #8EE0B2;outline-offset:3px}
+.lc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;transform-origin:50% 30%;transform:scale(1.02);transition:transform 4.2s ease-out}
+.lc.on img{transform:scale(1.1)}
+.lc.on .play i{box-shadow:0 0 0 6px rgba(42,169,103,.3)}
+@media (prefers-reduced-motion:reduce){.lc img,.lc.on img{transform:none;transition:none}}
+.lc::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,24,15,0) 35%,rgba(8,24,15,.92) 100%)}
+.lc .tx{position:absolute;left:14px;right:14px;bottom:14px;z-index:1;display:flex;flex-direction:column;gap:6px}
+.lc .tx small{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#9FE0BC}
+.lc .tx b{font-family:var(--serif);font-weight:500;font-size:clamp(22px,2vw,28px);line-height:1.1;text-wrap:balance}
+.lc .tx .nm{font-size:14px;font-weight:700;color:#fff;margin-top:2px}
+.lc .tx small{margin-top:-4px}
+.lc .play{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font-size:13px;font-weight:700;color:#fff}
+.lc .play i{font-style:normal;width:26px;height:26px;border-radius:50%;background:#2AA967;display:grid;place-items:center;font-size:11px}
+/* sections */
+section.block{padding-block:clamp(48px,7vw,92px)}
+.shead{display:flex;flex-wrap:wrap;align-items:end;gap:10px 32px;margin-bottom:26px}
+.shead h2{font-size:clamp(32px,4vw,52px)}
+.shead p{margin:0;flex:1 1 360px;max-width:62ch;color:var(--ink-2);font-size:17px}
+/* impact explorer */
+.explorer{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(18px,2.4vw,32px);align-items:start}
+@media (max-width:1080px){.explorer{grid-template-columns:1fr}}
+.flowcard{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:14px;position:relative}
+.flowcard.vert .legend{display:none}
+.flowcard .legend{display:flex;justify-content:space-between;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding:4px 8px 0}
+#flow{width:100%;display:block}
+#flow svg{display:block;width:100%;height:auto;overflow:visible}
+.edge{fill:none;stroke:var(--accent);stroke-linecap:butt;transition:stroke-opacity .35s}
+.edge.l{stroke-opacity:.22}.edge.i{stroke-opacity:.35}
+.dim .edge{stroke-opacity:.06}
+.dim .edge.hot{stroke-opacity:.55}
+.dim .edge.i.hot{stroke-opacity:.9}
+.enode{cursor:pointer;transition:opacity .35s}
+.dim .enode{opacity:.32}.dim .enode.hot{opacity:1}
+.enode circle.ring{fill:var(--bg);stroke:var(--bg);stroke-width:3}
+.enode.hot circle.ring{stroke:var(--accent)}
+.enode text{font-size:11.5px;font-weight:700;fill:var(--ink-2);text-anchor:middle}
+.inode{cursor:pointer}
+.inode rect{fill:var(--bg);stroke:var(--line-2);stroke-width:1.5;transition:fill .25s,stroke .25s}
+.inode .ic{fill:var(--accent-soft)}
+.inode .ig{fill:none;stroke:var(--primary);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.inode text.n{font-family:var(--serif);font-size:16px;fill:var(--ink)}
+.inode text.s{font-size:11.5px;fill:var(--ink-3)}
+.inode:hover rect{stroke:var(--accent)}
+.inode.on rect{fill:var(--primary);stroke:var(--primary)}
+.inode.on .ic{fill:rgba(255,255,255,.18)}.inode.on .ig{stroke:#fff}
+.inode.on text.n,.inode.on text.s{fill:#fff}
+.inode:focus-visible rect,.enode:focus-visible circle.ring{stroke:var(--accent);stroke-width:3}
+.inode,.enode{outline:none}
+.lblock text{font-size:12px;fill:var(--ink-2);font-weight:700}
+.lblock text.big{font-family:var(--serif);font-size:24px;fill:var(--primary);font-weight:500}
+.particle{fill:var(--accent)}
+.story{background:var(--bg);border:1px solid var(--line);border-radius:22px;padding:clamp(16px,2vw,24px);box-shadow:var(--shadow-sm);min-width:0}
+.story .ih{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.story .ico{width:52px;height:52px;border-radius:16px;background:var(--accent-soft);display:grid;place-items:center;flex:none}
+.story .ico svg{width:28px;height:28px;fill:none;stroke:var(--primary);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.story .ih h3{font-size:clamp(24px,2.4vw,32px)}
+.story .ist{display:flex;align-items:baseline;gap:10px;margin-top:14px;flex-wrap:wrap}
+.story .ist b{font-family:var(--serif);font-weight:500;font-size:38px;line-height:1;color:var(--primary)}
+.story .ist span{font-size:14px;color:var(--ink-2)}
+.story .sum{margin:12px 0 0;color:var(--ink-2)}
+.story .ctx{margin:10px 0 0;font-size:14px;color:var(--ink-3);border-left:3px solid var(--accent);padding-left:10px}
+.outcome{display:grid;grid-template-columns:minmax(150px,210px) minmax(0,1fr);gap:18px;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+@media (max-width:520px){.outcome{grid-template-columns:1fr}}
+.ovid{position:relative;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#0E1712;width:100%}
+@media (max-width:520px){.ovid{max-width:230px;margin:0 auto}}
+.ovid video,.ovid img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ovid .snd{position:absolute;right:8px;top:8px;z-index:2;border:0;border-radius:999px;background:rgba(14,23,18,.72);color:#fff;font-size:12.5px;font-weight:700;padding:6px 11px}
+.ovid .prog{position:absolute;left:0;top:0;height:3px;background:var(--accent);z-index:3;width:0}
+.otext{display:flex;flex-direction:column;gap:8px;min-width:0}
+.otext .who{display:flex;flex-direction:column}
+.otext .who b{font-size:16px}
+.otext .who span{font-size:13px;color:var(--ink-3)}
+.otext h4{font-size:clamp(21px,2vw,26px)}
+.obig{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.obig b{font-family:var(--serif);font-weight:500;font-size:clamp(34px,3.6vw,46px);line-height:1;color:var(--primary);white-space:nowrap}
+.obig span{font-size:13.5px;color:var(--ink-2);max-width:26ch}
+.otext q{font-family:var(--serif);font-size:17.5px;line-height:1.4;quotes:"“" "”"}
+.loanline{font-size:13.5px;color:var(--ink-2);background:var(--paper);border-radius:10px;padding:9px 12px}
+.loanline a{white-space:nowrap}
+.loanline + .loanline{margin-top:-2px}
+.onext{margin:0;font-size:14.5px;color:var(--ink-2)}
+.opager{display:flex;align-items:center;gap:8px;margin-top:16px;flex-wrap:wrap}
+.opager button.f{border:0;padding:0;background:none;border-radius:50%;opacity:.55;transition:opacity .2s,transform .2s}
+.opager button.f img{width:38px;height:38px;border-radius:50%;object-fit:cover;display:block;border:2px solid var(--bg);box-shadow:0 0 0 1px var(--line)}
+.opager button.f.on{opacity:1;transform:scale(1.08)}
+.opager button.f.on img{box-shadow:0 0 0 2px var(--accent)}
+.opager .sp{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:13px;color:var(--ink-3)}
+.round{width:34px;height:34px;border-radius:50%;border:1px solid var(--line-2);background:var(--bg);display:grid;place-items:center;font-size:16px;color:var(--ink)}
+.round:hover{border-color:var(--primary);color:var(--primary)}
+.tourbtn{border:0;background:none;color:var(--primary);font-weight:700;font-size:13px;padding:6px}
+/* people */
+.people{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.row{display:flex;gap:14px;width:max-content;animation:drift 80s linear infinite;padding-block:8px}
+.row.r2{animation-direction:reverse;animation-duration:95s}
+.people:hover .row{animation-play-state:paused}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.row{animation:none}.people{overflow-x:auto}}
+.pc{all:unset;box-sizing:border-box;cursor:pointer;width:178px;flex:none;display:flex;flex-direction:column;gap:8px}
+.pc img{width:178px;height:178px;border-radius:18px;object-fit:cover;display:block;transition:transform .25s,box-shadow .25s}
+.pc:hover img,.pc:focus-visible img{transform:translateY(-4px);box-shadow:var(--shadow)}
+.pc b{font-size:15px;line-height:1.2}
+.pc span{font-size:12.5px;color:var(--ink-3);line-height:1.3}
+@media (max-width:560px){.pc{width:140px}.pc img{width:140px;height:140px}}
+/* lenders */
+.lgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+.lcard{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:14px;align-items:start}
+.lcard .lv{position:relative;aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:#0E1712}
+.lcard .lv video,.lcard .lv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lcard .lv button{position:absolute;inset:0;border:0;background:rgba(0,0,0,.12);color:#fff;font-size:30px;display:grid;place-items:center}
+.lcard h3{font-size:21px;margin:2px 0 6px}
+.lcard q{font-family:var(--serif);font-size:16px;line-height:1.4}
+.lcard .who{font-size:13px;color:var(--ink-3);margin-top:8px}
+.partners{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px;margin-top:22px}
+.partner{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:12px;align-items:center;padding:10px;border-radius:16px;border:1px solid var(--line);background:var(--bg)}
+.partner img{width:64px;height:64px;border-radius:14px;object-fit:cover}
+.partner b{display:block;font-size:15px}
+.partner span{display:block;font-size:12.5px;color:var(--ink-3);line-height:1.35}
+.partner:hover{box-shadow:var(--shadow-sm)}
+/* kiva at 20 */
+.closing{background:var(--deep);color:#fff}
+.closing .grid2{display:grid;grid-template-columns:minmax(200px,280px) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:center}
+@media (max-width:760px){.closing .grid2{grid-template-columns:1fr}}
+.closing .cv{position:relative;aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:#000;max-width:280px}
+.closing .cv video,.closing .cv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.closing .cv button{position:absolute;inset:0;border:0;background:rgba(0,0,0,.15);color:#fff;font-size:38px}
+.closing .kicker{color:#9FE0BC}
+.closing h2{font-size:clamp(34px,4.4vw,58px);margin:10px 0 14px}
+.closing blockquote{margin:0 0 26px;font-family:var(--serif);font-size:clamp(20px,2vw,26px);line-height:1.35;color:rgba(255,255,255,.9)}
+.closing blockquote cite{display:block;font-family:var(--sans);font-style:normal;font-size:14px;color:rgba(255,255,255,.65);margin-top:8px}
+.kstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px}
+.kstats b{display:block;font-family:var(--serif);font-weight:500;font-size:42px;line-height:1;color:#8EE0B2}
+.kstats span{display:block;margin-top:6px;font-size:14px;color:rgba(255,255,255,.78)}
+.tagline{margin-top:34px;font-family:var(--serif);font-size:clamp(22px,2.4vw,30px)}
+footer{padding-block:26px 40px;font-size:13px;color:var(--ink-3)}
+footer .wrap{display:flex;gap:10px 24px;flex-wrap:wrap;justify-content:space-between}
+/* modal */
+.scrim{position:fixed;inset:0;background:rgba(10,24,16,.55);z-index:50;display:grid;place-items:center;padding:16px;opacity:0;transition:opacity .2s}
+.scrim.on{opacity:1}
+.modal{background:var(--bg);border-radius:22px;max-width:880px;width:100%;max-height:calc(100% - 20px);overflow:auto;box-shadow:var(--shadow);display:grid;grid-template-columns:minmax(200px,280px) minmax(0,1fr);position:relative}
+@media (max-width:680px){.modal{grid-template-columns:1fr}}
+.modal .mv{position:relative;background:#0E1712}
+.modal .mv .inner{position:sticky;top:0;aspect-ratio:9/16;width:100%}
+@media (max-width:680px){.modal .mv .inner{position:relative;aspect-ratio:4/5}}
+.modal .mv video,.modal .mv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.modal .mv .snd{position:absolute;right:10px;top:10px;border:0;border-radius:999px;background:rgba(14,23,18,.72);color:#fff;font-size:12.5px;font-weight:700;padding:6px 11px}
+.modal .mb{padding:24px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.modal h3{font-size:32px}
+.modal .sub{color:var(--ink-3);font-size:14px;margin-top:-6px}
+.modal q{font-family:var(--serif);font-size:19px;line-height:1.4}
+.modal .x{position:absolute;right:12px;top:12px;z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:rgba(14,23,18,.65);color:#fff;font-size:20px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line-2);background:var(--bg);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--primary)}
+.chip:hover{border-color:var(--primary)}
+.jsteps{display:flex;flex-direction:column}
+.jstep{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;padding:12px 0;border-top:1px solid var(--line);opacity:.15;transform:translateY(6px);transition:opacity .5s,transform .5s}
+.jstep.on{opacity:1;transform:none}
+.jstep .n{width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--primary);display:grid;place-items:center;font-weight:800;font-size:13px}
+.jstep h5{font-family:var(--sans);font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:6px 0 8px}
+.jstep h4{font-size:21px;margin-bottom:6px}
+.crowd{display:flex;flex-direction:column;gap:10px}
+.crowd canvas{width:100%;height:auto;display:block}
+.crowd b{font-family:var(--serif);font-weight:500;font-size:34px;line-height:1;color:var(--primary);font-variant-numeric:tabular-nums}
+.crowd small{display:block;color:var(--ink-3);font-size:12.5px;margin-top:4px}
+.loancard{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;align-items:baseline;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.loancard + .loancard{margin-top:6px}
+.loancard .amt{font-family:var(--serif);font-size:24px;line-height:1;color:var(--primary)}
+.loancard .luse{font-size:14px}
+.loancard .meta{grid-column:1/-1;font-size:12.5px;color:var(--ink-3)}
+@media (max-width:520px){.loancard{grid-template-columns:1fr}}
+.changed q{display:block;margin-top:8px}
+.modal .facts{margin:0;padding-left:18px;color:var(--ink-2);font-size:15px}
+.modal .facts li{margin:4px 0}
+.lendbox{display:flex;flex-direction:column;gap:8px;align-items:flex-start;background:var(--accent-soft);border-radius:14px;padding:14px 16px}
+.lendbox b{font-family:var(--serif);font-weight:500;font-size:20px}
+.lendbox span{font-size:14px;color:var(--ink-2)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+
+<header class="top"><div class="wrap">
+  <span class="logo" aria-label="Kiva"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 57 23"><path d="M4.695.391H0v22.141h4.695V.391zm12.899 22.141h4.695V7.011h-4.695v15.521zm12.159 0h5.413l5.413-15.521h-4.662s-2.544 8.445-3.293 11.119h-.066c-.75-2.674-3.326-11.119-3.326-11.119h-4.956l5.477 15.521zm-23.537-8.31c7.37 0 9.092-6.158 9.092-7.21h-.637c-7.372 0-9.094 6.157-9.094 7.21h.639zm-.639.969c0 1.117 1.276 7.403 9.222 7.403h.638c0-1.119-1.277-7.403-9.221-7.403h-.639zM22.746 2.739C22.746 1.272 21.671 0 19.941 0c-1.727 0-2.804 1.272-2.804 2.739 0 1.468 1.077 2.739 2.804 2.739 1.73 0 2.805-1.271 2.805-2.739M57 7.011h-4.532V9.13c-.783-1.631-2.608-2.543-4.729-2.543-3.848 0-6.88 3.129-6.88 8.184 0 5.087 2.935 8.185 6.652 8.185 2.608 0 4.173-1.272 4.956-2.675v2.25H57V7.011zm-4.663 8.151c0 2.871-1.76 4.208-3.522 4.208-1.924 0-3.163-1.956-3.163-4.598 0-2.608 1.305-4.598 3.326-4.598 1.663 0 3.359 1.37 3.359 4.206v.782z" fill="currentColor"></path></svg></span><span class="t">Stories of impact</span>
+  <nav aria-label="Sections"><a href="#top">Why people lend</a><a href="#impact">Impact</a><a href="#people">Borrowers</a><a href="#kiva">Kiva at 20</a></nav>
+</div></header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="top2">
+      <div><div class="kicker">Kiva lenders, in their own words</div>
+        <h1>Why people <em>lend.</em></h1>
+        <p id="herolede"></p></div>
+      <div class="acts"><a class="cta" id="lendcta" target="_blank" rel="noopener">Lend $25 on Kiva <span aria-hidden="true">↗</span></a>
+        <a class="cta ghost" href="#impact">See the impact <span aria-hidden="true">↓</span></a>
+        <div class="stat" id="herostat"></div></div>
+    </div>
+    <div class="lrow" id="lrow"></div>
+  </div>
+</section>
+
+<section class="block" id="impact"><div class="wrap">
+  <div class="shead"><div><div class="kicker">What one loan can do</div><h2>Follow the loans to their impact</h2></div>
+    <p>Thousands of people lent, a few dollars each. Pick an impact to follow the money to the entrepreneurs it reached, and hear the impact in their own words.</p></div>
+  <div class="explorer">
+    <div class="flowcard"><div class="legend"><span>The lenders</span><span>The entrepreneurs</span><span>The impact</span></div><div id="flow"></div></div>
+    <div class="story" id="story" aria-live="polite"></div>
+  </div>
+</div></section>
+
+<section class="block" id="people" style="background:var(--paper)"><div class="wrap">
+  <div class="shead"><div><div class="kicker">The people behind the impact</div><h2>Meet the borrowers</h2></div>
+    <p>Eleven entrepreneurs in Accra, Baltimore, Kansas City and New York. Tap anyone to see the lenders behind their loan, and the impact it made.</p></div>
+</div>
+  <div class="people" id="peoplestrip"></div>
+</section>
+
+<section class="block" id="partners-sec"><div class="wrap">
+  <div class="shead"><div><div class="kicker">The local partners behind every loan</div><h2>Who makes it work</h2></div>
+    <p>Kiva hubs and trustees find borrowers, vouch for them and support them while they repay.</p></div>
+  <div class="partners" id="partners"></div>
+</div></section>
+
+<section class="block closing" id="kiva"><div class="wrap"><div class="grid2">
+  <div class="cv" id="vishalv"></div>
+  <div><div class="kicker">Kiva at 20</div><h2>Talent is universal. Access isn't.</h2>
+    <blockquote>“Talent and ambition are universal, but opportunity and access to money isn't. On Kiva you can choose the person you want to support, and put as little as $25.”<cite>Vishal Ghotge, CEO at Kiva</cite></blockquote>
+    <div class="kstats" id="kstats"></div>
+    <div class="tagline">One loan changes a life. A million changes the world.</div>
+    <div style="margin-top:22px"><a class="cta" id="lendcta2" target="_blank" rel="noopener">Make a loan on Kiva <span aria-hidden="true">↗</span></a></div></div>
+</div></div></section>
+
+<footer><div class="wrap"><span>Kiva · Films by Happy Productions</span><span>Portraits are illustrations made from each person's interview; the video, quotes and loan records are their own.</span></div></footer>
+
+<div class="scrim" id="scrim" hidden><div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Story"></div></div>
+
+<script>
+const DATA = {"lendUrl":"https://www.kiva.org/lend","impacts":[{"id":"water","short":"Clean water","node":"2 franchises in Accra","name":"Clean drinking water","icon":"drop","stat":"2","statl":"clean-water franchises in Accra, Ghana","sum":"Kiva lenders funded two Jibu water franchises in Accra. They refill bottles and deliver safe drinking water to homes and institutions nearby.","context":"“In Ghana, when you look at the statistics, every 10 people you pick, you just have about 6 people or households having access to clean water.” Jibu Ghana","outcomes":[{"p":"aisha","big":"1,254","bigl":"lenders funded her franchise","head":"From no means to start to owning a clean-water franchise","next":"Two more loans followed: a delivery motorbike, then refillable bottles to reach more customers."},{"p":"karl","big":"1,020","bigl":"lenders funded his franchise","head":"A Jibu customer became a franchise owner","next":"His loan paid for the shop build-out and a delivery tricycle."},{"p":"selassie-osu","big":"","bigl":"","head":"A bigger truck brings water to more homes","next":"Kiva loans paid for bottles, a tricycle and then a bigger truck at the North Legon franchise."},{"p":"patience","big":"","bigl":"","head":"Clean water delivered to the door","next":"Customers without bottles of their own can now buy safe water."},{"p":"maria","big":"","bigl":"","head":"More bottles, more households served","next":"Institutions and families now buy from the Asylum Down franchise."}]},{"id":"jobs","short":"Jobs","node":"First hires, raises","name":"Jobs and paychecks","icon":"briefcase","stat":"","statl":"","sum":"Loans that turned into jobs: a first hire, a young team in Accra, raises for staff, and work for women.","outcomes":[{"p":"karl","big":"2+","bigl":"people employed at his franchise","head":"Jobs for young people in Ghana","next":"He dreams of a second location."},{"p":"shanntel-gladney","big":"1st","bigl":"employee, paid for by the loan","head":"A clinic hired its first employee","next":"Phaze Counseling now has a second location."},{"p":"selassie-osu","big":"","bigl":"","head":"As the franchise grew, so did everyone's pay","next":"“We have been able to increase the staff salary, and everyone is also enjoying it.”"},{"p":"kahindo","big":"","bigl":"","head":"A fashion brand built to create jobs for women","next":"KAHINDO is designed in New York and made ethically in Africa."},{"p":"akilah-beavers","big":"","bigl":"","head":"Training women to work for themselves","next":"Her loan is training other women as fixers who can earn on their own."}]},{"id":"children","short":"Children & families","node":"50 children in care","name":"Children and families","icon":"family","stat":"50","statl":"children now at Brandy's center, up from 15","sum":"Child care, mental-health care and science labs: loans that reach children and the families around them.","outcomes":[{"p":"brandy-poiry","big":"15 → 50","bigl":"children enrolled since August 2024","head":"A child-care center grew from 3 classrooms to 5","next":"Three more classrooms are still to open in the building."},{"p":"shanntel-gladney","big":"2","bigl":"clinic locations for children and families","head":"Mental-health care for children and families","next":"Her outpatient clinic opened in 2020 and has grown into more communities."},{"p":"antwan-daniels","big":"42 hrs","bigl":"to fund $2,500, in his words","head":"Science labs for kids","next":"More Cool Kids Chemistry labs led to contracts with the Boys & Girls Club."}]},{"id":"gather","short":"Places to gather","node":"Coffee, kitchens, wellness","name":"Places that bring people together","icon":"storefront","stat":"","statl":"","sum":"A coffee counter in City Hall, a kitchen for food entrepreneurs, an apothecary on wheels.","outcomes":[{"p":"racquel-rodriguez","big":"< 24 hrs","bigl":"to raise the money, in her words","head":"A backyard coffee truck now pours inside City Hall","next":"Kansas City's first spot for Cuban coffee: a truck, a cart, then a kiosk inside City Hall."},{"p":"kristina-perkins","big":"1st","bigl":"commercial kitchen of its kind in Prince George's County","head":"A kitchen for other food entrepreneurs","next":"The Foodie Academy will give PG County's food makers a place to cook and grow."},{"p":"shalita-oneale","big":"1 van","bigl":"to bring herbal education to the community","head":"An apothecary that comes to you","next":"Her loan funded faster than she expected."}]},{"id":"women","short":"Women-owned","node":"9 of 11 entrepreneurs","name":"Women-owned businesses","icon":"spark","stat":"9 of 11","statl":"entrepreneurs here are women","sum":"Underbanked women are one of Kiva's four focus areas. Nine of the eleven entrepreneurs we filmed are women.","outcomes":[{"p":"akilah-beavers","big":"$6,000","bigl":"to grow her home-repair classes","head":"Teaching women to fix their own homes","next":"Her motto: home repair is self care."},{"p":"aisha","big":"3","bigl":"Kiva loans, each one reaching further","head":"A mother of three built a water business","next":"“Kiva was the mother of the business, let me put it that way.”"},{"p":"cristina-uribe","big":"2","bigl":"Kiva loans: cleaning in 2020, events in 2025","head":"Two loans, two businesses","next":"Lenders she has never met, from Asia to Australia, backed her dream twice."},{"p":"kahindo","big":"81","bigl":"lenders filled a luxury retailer's order","head":"A purchase order no bank would fund","next":"It changed the trajectory of her brand."}]},{"id":"yes","short":"A first yes","node":"When banks said no","name":"A first yes","icon":"key","stat":"0%","statl":"interest, no fees, no collateral on Kiva U.S. loans","sum":"When the bank said no, or wasn't ready to say yes, thousands of lenders did. Local hubs help borrowers get there.","outcomes":[{"p":"kahindo","big":"","bigl":"","head":"She couldn't get a bank loan. Kiva lenders said yes.","next":"Her $7,500 loan funded in six days."},{"p":"tracey-lewis","big":"$1K–$15K","bigl":"Kiva U.S. loans, at 0% interest","head":"Why a city runs a Kiva hub","next":"Kiva KC: 15 loans and $111K by Nov 2025."},{"p":"neel-campbell","big":"","bigl":"","head":"A trustee vouches, so the next step can be a bank","next":"Repaying on Kiva builds the history a lender needs to see."},{"p":"lyndsae-peele","big":"","bigl":"","head":"She took a Kiva loan herself. Now she runs Kiva U.S.","next":"Named Director of Kiva U.S. in June 2026."}]}],"people":{"racquel-rodriguez":{"id":"racquel-rodriguez","film":"","name":"Racquel Rodriguez","caption":"Business owner, U.S.","business":"El Café Cubano","based":"Kansas City, MO","type":"borrower","story":"Brought Cuban coffee to Kansas City from a truck in her backyard. She asked Kiva for the espresso machine she had trained on and raised it in under 24 hours. Now she also serves from a kiosk inside City Hall.","quote":"I didn't know I would raise my funds in under 24 hours. That was my first aha moment.","quotes":["I didn't know I would raise my funds in under 24 hours. That was my first aha moment.","If you're scared, do it. If you're afraid, do it. If you don't know, still do it."],"loans":[{"amount":"$6,500","when":"","url":"https://www.kiva.org/lend/2735667","lenders":72,"use":"us transform our vision into reality by launching a mobile Cuban coffee shop","raised":"2024-03-03"}],"face":"media/racquel-rodriguez-p.jpg","clip":"media/clip-racquel-rodriguez.mp4"},"brandy-poiry":{"id":"brandy-poiry","film":"","name":"Brandy Poiry","caption":"Business owner, U.S.","business":"Gioiosa Montessori","based":"Roeland Park, KS","type":"borrower","story":"Runs Gioiosa Montessori, a child-care center, with her sister Teresa. A parent pointed them to Kiva when the building's HVAC failed. They went from 3 classrooms and about 15 children in August 2024 to 5 classrooms and about 50.","quote":"We started with three classrooms and about 15 kids. Now we've got five classrooms, about 50 kids.","quotes":["Being able to find funding that was based on a reputation that we have with people that we know and care about was incredibly helpful.","We started with three classrooms and about 15 kids. Now we've got five classrooms, about 50 kids."],"loans":[{"amount":"$15,000","when":"Dec 2025","url":"https://www.kiva.org/lend/3095012","lenders":209,"use":"a family owned childcare center open space to provide more kids with joyous learning experiences","raised":"2025-12-27"}],"face":"media/brandy-poiry-p.jpg","clip":"media/clip-brandy-poiry.mp4"},"antwan-daniels":{"id":"antwan-daniels","film":"","name":"Antwan Daniels","caption":"Business owner, U.S.","business":"5S LLC (Scientists Seeking Strategic Sustainable Solutions)","based":"Kansas City, MO","type":"borrower","story":"A chemist and college professor. His company does science advocacy and runs Cool Kids Chemistry labs. His $2,500 Kiva loan funded in about 42 hours and paid for more labs, which led to bigger contracts such as the Boys & Girls Club.","quote":"I said $2,500, let's try it. And I was funded fully within like 42 hours.","quotes":["I said $2,500, let's try it. And I was funded fully within like 42 hours.","Kiva was that push. They were that inflection point that brought me up to here."],"loans":[{"amount":"$2,500","when":"Jun 2025","url":"https://www.kiva.org/lend/2994374","lenders":26,"use":"empower and create a Science Literacy for ALL: 5SLLC is poised to serve","raised":"2025-06-17"}],"face":"media/antwan-daniels-p.jpg","clip":"media/clip-antwan-daniels.mp4"},"tracey-lewis":{"id":"tracey-lewis","film":"","name":"Tracey Lewis","caption":"President & CEO, Economic Development Corporation of Kansas City","business":"Economic Development Corporation of Kansas City","based":"Kansas City, MO","type":"hub","story":"Led the Economic Development Corporation of Kansas City, which runs Kiva KC with the City's KC BizCare office. He calls Kiva's 0% interest, no-fee, no-collateral loan a way to start a business and keep repeating it.","quote":"Kiva gives an opportunity for a small business to get an interest-free, fee-free loan that doesn't involve collateral.","quotes":["Kansas City is an entrepreneurial city. Our mantra is City of Entrepreneurs.","Kiva gives an opportunity for a small business to get an interest-free, fee-free loan that doesn't involve collateral."],"loans":[],"face":"media/tracey-lewis-p.jpg","clip":"media/clip-tracey-lewis.mp4"},"neel-campbell":{"id":"neel-campbell","film":"","name":"Neel Campbell","caption":"Small Business Program Manager, Pathway Financial Education","business":"Pathway Financial Education","based":"Kansas City, MO","type":"hub","story":"Teaches financial literacy to business owners at Pathway Financial Education, one of Kiva KC's trustee partners. As a trustee he vouches for borrowers, and the track record they build helps them get to bank financing.","quote":"Kiva is filling a gap.","quotes":["Kiva is filling a gap.","Kiva has provided a business owner some confidence in being able to say, I might possibly be able to get this done."],"loans":[],"face":"media/neel-campbell-p.jpg","clip":"media/clip-neel-campbell.mp4"},"nia-webster":{"id":"nia-webster","film":"","name":"Nia Webster","caption":"Assistant Director, Neighborhood Services, City of Kansas City, Mo.","business":"City of Kansas City, Mo. (KC BizCare)","based":"Kansas City, MO","type":"hub","story":"Oversees KC BizCare for the City. She helped bring Kiva to Kansas City, and her storefront-vacancy program gives 18 or 19 new businesses access to the city's Kiva match.","quote":"It's not big businesses that's going to change our community. It's the small businesses that's going to change our community.","quotes":["It's not big businesses that's going to change our community. It's the small businesses that's going to change our community."],"loans":[],"face":"media/nia-webster-p.jpg","clip":"media/clip-nia-webster.mp4"},"lyndsae-peele":{"id":"lyndsae-peele","film":"","name":"Lyndsae' Peele","caption":"U.S. Director at Kiva","business":"Kiva","based":"Baltimore, MD","type":"staff","story":"A former banker who started as a Kiva referral partner and took a Kiva loan for her own consulting practice. She joined Kiva as Entrepreneurial Ecosystem Manager and was named Director of Kiva U.S. in June 2026, the program's second director.","quote":"So I applied, and I got approved and fully funded my Kiva loan. And two months later I was recruited for the role.","quotes":["It takes a village to raise a child, but it also takes a village to build a business. Kiva provides that village.","I literally eat, breathe and sleep economic development and financial inclusion.","So I applied, and I got approved and fully funded my Kiva loan. And two months later I was recruited for the role."],"loans":[],"face":"media/lyndsae-peele-p.jpg","clip":"media/clip-lyndsae-peele.mp4"},"kathleen-clark":{"id":"kathleen-clark","film":"","name":"Kathleen Clark","caption":"Capital Access Manager, Kiva Baltimore Hub","business":"Baltimore Community Lending","based":"Baltimore, MD","type":"hub","story":"Connects business owners who aren't ready for a Baltimore Community Lending loan to Kiva, and supports them before, during and after they borrow so they can prove they can manage the debt.","quote":"Small businesses really are the heartbeat of our economy.","quotes":["Small businesses really are the heartbeat of our economy."],"loans":[],"face":"media/kathleen-clark-p.jpg","clip":"media/clip-kathleen-clark.mp4"},"akilah-beavers":{"id":"akilah-beavers","film":"","name":"Akilah Beavers","caption":"Business owner, U.S.","business":"My Favorite Fixer","based":"Northern Virginia","type":"borrower","story":"Teaches women to fix their own homes ('home repair is self care'). She came to Kiva through the Wealthy Women program and is using her loan to grow her repair classes and train other women as fixers.","quote":"I'm going to use that money to help other women that want to learn to be a fixer, so they can be able to work for themselves.","quotes":["Our motto is: home repair is self care.","I'm going to use that money to help other women that want to learn to be a fixer, so they can be able to work for themselves.","Just to have that community behind you makes you feel supported and that you could do it."],"loans":[{"amount":"$6,000","when":"Feb 2026","url":"https://www.kiva.org/lend/3121257","lenders":51,"use":"women access trusted home repair services and gain skills to care for their homes","raised":"2026-02-12"}],"face":"media/akilah-beavers-p.jpg","clip":"media/clip-akilah-beavers.mp4"},"kristina-perkins":{"id":"kristina-perkins","film":"","name":"Kristina Perkins","caption":"Business owner, U.S.","business":"Caked and Baked","based":"Beltsville, MD","type":"borrower","story":"Runs a food-manufacturing company that puts logistics first. She is building the Foodie Academy, Prince George's County's first commercial kitchen for food entrepreneurs. She heard about Kiva from Lyndsae' at the Baltimore Community Lending center.","quote":"It's not just a loan. It's a vote towards you being able to build something that you believe in.","quotes":["It's not just a loan. It's a vote towards you being able to build something that you believe in."],"loans":[{"amount":"$7,000","when":"Nov 2025","url":"https://www.kiva.org/lend/3067991","lenders":51,"use":"expand products, empower bakers dreams and expand Caked and Baked nationwide","raised":"2025-11-09"}],"face":"media/kristina-perkins-p.jpg","clip":"media/clip-kristina-perkins.mp4"},"shanntel-gladney":{"id":"shanntel-gladney","film":"","name":"Dr. Shanntel Gladney","caption":"Business owner, U.S.","business":"Phaze Counseling Services, Inc.","based":"Nottingham, MD","type":"borrower","story":"Owns an outpatient mental-health clinic for children and families, open since 2020, now with a second location. Her Kiva loan paid for her first employee.","quote":"We were able to hire our first employee using the loan.","quotes":["The loan was the best decision I could have made.","We were able to hire our first employee using the loan."],"loans":[{"amount":"$8,000","when":"Jun 2020","url":"https://www.kiva.org/lend/1972873","lenders":219,"use":"a minority woman-owned business whose opening was postponed due to the COVID-19 crisis","raised":"2020-06-19"}],"face":"media/shanntel-gladney-p.jpg","clip":"media/clip-shanntel-gladney.mp4"},"cristina-uribe":{"id":"cristina-uribe","film":"","name":"Cristina Uribe","caption":"Business owner, U.S.","business":"Fresh and Shine Cleaning Services; CW Events","based":"Baltimore, MD","type":"borrower","story":"Has borrowed on Kiva twice: for her cleaning company in 2020 and for her events and catering business in 2025. She is moved that strangers in Asia and Australia lend to her.","quote":"People that don't know you, they believe in you. They believe in your dream.","quotes":["People that don't know you, they believe in you. They believe in your dream."],"loans":[{"amount":"$5,000","when":"Jul 2020","url":"https://www.kiva.org/lend/1992424","lenders":96,"use":"To implement the DISINFECTION protocols to clean the house due to the COVID-19 crisis","raised":"2020-08-11"},{"amount":"$10,000","when":"Nov 2025","url":"https://www.kiva.org/lend/3079845","lenders":308,"use":"a 2x Kiva borrower obtain the necessary licenses to launch a catering business and expand marketing","raised":"2025-12-19"}],"face":"media/cristina-uribe-p.jpg","clip":"media/clip-cristina-uribe.mp4"},"shalita-oneale":{"id":"shalita-oneale","film":"","name":"Shalita O'Neale","caption":"Business owner, U.S.","business":"Ancestors' Dream Apothecary","based":"Upper Marlboro, MD","type":"borrower","story":"Runs an herbal wellness workshop, online and mobile. She worked her way through her early mistakes alone, and her Kiva loan funded faster than she expected.","quote":"My loan was fully funded very quickly, quicker than I anticipated.","quotes":["My loan was fully funded very quickly, quicker than I anticipated.","Kiva was a blessing to me."],"loans":[{"amount":"$5,000","when":"Oct 2025","url":"https://www.kiva.org/lend/3062552","lenders":43,"use":"a Maryland-based herbal shop buy a van to bring natural remedies and herbal education to the community","raised":"2025-10-18"}],"face":"media/shalita-oneale-p.jpg","clip":"media/clip-shalita-oneale.mp4"},"kahindo":{"id":"kahindo","film":"","name":"Kahindo","caption":"Business owner, U.S.","business":"KAHINDO","based":"New York, NY","type":"borrower","story":"Founder and designer of KAHINDO, a New York fashion brand made ethically in Africa to create jobs for women. A Kiva loan let her fill a purchase order when no bank would lend.","quote":"I specifically came to Kiva because I couldn't get a traditional bank loan.","quotes":["I specifically came to Kiva because I couldn't get a traditional bank loan.","Looking back, it has really changed the trajectory of my business."],"loans":[{"amount":"$7,500","when":"Apr 2020","url":"https://www.kiva.org/lend/1963063","lenders":81,"use":"me fulfill a Purchase order from a luxury retailer","raised":"2020-05-06"}],"face":"media/kahindo-p.jpg","clip":"media/clip-kahindo.mp4"},"charles-noonan":{"id":"charles-noonan","film":"media/full-charles-noonan.mp4","name":"Charles Noonan","caption":"Kiva lender and ambassador","business":"Kiva lender","based":"U.S.","type":"ambassador","story":"A real-estate developer who has lent on Kiva since 2020. His favorite loan to make is the last piece that fully funds someone's project.","quote":"What I really like is when I give a loan to someone who's looking for funds through Kiva is when I give the last piece of the loan that actually funds their project.","quotes":["What I really like is when I give a loan to someone who's looking for funds through Kiva is when I give the last piece of the loan that actually funds their project."],"loans":[],"face":"media/charles-noonan-p.jpg","clip":"media/clip-charles-noonan.mp4"},"pradnya-haldipur":{"id":"pradnya-haldipur","film":"media/full-pradnya-haldipur.mp4","name":"Pradnya Haldipur","caption":"Kiva lender and ambassador","business":"Kiva lender","based":"U.S.","type":"ambassador","story":"A professional fundraiser who has lent on Kiva for about 10 years and is part of the new Kiva Ambassador Program.","quote":"Every time I get the email that says the woman you've been supporting has repaid her loan, that tells me that her journey has gone in the right direction.","quotes":["Every time I get the email that says the woman you've been supporting has repaid her loan, that tells me that her journey has gone in the right direction."],"loans":[],"face":"media/pradnya-haldipur-p.jpg","clip":"media/clip-pradnya-haldipur.mp4"},"cissy-deluca":{"id":"cissy-deluca","film":"media/full-cissy-deluca.mp4","name":"Cissy DeLuca","caption":"Former Specialist for Asia at Kiva","business":"Kiva (former)","based":"U.S.","type":"former","story":"Spent two years in Southeast Asia for Kiva. There she met two sisters on their farms who had both borrowed, one after the other.","quote":"They were just so happy to meet someone from Kiva, to have had the opportunity to get a microfinance loan through Kiva.","quotes":["They were just so happy to meet someone from Kiva, to have had the opportunity to get a microfinance loan through Kiva."],"loans":[],"face":"media/cissy-deluca-p.jpg","clip":"media/clip-cissy-deluca.mp4"},"martha-brantley":{"id":"martha-brantley","film":"media/full-martha-brantley.mp4","name":"Martha Brantley","caption":"Former Senior Director of Strategic Partnerships at Kiva","business":"Kiva (former)","based":"U.S.","type":"former","story":"Made her first Kiva loan during her job interview. At a conference in Mexico she met a man whose 2004 Kiva laptop loan in Rwanda had put him through college.","quote":"He said: I got one of those loans. It allowed me to attend and complete college.","quotes":["He said: I got one of those loans. It allowed me to attend and complete college."],"loans":[],"face":"media/martha-brantley-p.jpg","clip":"media/clip-martha-brantley.mp4"},"aisha":{"id":"aisha","film":"","name":"Aisha","caption":"Business owner, Ghana","business":"Jibu North Legon franchise","based":"Accra, Ghana","type":"borrower","story":"Owns Jibu's North Legon franchise, a drinking-water business in Accra. She borrowed on Kiva to open it, then for a motorbike and for refillable bottles.","quote":"Today I can boldly say I'm very happy, because Kiva has changed my life completely.","quotes":["Because of Kiva, I am who I am today.","Today I can boldly say I'm very happy, because Kiva has changed my life completely."],"loans":[{"amount":"$39,925","when":"May 2023","url":"https://www.kiva.org/lend/2586319","lenders":1254,"use":"to launch a safe drinking water franchise in Ghana","raised":"2023-06-20"},{"amount":"$2,950","when":"Jun 2024","url":"https://www.kiva.org/lend/2790317","lenders":78,"use":"to purchase a delivery motorbike","raised":"2024-06-10"},{"amount":"$2,925","when":"Aug 2024","url":"https://www.kiva.org/lend/2839031","lenders":80,"use":"to buy more refillable bottles to reach more customers","raised":"2024-09-03"}],"face":"media/aisha-p.jpg","clip":"media/clip-aisha.mp4"},"karl":{"id":"karl","film":"","name":"Karl","caption":"Business owner, Ghana","business":"Jibu Asylum Down franchise","based":"Accra, Ghana","type":"borrower","story":"Was a Jibu customer before he became a franchisee. His Kiva loan paid for the shop build-out and a delivery tricycle. He now employs two or more people and dreams of a second location.","quote":"I'm able to have an impact on the youth of Ghana through giving them a job.","quotes":["I'm able to have an impact on the youth of Ghana through giving them a job.","I dream of having more than one franchise location in the future."],"loans":[{"amount":"$39,950","when":"Aug 2023","url":"https://www.kiva.org/lend/2629318","lenders":1020,"use":"to launch a safe drinking water business, serving the community and providing employment in Accra, Ghana","raised":"2023-11-19"},{"amount":"$2,925","when":"Aug 2024","url":"https://www.kiva.org/lend/2838647","lenders":79,"use":"to buy refillable bottles, to reach more customers who could not previously afford clean drinking water","raised":"2024-09-15"}],"face":"media/karl-p.jpg","clip":"media/clip-karl.mp4"},"patience":{"id":"patience","film":"","name":"Patience","caption":"Jibu franchise team, Ghana","business":"Jibu franchise, Accra","based":"Accra, Ghana","type":"team","story":"Works at a Jibu franchise in Accra. Kiva loans paid for more bottles and a delivery tricycle, so the shop can bring water to customers' doors.","quote":"Through Kiva we are able to distribute more bottles.","quotes":["Through Kiva we are able to distribute more bottles."],"loans":[],"face":"media/patience-p.jpg","clip":"media/clip-patience.mp4"},"maria":{"id":"maria","film":"","name":"Maria","caption":"Front desk officer, Ghana","business":"Jibu Asylum Down franchise","based":"Accra, Ghana","type":"team","story":"Front desk officer at Karl's Asylum Down franchise, her first job after graduating. She saw the shop grow as Kiva loans bought more bottles and production equipment.","quote":"Now with the support of Kiva we have more bottles, and we've been able to contact more of our customers.","quotes":["Now with the support of Kiva we have more bottles, and we've been able to contact more of our customers."],"loans":[],"face":"media/maria-p.jpg","clip":"media/clip-maria.mp4"},"selassie-osu":{"id":"selassie-osu","film":"","name":"Selassie Osu","caption":"Operations manager, Ghana","business":"Jibu North Legon franchise","based":"Accra, Ghana","type":"team","story":"Runs day-to-day operations at the North Legon franchise. A later Kiva loan bought a bigger truck, the business grew, and staff salaries went up.","quote":"We are able to serve our people within the community with access to quality drinking water, and we are also giving job opportunities.","quotes":["We are able to serve our people within the community with access to quality drinking water, and we are also giving job opportunities."],"loans":[],"face":"media/selassie-osu-p.jpg","clip":"media/clip-selassie-osu.mp4"},"vishal-ghotge":{"id":"vishal-ghotge","film":"","name":"Vishal Ghotge","caption":"CEO at Kiva","business":"Kiva","based":"Seattle, WA","type":"leader","story":"Kiva's CEO since January 2023, his first CEO role. He grew up in Mumbai, where his grandfather built night schools for adults, and later built products at Microsoft, Groupon and Remitly. He is a runner.","quote":"Talent and ambition are universal, but opportunity and access to money isn't.","quotes":["Talent and ambition are universal, but opportunity and access to money isn't.","Most leaders that we all admire are also winging it."],"loans":[],"face":"media/vishal-ghotge-p.jpg","clip":"media/clip-vishal-ghotge.mp4"}},"entrepreneurs":["aisha","karl","racquel-rodriguez","brandy-poiry","antwan-daniels","shanntel-gladney","kahindo","akilah-beavers","kristina-perkins","cristina-uribe","shalita-oneale"],"lenders":[{"p":"charles-noonan","film":"charles-noonan","role":"Kiva lender since 2020 · Kiva ambassador","quote":"It serves such a good cause.","head":"$100 out. $69 back in two months.","line":"That's when I really decided that Kiva will be the number one place that I use to lend money.","facts":["He lent $100. Two months later, $69 had already been repaid.","A real-estate developer, he lends to people getting their businesses started.","His favorite loan to make: the last piece that fully funds someone's project."],"card":"media/charles-noonan-card.jpg"},{"p":"pradnya-haldipur","film":"pradnya-haldipur","role":"Kiva lender for 10 years · Kiva ambassador","quote":"Her journey has gone in the right direction.","head":"The email that says: repaid.","line":"Every time I get the email that says the woman you've been supporting has repaid her loan.","facts":["A professional fundraiser, she has lent on Kiva for about 10 years.","Every repayment email tells her a woman's journey is going the right way.","Then her $25 goes on to the next borrower."],"card":"media/pradnya-haldipur-card.jpg"},{"p":"martha-brantley","film":"martha-brantley","role":"Kiva lender · former Kiva staff","quote":"I got hooked really quickly.","head":"Hooked from her first loan.","line":"He said: I got one of those loans. It allowed me to attend and complete college.","facts":["She made her first Kiva loan during her job interview at Kiva.","Years later she met a man whose Kiva loan for a laptop in Rwanda put him through college.","He went on to found and run his own organization."],"card":"media/martha-brantley-card.jpg"},{"p":"cissy-deluca","film":"cissy-deluca","role":"Kiva lender · former Kiva staff","quote":"Kiva's just such a special organization.","head":"Two sisters, two loans, two farms.","line":"They were just so happy to meet someone from Kiva.","facts":["She spent two years in Southeast Asia working for Kiva.","She met two sisters: one borrowed, then encouraged the other to borrow too.","She visited both farms and saw the businesses grow."],"card":"media/cissy-deluca-card.jpg"}],"partners":["tracey-lewis","nia-webster","neel-campbell","kathleen-clark"],"kiva":[{"n":"$2B+","l":"lent through Kiva in 20 years, $25 to $50 at a time"},{"n":"10M","l":"more people: the goal Kiva set at 20, doubling its impact in half the time"},{"n":"$71.8M","l":"lent to 10,288 U.S. borrowers since 2011"}],"totals":{"amount":161175,"lenders":3667,"loans":15,"borrowers":11,"women":9}};
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const P = DATA.people, IMP = DATA.impacts, T = DATA.totals;
+const money = n => "$" + Math.round(n).toLocaleString("en-US");
+const first = p => p.name.replace(/^Dr\. /, "").split(" ")[0];
+const ICON = {
+  drop:'<path d="M12 3c3.2 4.2 6 7.6 6 11.2a6 6 0 0 1-12 0C6 10.6 8.8 7.2 12 3z"/><path d="M9.5 14.5a2.6 2.6 0 0 0 2.5 2.5"/>',
+  briefcase:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8.5 7V5.2A1.7 1.7 0 0 1 10.2 3.5h3.6a1.7 1.7 0 0 1 1.7 1.7V7M3 12.5h18"/>',
+  family:'<circle cx="8" cy="7" r="3"/><circle cx="17" cy="9.5" r="2.4"/><path d="M2.5 21v-1.6a5.5 5.5 0 0 1 11 0V21M13.5 21v-1a3.6 3.6 0 0 1 7.2 0v1"/>',
+  storefront:'<path d="M3.5 9 5 4h14l1.5 5"/><path d="M3.5 9h17v1.5a2.8 2.8 0 0 1-5.6 0 2.8 2.8 0 0 1-5.8 0 2.8 2.8 0 0 1-5.6 0z"/><path d="M5 13v8h14v-8M10 21v-5h4v5"/>',
+  spark:'<path d="M12 3.5l2.1 5.4 5.6.6-4.2 3.8 1.3 5.6L12 16l-4.8 2.9 1.3-5.6-4.2-3.8 5.6-.6z"/>',
+  key:'<circle cx="8" cy="15" r="4.2"/><path d="M11 12l8.5-8.5M16.5 6.5l2.8 2.8M13.8 9.2l2 2"/>',
+};
+const icon = (k, cls = "") => `<svg viewBox="0 0 24 24" class="${cls}" aria-hidden="true">${ICON[k] || ""}</svg>`;
+const S = {imp: IMP[0].id, k: 0, auto: true, sound: false, timers: [], adv: null, vid: null, inView: true, modal: null};
+const impactsOf = pid => IMP.filter(i => i.outcomes.some(o => o.p === pid)).map(i => i.id);
+function useLine(l, p){ const u = (l.use || "").trim(); if (!u) return ""; return /^to\b/i.test(u) ? `helps ${first(p)} ${u}` : `helps ${u}`; }
+function loanHTML(p, max = 3){
+  return (p.loans || []).slice(0, max).map(l => `<div class="loanline"><b>${esc(l.amount)}</b> from <b>${l.lenders.toLocaleString("en-US")} lenders</b> ${esc(useLine(l, p))}. <a href="${esc(l.url)}" target="_blank" rel="noopener">Kiva loan ↗</a></div>`).join("");
+}
+
+/* hero: the lenders */
+$("#herolede").textContent = "Every loan on Kiva starts with someone who chooses to lend, often just $25. When it's repaid, they lend it again. Hear why four of them keep coming back, then follow " + T.lenders.toLocaleString("en-US") + " lenders to the entrepreneurs they backed.";
+$("#lendcta").href = DATA.lendUrl; $("#lendcta2").href = DATA.lendUrl;
+$("#herostat").innerHTML = `<b data-n="${T.lenders}">${T.lenders.toLocaleString("en-US")}</b> people lent <b data-n="${T.amount}" data-m="1">${money(T.amount)}</b> to the ${T.borrowers} entrepreneurs on this page.`;
+const LND = Object.fromEntries(DATA.lenders.map(l => [l.p, l]));
+$("#lrow").innerHTML = DATA.lenders.map(l => { const p = P[l.p];
+  return `<button class="lc" data-lender="${l.p}" aria-label="Watch ${esc(p.name)}'s story"><img src="${l.card || p.face}" alt="">
+    <span class="tx"><b>“${esc(l.quote)}”</b><span class="nm">${esc(p.name)}</span><small>${esc(l.role)}</small><span class="play"><i>▶</i>Watch ${esc(first(p))}'s story</span></span></button>`; }).join("");
+// a slow push-in moves from card to card, so the row feels alive without competing with the films
+(function heroLoop(){
+  const cards = $$("#lrow .lc"); let i = 0;
+  const next = () => { cards.forEach(c => c.classList.remove("on")); if (cards.length) cards[i++ % cards.length].classList.add("on"); };
+  next(); setInterval(next, 4200);
+})();
+$$("#lrow [data-lender]").forEach(b => b.addEventListener("click", () => openLender(b.dataset.lender)));
+function countUp(root){ $$("[data-n]", root).forEach(el => { const n = +el.dataset.n, m = el.dataset.m === "1", t0 = performance.now();
+  const f = t => { const k = Math.min(1, (t - t0) / 1600), v = n * (1 - Math.pow(1 - k, 3)); el.textContent = m ? money(v) : Math.round(v).toLocaleString("en-US"); if (k < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); }); }
+countUp($("#herostat"));
+
+/* flow: lenders -> entrepreneurs -> impacts */
+const F = {edges: [], parts: [], raf: 0, geo: null};
+function drawFlow(){
+  const box = $("#flow"), W = Math.max(300, box.clientWidth), vert = W < 560;
+  const E = DATA.entrepreneurs, n = E.length, m = IMP.length;
+  const H = vert ? 600 : Math.max(600, n * 54 + 60);
+  const lw = l => 3 + 22 * Math.sqrt(l / 1412);
+  const lenders = pid => (P[pid].loans || []).reduce((s, l) => s + l.lenders, 0);
+  const g = {W, H, vert, ent: {}, imp: {}};
+  // lender block
+  const LB = vert ? {x: 10, y: 38, w: W - 20, h: 54} : {x: 4, y: 70, w: 92, h: H - 140};
+  // entrepreneurs
+  E.forEach((pid, i) => { g.ent[pid] = vert ? {x: 22 + i * (W - 44) / (n - 1), y: 232, r: Math.min(15, (W - 44) / (n - 1) / 2 - 1)}
+                                         : {x: W * 0.43, y: 34 + i * (H - 78) / (n - 1), r: 19}; });
+  // impacts
+  const iw = vert ? (W - 30) / 2 : Math.min(230, W * 0.36), ih = vert ? 64 : 66;
+  IMP.forEach((it, j) => { g.imp[it.id] = vert ? {x: 10 + (j % 2) * (iw + 10), y: 360 + Math.floor(j / 2) * (ih + 12), w: iw, h: ih}
+                                               : {x: W - iw - 4, y: 22 + j * (H - 44 - ih) / (m - 1), w: iw, h: ih}; });
+  // lender -> entrepreneur edges, stacked along the block edge
+  const widths = E.map(pid => lw(lenders(pid))), total = widths.reduce((a, b) => a + b, 0) + (n - 1) * 3;
+  let off = (vert ? LB.w : LB.h) / 2 - total / 2;
+  const edges = [];
+  E.forEach((pid, i) => {
+    const w = widths[i], e = g.ent[pid];
+    if (vert){ const x0 = LB.x + off + w / 2, y0 = LB.y + LB.h, y1 = e.y - e.r;
+      edges.push({k: "l", pid, w, d: `M${x0},${y0} C${x0},${(y0 + y1) / 2} ${e.x},${(y0 + y1) / 2} ${e.x},${y1}`}); }
+    else { const y0 = LB.y + off + w / 2, x0 = LB.x + LB.w, x1 = e.x - e.r;
+      edges.push({k: "l", pid, w, d: `M${x0},${y0} C${(x0 + x1) / 2},${y0} ${(x0 + x1) / 2},${e.y} ${x1},${e.y}`}); }
+    off += w + 3;
+  });
+  // entrepreneur -> impact edges
+  IMP.forEach(it => { const ins = it.outcomes.map(o => o.p).filter(p => g.ent[p]), b = g.imp[it.id];
+    ins.forEach((pid, q) => { const e = g.ent[pid];
+      if (vert){ const x1 = b.x + b.w * (q + 1) / (ins.length + 1), y1 = b.y, y0 = e.y + e.r;
+        edges.push({k: "i", pid, imp: it.id, w: 2.5, d: `M${e.x},${y0} C${e.x},${(y0 + y1) / 2} ${x1},${(y0 + y1) / 2} ${x1},${y1}`}); }
+      else { const y1 = b.y + b.h * (q + 1) / (ins.length + 1), x0 = e.x + e.r, x1 = b.x;
+        edges.push({k: "i", pid, imp: it.id, w: 2.5, d: `M${x0},${e.y} C${(x0 + x1) / 2},${e.y} ${(x0 + x1) / 2},${y1} ${x1},${y1}`}); }
+    }); });
+  const dots = (() => { let s = ""; const cols = vert ? 60 : 9, rows = vert ? 6 : Math.floor(LB.h / 9.5);
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++){ const x = LB.x + 6 + c * (LB.w - 12) / (cols - 1), y = LB.y + 6 + r * (LB.h - 12) / Math.max(1, rows - 1); s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.1"/>`; } return s; })();
+  box.closest(".flowcard").classList.toggle("vert", vert);
+  box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${T.lenders.toLocaleString("en-US")} lenders funded ${n} entrepreneurs; their loans made six kinds of impact">
+    <defs>${E.map(pid => { const e = g.ent[pid]; return `<clipPath id="cp-${pid}"><circle cx="${e.x}" cy="${e.y}" r="${e.r}"/></clipPath>`; }).join("")}</defs>
+    <g class="lblock"><rect x="${LB.x}" y="${LB.y}" width="${LB.w}" height="${LB.h}" rx="14" fill="var(--surface)"/><g fill="var(--accent)" opacity=".55">${dots}</g>
+      ${vert ? `<text x="${LB.x}" y="${LB.y - 22}" class="big">${T.lenders.toLocaleString("en-US")}</text><text x="${LB.x + 86}" y="${LB.y - 22}">people lent ${money(T.amount)}</text>`
+             : `<text x="${LB.x + LB.w / 2}" y="${LB.y - 30}" class="big" text-anchor="middle">${T.lenders.toLocaleString("en-US")}</text><text x="${LB.x + LB.w / 2}" y="${LB.y - 12}" text-anchor="middle">people lent</text><text x="${LB.x + LB.w / 2}" y="${LB.y + LB.h + 22}" text-anchor="middle">${money(T.amount)}</text>`}</g>
+    <g id="edges">${edges.map((e, i) => `<path id="e${i}" class="edge ${e.k}" d="${e.d}" stroke-width="${e.w.toFixed(1)}" data-pid="${e.pid}" ${e.imp ? `data-imp="${e.imp}"` : ""}/>`).join("")}</g>
+    <g id="parts"></g>
+    ${E.map(pid => { const e = g.ent[pid], p = P[pid];
+      return `<g class="enode" data-pid="${pid}" tabindex="0" role="button" aria-label="${esc(p.name)}"><title>${esc(p.name)}: ${esc(p.business)}</title><circle class="ring" cx="${e.x}" cy="${e.y}" r="${e.r + 2}"/><image href="${p.face}" x="${e.x - e.r}" y="${e.y - e.r}" width="${e.r * 2}" height="${e.r * 2}" clip-path="url(#cp-${pid})" preserveAspectRatio="xMidYMid slice"/>${vert ? "" : `<text x="${e.x}" y="${e.y + e.r + 14}">${esc(first(p))}</text>`}</g>`; }).join("")}
+    ${IMP.map(it => { const b = g.imp[it.id], ic = vert ? 14 : 18, cx = b.x + (vert ? 10 : 14) + ic, cy = b.y + b.h / 2;
+      const TINY = {water:"Clean water", jobs:"Jobs", children:"Children", gather:"Gathering", women:"Women", yes:"First yes"};
+      return `<g class="inode ${S.imp === it.id ? "on" : ""}" data-imp="${it.id}" tabindex="0" role="button" aria-label="${esc(it.name)}"><rect x="${b.x}" y="${b.y}" width="${b.w}" height="${b.h}" rx="14"/>
+        <circle class="ic" cx="${cx}" cy="${cy}" r="${ic}"/><g transform="translate(${cx - (vert ? 9 : 11)},${cy - (vert ? 9 : 11)}) scale(${vert ? .75 : .92})" class="ig">${ICON[it.icon]}</g>
+        <text class="n" x="${cx + ic + (vert ? 7 : 10)}" y="${cy - (vert ? -5 : 3)}" ${vert ? 'style="font-size:14px"' : ""}>${esc(vert ? TINY[it.id] : it.short)}</text>${!vert ? `<text class="s" x="${cx + ic + 10}" y="${cy + 15}">${esc(it.node)}</text>` : ""}</g>`; }).join("")}
+  </svg>`;
+  F.edges = edges.map((e, i) => ({...e, el: $("#e" + i)}));
+  F.geo = g;
+  $$("#flow .inode").forEach(el => { const go = () => { S.auto = false; selectImpact(el.dataset.imp, 0, true); }; el.addEventListener("click", go); el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } }); });
+  $$("#flow .enode").forEach(el => { const go = () => { const pid = el.dataset.pid; S.auto = false;
+      const cur = IMP.find(i => i.id === S.imp), k = cur.outcomes.findIndex(o => o.p === pid);
+      if (k >= 0) selectImpact(S.imp, k, true); else { const it = IMP.find(i => i.outcomes.some(o => o.p === pid)); selectImpact(it.id, it.outcomes.findIndex(o => o.p === pid), true); } };
+    el.addEventListener("click", go); el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } }); });
+  highlight();
+}
+function shortL(it){ return it.statl.length > 26 ? it.statl.split(" ").slice(0, 3).join(" ") : it.statl; }
+function highlight(){
+  const svg = $("#flow svg"); if (!svg) return;
+  const it = IMP.find(i => i.id === S.imp), cur = it.outcomes[S.k], ppl = new Set(it.outcomes.map(o => o.p));
+  svg.classList.add("dim");
+  $$("#flow .edge").forEach(e => e.classList.toggle("hot", ppl.has(e.dataset.pid) && (!e.dataset.imp || e.dataset.imp === it.id)));
+  $$("#flow .enode").forEach(e => e.classList.toggle("hot", ppl.has(e.dataset.pid)));
+  $$("#flow .inode").forEach(e => e.classList.toggle("on", e.dataset.imp === it.id));
+}
+// money flowing: dots travel lender -> entrepreneur -> impact along the lit paths
+function animateParts(){
+  cancelAnimationFrame(F.raf);
+  const layer = $("#parts"); if (!layer) return;
+  const N = 46; layer.innerHTML = Array.from({length: N}, () => `<circle class="particle" r="2.6" opacity="0"/>`).join("");
+  const els = $$("circle", layer);
+  const ps = els.map((el, i) => ({el, t: Math.random() * 2, sp: .0035 + Math.random() * .003, a: null, b: null}));
+  const pick = p => {
+    const it = IMP.find(i => i.id === S.imp), ppl = it.outcomes.map(o => o.p).filter(x => F.geo.ent[x]);
+    const pool = ppl.length ? ppl : DATA.entrepreneurs, pid = pool[Math.floor(Math.random() * pool.length)];
+    p.a = F.edges.find(e => e.k === "l" && e.pid === pid); p.b = F.edges.find(e => e.k === "i" && e.pid === pid && e.imp === it.id) || F.edges.find(e => e.k === "i" && e.pid === pid);
+    p.la = p.a.el.getTotalLength(); p.lb = p.b ? p.b.el.getTotalLength() : 0;
+  };
+  ps.forEach(pick);
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const frame = () => {
+    if (!document.body.contains(layer)) return;
+    if (S.inView && !reduce) ps.forEach(p => {
+      p.t += p.sp * (p.t < 1 ? 1 : 1.4);
+      if (p.t >= 2 || !p.a) { p.t = 0; pick(p); }
+      const pt = p.t < 1 ? p.a.el.getPointAtLength(p.la * p.t) : p.b ? p.b.el.getPointAtLength(p.lb * (p.t - 1)) : null;
+      if (!pt) return;
+      p.el.setAttribute("cx", pt.x.toFixed(1)); p.el.setAttribute("cy", pt.y.toFixed(1));
+      p.el.setAttribute("opacity", (p.t < .08 ? p.t / .08 : p.t > 1.9 ? (2 - p.t) / .1 : 1).toFixed(2));
+    });
+    F.raf = requestAnimationFrame(frame);
+  };
+  F.raf = requestAnimationFrame(frame);
+}
+
+/* story */
+function clearT(){ S.timers.forEach(clearTimeout); S.timers = []; clearTimeout(S.adv); S.adv = null; }
+function nextStep(){ const it = IMP.find(i => i.id === S.imp); if (S.k + 1 < it.outcomes.length) selectImpact(S.imp, S.k + 1); else { const j = (IMP.indexOf(it) + 1) % IMP.length; selectImpact(IMP[j].id, 0); } }
+function scheduleNext(ms){ clearTimeout(S.adv); S.adv = null; if (!S.auto) return; S.adv = setTimeout(() => { if (!S.inView || S.modal) return scheduleNext(3000); nextStep(); }, ms); }
+function selectImpact(id, k = 0, user = false){
+  clearT();
+  const changed = S.imp !== id; S.imp = id; S.k = k;
+  const it = IMP.find(i => i.id === id), o = it.outcomes[k], p = P[o.p];
+  if (S.vid) S.vid.pause();
+  $("#story").innerHTML = `
+    <div class="ih"><div class="ico">${icon(it.icon)}</div><div><div class="kicker">Impact</div><h3>${esc(it.name)}</h3></div></div>
+    ${it.stat ? `<div class="ist"><b>${esc(it.stat)}</b><span>${esc(it.statl)}</span></div>` : ""}
+    <p class="sum">${esc(it.sum)}</p>${it.context ? `<p class="ctx">${esc(it.context)}</p>` : ""}
+    <div class="outcome">
+      <div class="ovid">${p.clip ? `<video id="ov" src="${p.clip}" poster="${p.face}" playsinline preload="auto" muted></video><button class="snd" id="osnd">${S.sound ? "🔊 Sound on" : "🔈 Hear " + esc(first(p))}</button><div class="prog" id="oprog"></div>` : `<img src="${p.face}" alt="">`}</div>
+      <div class="otext"><div class="who"><b>${esc(p.name)}</b><span>${esc(p.business)}${p.business ? " · " : ""}${esc(p.based)}</span></div>
+        <h4>${esc(o.head)}</h4>
+        ${o.big ? `<div class="obig"><b>${esc(o.big)}</b><span>${esc(o.bigl)}</span></div>` : ""}
+        ${p.quote ? `<q>${esc(p.quote)}</q>` : ""}
+        ${loanHTML(p)}
+        <p class="onext">${esc(o.next)}</p>
+        <div><button class="chip" data-person="${p.id}">More about ${esc(first(p))}</button></div></div>
+    </div>
+    <div class="opager">${it.outcomes.map((x, j) => `<button class="f ${j === k ? "on" : ""}" data-k="${j}" aria-label="${esc(P[x.p].name)}"><img src="${P[x.p].face}" alt=""></button>`).join("")}
+      <span class="sp"><button class="tourbtn" id="tour">${S.auto ? "❚❚ Pause" : "▶ Play"}</button>${k + 1} of ${it.outcomes.length}<button class="round" id="oprev" aria-label="Previous">‹</button><button class="round" id="onext" aria-label="Next">›</button></span></div>`;
+  $$("#story .opager .f").forEach(b => b.addEventListener("click", () => { S.auto = false; selectImpact(S.imp, +b.dataset.k, true); }));
+  $("#oprev").addEventListener("click", () => { S.auto = false; const it2 = IMP.find(i => i.id === S.imp); if (S.k > 0) selectImpact(S.imp, S.k - 1, true); else { const j = (IMP.indexOf(it2) - 1 + IMP.length) % IMP.length; selectImpact(IMP[j].id, IMP[j].outcomes.length - 1, true); } });
+  $("#onext").addEventListener("click", () => { S.auto = false; nextStep(); });
+  $("#tour").addEventListener("click", () => { S.auto = !S.auto; $("#tour").textContent = S.auto ? "❚❚ Pause" : "▶ Play"; if (S.auto && (!S.vid || S.vid.ended)) scheduleNext(1500); if (!S.auto) { clearTimeout(S.adv); S.adv = null; } });
+  $$("#story [data-person]").forEach(b => b.addEventListener("click", () => openPerson(b.dataset.person)));
+  highlight();
+  if (changed) animateParts();
+  const v = $("#ov"); S.vid = v;
+  if (v){
+    v.muted = !S.sound;
+    const pr = $("#oprog");
+    v.addEventListener("timeupdate", () => { if (v.duration) pr.style.width = (100 * v.currentTime / v.duration) + "%"; });
+    v.addEventListener("ended", () => scheduleNext(2600));
+    v.addEventListener("playing", () => { clearTimeout(S.adv); S.adv = null; });
+    if (S.inView || user) v.play().catch(() => scheduleNext(9000)); else scheduleNext(9000);
+    $("#osnd").addEventListener("click", () => { S.sound = !S.sound; v.muted = !S.sound; if (v.ended) v.currentTime = 0; v.play().catch(() => {}); $("#osnd").textContent = S.sound ? "🔊 Sound on" : "🔈 Hear " + first(p); });
+  } else scheduleNext(9000);
+}
+
+/* people strip */
+function card(pid){ const p = P[pid]; return `<button class="pc" data-person="${pid}"><img src="${p.face}" alt="${esc(p.name)}" loading="lazy"><b>${esc(p.name)}</b><span>${esc(p.business || p.caption)}</span></button>`; }
+(function people(){
+  // the borrowers only: lenders lead the page, partners have their own section
+  const row = (ids, cls) => `<div class="row ${cls}">${[...ids, ...ids].map(card).join("")}</div>`;
+  $("#peoplestrip").innerHTML = row(DATA.entrepreneurs, "r1");
+  // the duplicate half is for the loop; keep it out of the tab order and away from screen readers
+  $$("#peoplestrip .row").forEach(r => { const kids = [...r.children]; kids.slice(kids.length / 2).forEach(k => { k.tabIndex = -1; k.setAttribute("aria-hidden", "true"); }); });
+})();
+
+/* lenders, partners, closing */
+$("#partners").innerHTML = DATA.partners.filter(x => P[x]).map(pid => { const p = P[pid];
+  return `<button class="partner" data-person="${pid}"><img src="${p.face}" alt=""><span><b>${esc(p.name)}</b><span>${esc(p.caption)}</span></span></button>`; }).join("");
+$("#kstats").innerHTML = DATA.kiva.map(k => `<div><b>${esc(k.n)}</b><span>${esc(k.l)}</span></div>`).join("");
+const vp = P["vishal-ghotge"];
+$("#vishalv").dataset.clip = vp.clip; $("#vishalv").dataset.poster = vp.face;
+$("#vishalv").innerHTML = `<img src="${vp.face}" alt="Vishal Ghotge"><button aria-label="Play Vishal">▶</button>`;
+// tap a still to play that person's line, with sound (the tap allows it)
+document.addEventListener("click", e => {
+  const box = e.target.closest("[data-clip]"); if (!box || !box.dataset.clip) return;
+  if (S.vid) S.vid.pause();
+  box.innerHTML = `<video src="${box.dataset.clip}" poster="${box.dataset.poster}" playsinline autoplay controls></video>`;
+  const v = $("video", box); v.play().catch(() => {});
+});
+
+/* person modal */
+function openPerson(pid){
+  const p = P[pid]; if (!p) return;
+  S.modal = pid; if (S.vid) S.vid.pause();
+  const imps = impactsOf(pid);
+  const lenders = (p.loans || []).reduce((n, l) => n + l.lenders, 0);
+  const amount = (p.loans || []).reduce((n, l) => n + +String(l.amount).replace(/[^0-9.]/g, ""), 0);
+  const it0 = imps.length ? IMP.find(i => i.id === imps[0]) : null, o0 = it0 ? it0.outcomes.find(o => o.p === pid) : null;
+  const steps = [];
+  if (lenders) {
+    steps.push(["The lenders", `<div class="crowd"><canvas width="720" height="${lenders > 600 ? 260 : lenders > 150 ? 190 : 130}" id="crowd" aria-hidden="true"></canvas><div><b data-n="${lenders}">${lenders.toLocaleString("en-US")}</b><small>people lent ${money(amount)}${p.loans.length > 1 ? ` across ${p.loans.length} loans` : ""}</small></div></div>`]);
+    steps.push([p.loans.length > 1 ? "The loans" : "The loan", p.loans.map(l => `<div class="loancard"><span class="amt">${esc(l.amount)}</span><span class="luse">A loan of ${esc(l.amount)} ${esc(useLine(l, p))}.</span><span class="meta">${l.raised ? "Funded " + esc(new Date(l.raised + "T12:00:00").toLocaleDateString("en-US", {month: "short", year: "numeric"})) + " · " : ""}<a href="${esc(l.url)}" target="_blank" rel="noopener">Kiva loan page ↗</a></span></div>`).join("")]);
+  }
+  if (o0) steps.push(["The impact", `<div class="changed"><h4>${esc(o0.head)}</h4>${o0.big ? `<div class="obig"><b>${esc(o0.big)}</b><span>${esc(o0.bigl)}</span></div>` : ""}${p.quote ? `<q>${esc(p.quote)}</q>` : ""}</div>`]);
+  steps.push([o0 ? "What it led to" : "Their story", `<p class="onext">${esc(o0 ? o0.next : p.story)}</p>${!o0 && p.quote ? `<q>${esc(p.quote)}</q>` : ""}`]);
+  $("#modal").innerHTML = `<button class="x" id="mx" aria-label="Close">×</button>
+    <div class="mv"><div class="inner">${p.clip ? `<video id="mvid" src="${p.clip}" poster="${p.face}" playsinline autoplay muted></video><button class="snd" id="msnd">🔈 Hear ${esc(first(p))}</button>` : `<img src="${p.face}" alt="">`}</div></div>
+    <div class="mb"><div class="kicker">${esc({borrower:"Entrepreneur", team:"Franchise team", hub:"Local partner", staff:"Kiva", leader:"Kiva", ambassador:"Kiva lender", former:"Former Kiva staff"}[p.type] || "")}</div>
+      <h3>${esc(p.name)}</h3><div class="sub">${p.type === "borrower" ? esc(p.business) : esc(p.caption)} · ${esc(p.based)}</div>
+      <div class="jsteps">${steps.map((st, k) => `<div class="jstep" data-k="${k}"><div class="n">${k + 1}</div><div style="min-width:0"><h5>${esc(st[0])}</h5>${st[1]}</div></div>`).join("")}</div>
+      ${imps.length ? `<div><div class="kicker" style="margin-bottom:6px">Follow their impact</div><div class="chips">${imps.map(id => { const it = IMP.find(i => i.id === id); return `<button class="chip" data-goimp="${id}">${esc(it.name)}</button>`; }).join("")}</div></div>` : ""}</div>`;
+  const sc = $("#scrim"); sc.hidden = false; requestAnimationFrame(() => sc.classList.add("on"));
+  // the journey reveals a step at a time; the dots fill in as the lenders count up
+  $$("#modal .jstep").forEach((el, k) => setTimeout(() => { if (S.modal !== pid) return; el.classList.add("on"); if (k === 0 && lenders) { drawCrowd(lenders); countUp(el); } }, 200 + k * 900));
+  $("#mx").addEventListener("click", closePerson);
+  const v = $("#mvid");
+  if (v){ v.muted = true; v.play().catch(() => {}); $("#msnd").addEventListener("click", () => { v.muted = !v.muted; if (v.ended) v.currentTime = 0; v.play().catch(() => {}); $("#msnd").textContent = v.muted ? "🔈 Hear " + first(p) : "🔊 Sound on"; }); }
+  $$("#modal [data-goimp]").forEach(b => b.addEventListener("click", () => { const id = b.dataset.goimp, it = IMP.find(i => i.id === id); closePerson(); S.auto = false;
+    selectImpact(id, Math.max(0, it.outcomes.findIndex(o => o.p === pid)), true); $("#impact").scrollIntoView({behavior: "smooth"}); }));
+  $("#mx").focus();
+}
+function drawCrowd(n){
+  const cv = $("#crowd"); if (!cv) return;
+  const ctx = cv.getContext("2d"), W = cv.width, H = cv.height;
+  const cs = getComputedStyle(document.documentElement), green = cs.getPropertyValue("--accent").trim() || "#2AA967", dim = cs.getPropertyValue("--line-2").trim() || "#ccc";
+  const cols = Math.max(12, Math.ceil(Math.sqrt(n * W / H))), size = Math.min(W / cols, H / Math.ceil(n / cols)), r = Math.max(1.4, size * 0.36);
+  const pts = Array.from({length: n}, (_, i) => [(i % cols + .5) * size, (Math.floor(i / cols) + .5) * size]).sort(() => Math.random() - .5);
+  const t0 = performance.now(), dur = 1500;
+  const frame = t => { const k = Math.min(1, (t - t0) / dur), m = Math.floor(n * (1 - Math.pow(1 - k, 2)));
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < n; i++){ ctx.beginPath(); ctx.fillStyle = i < m ? green : dim; ctx.globalAlpha = i < m ? 1 : .35; ctx.arc(pts[i][0], pts[i][1], r, 0, 7); ctx.fill(); }
+    ctx.globalAlpha = 1; if (k < 1 && document.body.contains(cv)) requestAnimationFrame(frame); };
+  requestAnimationFrame(frame);
+}
+function openLender(pid){
+  const p = P[pid], l = LND[pid]; if (!p || !l) return;
+  S.modal = pid; if (S.vid) S.vid.pause();
+  $("#modal").innerHTML = `<button class="x" id="mx" aria-label="Close">×</button>
+    <div class="mv"><div class="inner">${p.film ? `<video id="mvid" src="${p.film}" poster="${p.face}" playsinline controls autoplay></video>` : `<img src="${p.face}" alt="">`}</div></div>
+    <div class="mb"><div class="kicker">${esc(l.role)}</div>
+      <h3>${esc(p.name)}</h3><div class="sub">Why ${esc(first(p))} lends</div>
+      <h4 style="font-size:28px">“${esc(l.quote)}”</h4>
+      <p style="margin:0;font-family:var(--serif);font-size:18px;color:var(--ink-2)">${esc(l.head)} ${esc(l.line)}</p>
+      <ul class="facts">${l.facts.map(f => `<li>${esc(f)}</li>`).join("")}</ul>
+      <div class="lendbox"><b>Lend like ${esc(first(p))}.</b><span>Choose an entrepreneur and lend as little as $25. As it's repaid, you can lend it again.</span>
+        <a class="cta" href="${esc(DATA.lendUrl)}" target="_blank" rel="noopener">Lend on Kiva <span aria-hidden="true">↗</span></a></div>
+      <div class="chips"><span class="note" style="font-size:13px;color:var(--ink-3)">More lenders:</span>${DATA.lenders.filter(x => x.p !== pid).map(x => `<button class="chip" data-lender="${x.p}">${esc(P[x.p].name)}</button>`).join("")}</div></div>`;
+  const sc = $("#scrim"); sc.hidden = false; requestAnimationFrame(() => sc.classList.add("on"));
+  $("#mx").addEventListener("click", closePerson);
+  const v = $("#mvid"); if (v) v.play().catch(() => { v.muted = true; v.play().catch(() => {}); });
+  $$("#modal [data-lender]").forEach(b => b.addEventListener("click", () => openLender(b.dataset.lender)));
+  $("#mx").focus();
+}
+function closePerson(){ const sc = $("#scrim"); sc.classList.remove("on"); const v = $("#mvid"); if (v) v.pause(); S.modal = null; setTimeout(() => { if (!S.modal) { sc.hidden = true; $("#modal").innerHTML = ""; } }, 200);
+  if (S.auto && S.inView && S.vid && S.vid.paused && !S.vid.ended) S.vid.play().catch(() => {}); }
+$("#scrim").addEventListener("click", e => { if (e.target.id === "scrim") closePerson(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && S.modal) closePerson(); });
+document.addEventListener("click", e => { const b = e.target.closest("#peoplestrip [data-person], #partners [data-person]"); if (b) (LND[b.dataset.person] ? openLender : openPerson)(b.dataset.person); });
+
+/* start */
+drawFlow(); selectImpact(S.imp, 0); animateParts();
+let rw = 0; window.addEventListener("resize", () => { clearTimeout(rw); rw = setTimeout(() => { drawFlow(); animateParts(); }, 200); });
+// play the tour only while the explorer is on screen
+if ("IntersectionObserver" in window){
+  new IntersectionObserver(es => { es.forEach(e => { S.inView = e.isIntersecting; if (S.vid){ if (S.inView && S.auto && S.vid.paused && !S.vid.ended && !S.modal) S.vid.play().catch(() => {}); if (!S.inView) S.vid.pause(); } }); }, {threshold: .25}).observe($(".explorer"));
+}
+</script>
+</body></html>
