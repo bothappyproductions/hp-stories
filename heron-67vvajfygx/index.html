@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Heron Story Studio</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Domine:wght@500;600;700&family=Figtree:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--pp:#FBFAF6;--pn:#F3F1EA;--p2:#E9E5DA;--ik:#1E2240;--i2:#4B5070;--ft:#7C8098;--ln:rgba(30,34,64,.12);--ls:rgba(30,34,64,.22);--nv:#2A2F55;--nd:#1D2140;--tl:#69C6AD;--td:#237A64;--tp:#E6F5F0;--gd:#BB7E2B;--gk:#93611C;--gp:#FBF3E6;--ok:#2E7D5B;
+--fd:"Domine",Georgia,serif;--fb:"Figtree","Helvetica Neue",Arial,sans-serif;--fm:"IBM Plex Mono",ui-monospace,Menlo,monospace;--r:10px;--sh:0 1px 2px rgba(30,34,64,.06),0 10px 28px -14px rgba(30,34,64,.25);color-scheme:light}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--pp);color:var(--ik);font-family:var(--fb);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}img{display:block;max-width:100%}button{font:inherit}p{margin:0}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0));padding-right:max(16px,env(safe-area-inset-right,0))}
+h1,h2,h3,h4{font-family:var(--fd);font-weight:700;margin:0;letter-spacing:-.01em;text-wrap:balance;color:var(--ik)}
+.hl{color:var(--td)}
+.eyebrow{font-family:var(--fm);font-size:.74rem;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--gk)}
+.num{font-variant-numeric:tabular-nums lining-nums}
+:focus-visible{outline:2px solid var(--gd);outline-offset:3px;border-radius:3px}
+
+/* bar */
+.bar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--pp) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--ln)}
+.bar .wrap{display:flex;align-items:center;gap:20px;height:62px}
+.lockup{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.chip-logo{background:var(--nv);border-radius:6px;padding:6px 10px;display:block}
+.chip-logo img{height:24px;width:auto}
+.chip-logo.hp img{height:13px}
+.lockup .x{color:var(--ft);font-family:var(--fm);font-size:.8rem}
+.rail{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:auto;min-width:0}
+.rail::-webkit-scrollbar{display:none}
+.rail a{font-family:var(--fm);font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;color:var(--i2);padding:7px 10px;border-radius:999px;white-space:nowrap;transition:color .2s,background .2s}
+.rail a:hover,.rail a.on{color:var(--nv);background:var(--tp)}
+@media (max-width:720px){.lockup .x,.chip-logo.hp{display:none}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;background:var(--nd)}
+.hero-media{position:absolute;inset:0}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:70% 40%}
+.hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(22,25,50,.95) 0%,rgba(29,33,64,.86) 38%,rgba(29,33,64,.35) 72%,rgba(29,33,64,.08) 100%)}
+.hero .wrap{position:relative;padding-block:96px 64px;display:grid;gap:24px;color:#F6F4EE}
+.hero .eyebrow{color:var(--tl)}
+.hero h1{color:#fff;font-size:clamp(2.6rem,5.8vw,4.8rem);line-height:1.05;max-width:13ch}
+.hero h1 .hl{color:var(--tl)}
+.hero .lede{max-width:54ch;font-size:1.16rem;color:#EDEBF3}
+.prepared{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--fm);font-size:.76rem;color:rgba(246,244,238,.82)}
+.prepared b{color:#fff;font-weight:500}
+.cards{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.cd{background:rgba(251,250,246,.97);color:var(--ik);border-radius:var(--r);padding:14px 18px;box-shadow:var(--sh);min-width:0}
+.cd .k{font-family:var(--fm);font-size:.66rem;letter-spacing:.11em;text-transform:uppercase;color:var(--i2)}
+.cd .v{font-family:var(--fd);font-weight:700;font-size:2rem;line-height:1.1;margin-top:4px;color:var(--nv)}
+.cd .v small{font-family:var(--fb);font-weight:500;font-size:.85rem;color:var(--i2);margin-left:6px}
+@media (max-width:640px){.hero .wrap{padding-block:64px 44px}.hero-media::after{background:linear-gradient(0deg,rgba(22,25,50,.96) 35%,rgba(29,33,64,.72) 100%)}}
+
+/* bands */
+section.band{border-bottom:1px solid var(--ln)}
+section.band.tint{background:var(--pn)}
+section.band>.wrap{padding-block:84px}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:20px 56px;align-items:end;margin-bottom:40px}
+.sec-head .eyebrow{grid-column:1/-1;margin-bottom:-8px}
+.sec-head h2{font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.12}
+.sec-head .intro{color:var(--i2);max-width:60ch}
+@media (max-width:860px){.sec-head{grid-template-columns:1fr}}
+
+/* heard */
+.heard{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.heard article{background:#fff;border:1px solid var(--ln);border-radius:var(--r);padding:24px;display:grid;grid-template-rows:auto 1fr auto;gap:14px;box-shadow:var(--sh);min-width:0}
+.tag{font-family:var(--fm);font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;color:var(--i2);display:flex;align-items:center;gap:8px}
+.tag i{width:9px;height:9px;border-radius:50%;background:var(--tl);display:inline-block}
+.tag i.ch{background:var(--gd);border-radius:2px}
+.tag i.st{background:var(--nv);border-radius:2px}
+.heard h3{font-size:1.24rem;line-height:1.35}
+.heard q{font-family:var(--fd);font-weight:600;font-size:1.16rem;line-height:1.45;color:var(--ik);quotes:"\201C" "\201D"}
+.heard .means{font-size:.95rem;color:var(--i2);border-top:1px solid var(--ln);padding-top:12px}
+.heard .means b{color:var(--ik)}
+@media (max-width:960px){.heard{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.heard{grid-template-columns:1fr}}
+.thesis{margin-top:48px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center;padding:32px 34px;border-radius:var(--r);background:var(--nv);color:#EDEBF3}
+.thesis .big{font-family:var(--fd);font-size:clamp(3rem,7vw,5rem);line-height:.9;font-weight:700;color:var(--tl)}
+.thesis p{font-size:1.12rem;max-width:64ch}
+.thesis p+p{margin-top:10px;opacity:.88;font-size:1rem}
+@media (max-width:700px){.thesis{grid-template-columns:1fr;padding:26px}}
+
+/* kpis + library */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.kpi{border:1px solid var(--ln);border-radius:var(--r);padding:18px;background:#fff;min-width:0}
+.kpi .k{font-family:var(--fm);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;color:var(--i2)}
+.kpi .v{font-family:var(--fd);font-weight:700;font-size:2.1rem;line-height:1.1;margin-top:6px;color:var(--nv)}
+.kpi .s{font-size:.86rem;color:var(--i2);margin-top:4px}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.src{font-family:var(--fm);font-size:.72rem;color:var(--ft);margin-top:14px}
+.lib-tools{display:flex;flex-wrap:wrap;gap:8px;margin:52px 0 22px}
+.chip{font-family:var(--fm);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--ls);background:#fff;color:var(--i2);padding:8px 13px;border-radius:999px;cursor:pointer;transition:all .18s}
+.chip:hover{color:var(--nv);border-color:var(--nv)}
+.chip[aria-pressed=true]{background:var(--nv);color:#fff;border-color:var(--nv)}
+.lib{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 22px}
+@media (max-width:980px){.lib{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.lib{grid-template-columns:1fr}}
+.film{display:grid;gap:10px;text-align:left;background:none;border:0;padding:0;color:inherit;cursor:pointer;min-width:0}
+.film .frame{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:3/2;background:var(--p2);box-shadow:var(--sh)}
+.film .frame img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.film:hover .frame img{transform:scale(1.035)}
+.play{position:absolute;right:12px;bottom:12px;display:flex;align-items:center;gap:7px;font-family:var(--fm);font-size:.7rem;background:rgba(251,250,246,.95);padding:5px 10px 5px 8px;border-radius:999px;color:var(--ik)}
+.play svg{width:12px;height:12px;fill:var(--nv)}
+.badge{position:absolute;top:12px;right:12px;font-family:var(--fm);font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;padding:4px 8px;border-radius:3px;background:var(--gd);color:#fff}
+.film .meta{display:flex;justify-content:space-between;gap:10px;font-family:var(--fm);font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--i2)}
+.film h3{font-size:1.22rem;line-height:1.25}
+.film .need{font-size:.92rem;color:var(--i2)}
+.film .need b{color:var(--ik)}
+.concept-note{font-family:var(--fm);font-size:.72rem;color:var(--ft);margin-top:26px;max-width:90ch}
+
+/* need rows */
+.need-row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:52px;align-items:center}
+.need-row.flip{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
+.need-row.flip .need-media{order:2}
+@media (max-width:900px){.need-row,.need-row.flip{grid-template-columns:1fr;gap:28px}.need-row.flip .need-media{order:0}}
+.need-media{display:grid;gap:12px;min-width:0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.trio{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.trio>:first-child{grid-column:1/-1}
+@media (max-width:560px){.trio{grid-template-columns:1fr}}
+.cap{font-family:var(--fm);font-size:.7rem;color:var(--ft)}
+.need-copy{display:grid;gap:18px;min-width:0}
+.need-copy h2{font-size:clamp(1.8rem,3.2vw,2.5rem);line-height:1.14}
+.need-copy p.body{color:var(--i2);max-width:58ch;font-size:1.03rem}
+.spec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--ln);border-radius:var(--r);background:#fff}
+.spec div{padding:12px 14px;min-width:0}
+.spec div+div{border-left:1px solid var(--ln)}
+.spec .k{font-family:var(--fm);font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;color:var(--i2)}
+.spec .v{font-size:.95rem;margin-top:3px;line-height:1.35;font-weight:700}
+@media (max-width:520px){.spec{grid-template-columns:1fr}.spec div+div{border-left:0;border-top:1px solid var(--ln)}}
+.roi-line{display:flex;gap:12px;align-items:flex-start;background:var(--tp);border:1px solid #BFE3D7;border-radius:var(--r);padding:14px 16px;font-size:.95rem}
+.roi-line .ic{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--td);color:#fff;display:grid;place-items:center;font-family:var(--fm);font-size:.8rem;margin-top:1px}
+.roi-line b{color:var(--td)}
+.rules{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.rules li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;font-size:.95rem;color:var(--i2)}
+.rules li::before{content:"";width:12px;height:12px;margin-top:6px;border-radius:50%;border:3px solid var(--tl)}
+.rules b{color:var(--ik)}
+
+/* before/after */
+.ba{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+@media (max-width:860px){.ba{grid-template-columns:1fr}}
+.shot{display:grid;gap:10px;min-width:0}
+.shot .lbl{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pill{font-family:var(--fm);font-size:.66rem;letter-spacing:.11em;text-transform:uppercase;padding:5px 10px;border-radius:999px;font-weight:500}
+.pill.before{background:var(--p2);color:var(--i2)}
+.pill.after{background:var(--td);color:#fff}
+.shot .lbl span{font-family:var(--fm);font-size:.68rem;color:var(--ft)}
+.shot .img{border-radius:var(--r);overflow:hidden;border:1px solid var(--ls);background:#fff;cursor:zoom-in;box-shadow:var(--sh)}
+.shot .img img{width:100%;height:auto}
+.changes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 32px;margin-top:30px}
+@media (max-width:760px){.changes{grid-template-columns:1fr}}
+.change{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:start}
+.change .n{width:26px;height:26px;border-radius:50%;background:var(--nv);color:#fff;font-family:var(--fm);font-size:.72rem;display:grid;place-items:center}
+.change h4{font-family:var(--fb);font-size:1rem;font-weight:700}
+.change p{font-size:.93rem;color:var(--i2);margin-top:2px}
+
+/* founder */
+.founder{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:44px;align-items:center}
+@media (max-width:900px){.founder{grid-template-columns:1fr}}
+.portrait{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);aspect-ratio:6/7;background:var(--p2)}
+.portrait img{width:100%;height:100%;object-fit:cover}
+.badges{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.badges img{height:64px;width:auto;background:#fff;border-radius:8px;padding:4px;border:1px solid var(--ln)}
+.pull{font-family:var(--fd);font-size:1.3rem;line-height:1.45;font-weight:600;border-left:4px solid var(--tl);padding-left:18px;color:var(--ik)}
+
+/* tabs */
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--ls);margin-bottom:26px;overflow-x:auto;scrollbar-width:none}
+.tab{font-family:var(--fm);font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;background:none;border:0;padding:12px 16px;cursor:pointer;color:var(--i2);border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tab[aria-selected=true]{color:var(--nv);border-bottom-color:var(--tl);font-weight:500}
+.now{display:flex;flex-wrap:wrap;gap:8px 22px;font-family:var(--fm);font-size:.76rem;color:var(--i2);margin-bottom:18px}
+.now b{color:var(--ik);font-weight:500}
+.plan{margin-top:56px;overflow-x:auto;border:1px solid var(--ln);border-radius:var(--r);background:#fff}
+.plan table{width:100%;border-collapse:collapse;min-width:700px;font-size:.94rem}
+.plan th,.plan td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--ln);vertical-align:top}
+.plan th{font-family:var(--fm);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;color:var(--i2);font-weight:500;background:var(--pn)}
+.plan tr:last-child td{border-bottom:0}
+.plan td:first-child{font-weight:700;white-space:nowrap}
+
+/* email */
+.email{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:44px;align-items:start}
+@media (max-width:900px){.email{grid-template-columns:1fr}}
+.phone{border-radius:16px;overflow:hidden;box-shadow:var(--sh);cursor:zoom-in;max-width:420px}
+.tracks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.seq{display:grid;gap:10px;counter-reset:s}
+.mail{display:grid;grid-template-columns:auto 96px minmax(0,1fr);gap:14px;align-items:center;background:#fff;border:1px solid var(--ln);border-radius:var(--r);padding:12px;box-shadow:var(--sh)}
+.mail .day{font-family:var(--fm);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gk);writing-mode:vertical-rl;transform:rotate(180deg);text-align:center}
+.mail img{width:96px;aspect-ratio:3/2;object-fit:cover;border-radius:6px}
+.mail .sub{font-weight:700;line-height:1.3}
+.mail .what{font-size:.86rem;color:var(--i2);margin-top:2px}
+.mail .goal{font-family:var(--fm);font-size:.66rem;color:var(--td);text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+.enter{animation:pop .4s cubic-bezier(.2,.7,.2,1) both}
+@keyframes pop{0%{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* journey */
+.who{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.path{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;background:#fff}
+@media (max-width:900px){.path{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:540px){.path{grid-template-columns:1fr}}
+.step{padding:20px 18px;display:grid;gap:10px;align-content:start;border-right:1px solid var(--ln);min-width:0;position:relative}
+.step:last-child{border-right:0}
+.step .k{font-family:var(--fm);font-size:.66rem;letter-spacing:.11em;text-transform:uppercase;color:var(--gk)}
+.step h3{font-size:1.15rem;line-height:1.25}
+.step p{font-size:.88rem;color:var(--i2)}
+.step img{border-radius:6px;aspect-ratio:3/2;object-fit:cover;width:100%}
+.step .ch{font-family:var(--fm);font-size:.68rem;color:var(--td);text-transform:uppercase;letter-spacing:.05em}
+@media (max-width:900px){.step:nth-child(2n){border-right:0}.step:nth-child(-n+2){border-bottom:1px solid var(--ln)}}
+@media (max-width:540px){.step{border-right:0;border-bottom:1px solid var(--ln)}.step:last-child{border-bottom:0}}
+.who-note{margin-top:16px;color:var(--i2);font-size:.95rem;max-width:80ch}
+.who-note b{color:var(--ik)}
+
+/* roi */
+.roi{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:32px;align-items:start}
+@media (max-width:960px){.roi{grid-template-columns:1fr}}
+.levers{display:grid;gap:14px}
+.lever{border:1px solid var(--ln);border-radius:var(--r);padding:16px 18px;background:#fff;display:grid;gap:10px}
+.lever .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.lever h4{font-family:var(--fb);font-size:1rem;font-weight:700}
+.lever .out{font-family:var(--fm);color:var(--ok);font-weight:500;white-space:nowrap}
+.lever .film-ref{font-family:var(--fm);font-size:.66rem;color:var(--i2);letter-spacing:.05em;text-transform:uppercase}
+.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.inputs label{display:grid;gap:4px;font-size:.78rem;color:var(--i2)}
+.inputs input,.inv input{width:100%;background:var(--pp);color:var(--ik);border:1px solid var(--ls);border-radius:4px;padding:8px 10px;font-family:var(--fm);font-size:.9rem}
+.inputs input:focus,.inv input:focus{border-color:var(--nv);outline:0}
+.result{position:sticky;top:84px;border-radius:var(--r);padding:26px;background:#fff;border:1px solid var(--ls);display:grid;gap:20px;box-shadow:var(--sh)}
+@media (max-width:960px){.result{position:static}}
+.flag{display:inline-flex;justify-self:start;font-family:var(--fm);font-size:.68rem;letter-spacing:.07em;text-transform:uppercase;color:var(--gk);border:1px dashed var(--gd);border-radius:999px;padding:5px 11px}
+.result .row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:480px){.result .row{grid-template-columns:1fr}}
+.cell .k,.inv label{font-family:var(--fm);font-size:.64rem;letter-spacing:.09em;text-transform:uppercase;color:var(--i2)}
+.cell .v{font-family:var(--fd);font-weight:700;font-size:clamp(1.45rem,2.6vw,2.1rem);line-height:1.15}
+.cell .v.good{color:var(--ok)}
+.inv{display:grid;gap:6px}.inv input{max-width:220px;font-size:1rem}
+.bars{display:grid;gap:10px}
+.barrow{display:grid;grid-template-columns:minmax(0,8.5rem) minmax(0,1fr) 5.5rem;gap:10px;align-items:center;font-size:.85rem}
+.barrow .lab{color:var(--i2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{height:12px;background:var(--pn);border-radius:2px}
+.fill{height:100%;background:var(--tl);border-radius:2px;transition:width .35s}
+.fill.inv{background:var(--nv)}
+.barrow .amt{font-family:var(--fm);text-align:right;font-variant-numeric:tabular-nums}
+.assume{font-size:.82rem;color:var(--ft);line-height:1.5}
+.people{border-top:1px solid var(--ln);padding-top:16px;font-size:.95rem;color:var(--i2)}
+.people b{color:var(--ik);font-family:var(--fd);font-size:1.3rem}
+
+/* timeline */
+.tl{position:relative}
+.tl::before{content:"";position:absolute;left:calc(9.5rem + 30px);top:24px;bottom:24px;width:1px;background:var(--ls)}
+.tl-item{display:grid;grid-template-columns:9.5rem 28px minmax(0,1fr);gap:16px;align-items:start;padding:13px 0}
+.tl-item .d{font-family:var(--fm);font-size:.8rem;color:var(--i2);text-align:right;padding-top:2px}
+.tl-item .dot{width:13px;height:13px;border-radius:50%;border:2px solid var(--ft);background:var(--pp);margin:5px auto 0;position:relative;z-index:1}
+.tl-item.key .dot{border-color:var(--gd);background:var(--gd)}
+.tl-item.final .dot{width:19px;height:19px;margin-top:2px;border-color:var(--td);background:var(--td);box-shadow:0 0 0 6px rgba(35,122,100,.15)}
+.tl-item h4{font-family:var(--fb);font-size:1.02rem;font-weight:700}
+.tl-item p{font-size:.92rem;color:var(--i2)}
+.tl-item .who-l{font-family:var(--fm);font-size:.64rem;letter-spacing:.09em;color:var(--ft);text-transform:uppercase}
+@media (max-width:560px){.tl::before{left:11px}.tl-item{grid-template-columns:22px minmax(0,1fr)}.tl-item .d{grid-column:2;text-align:left;order:-1;padding:0}.tl-item .dot{grid-row:1/3;grid-column:1}}
+.early{margin-top:26px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;padding:20px 22px;background:#fff;border:1px solid var(--ls);border-radius:var(--r)}
+.early img{width:150px;border-radius:6px}
+@media (max-width:520px){.early{grid-template-columns:1fr}.early img{width:100%}}
+
+/* proof */
+.proof{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.proof div{background:#fff;border:1px solid var(--ln);border-radius:var(--r);padding:22px 20px;display:grid;gap:8px;align-content:start}
+.proof .where{font-family:var(--fm);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;color:var(--gk)}
+.proof h4{font-size:1.15rem}
+.proof p{font-size:.92rem;color:var(--i2)}
+.proof .stat{font-family:var(--fm);color:var(--ok);font-size:.84rem;font-weight:500}
+.foot{background:var(--nd);color:#E6E4EE}
+.foot .wrap{padding-block:34px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center;font-family:var(--fm);font-size:.74rem}
+.foot img{height:18px;width:auto}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:100;background:rgba(18,20,40,.8);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;padding:max(20px,env(safe-area-inset-top,0)) 16px;overflow-y:auto}
+.lb-card{background:#fff;border-radius:12px;max-width:980px;width:100%;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.lb-card.wide{grid-template-columns:1fr;max-width:1300px;background:none;box-shadow:none}
+.lb-card.wide img{border-radius:8px;max-height:88vh;width:auto;margin:0 auto}
+.lb-card>img{width:100%;height:100%;object-fit:cover;min-height:260px}
+.lb-body{padding:28px;display:grid;gap:14px;align-content:start}
+.lb-body h3{font-size:1.7rem;line-height:1.15}
+.lb-body dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px;margin:0;font-size:.93rem}
+.lb-body dt{font-family:var(--fm);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;color:var(--i2);padding-top:3px}
+.lb-body dd{margin:0}
+.lb-body .beats{font-size:.93rem;color:var(--i2);border-top:1px solid var(--ln);padding-top:12px}
+.lb-close{position:fixed;top:14px;right:14px;z-index:101;background:#fff;color:var(--ik);border:0;border-radius:999px;padding:9px 16px;font-family:var(--fm);font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;cursor:pointer}
+@media (max-width:760px){.lb-card{grid-template-columns:1fr}.lb-card>img{min-height:0;aspect-ratio:3/2}}
+/* social reels view */
+.lib.reels{grid-template-columns:repeat(4,minmax(0,1fr));gap:26px 18px}
+@media (max-width:980px){.lib.reels{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.lib.reels{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}}
+.reel{display:grid;gap:10px;text-align:left;background:none;border:0;padding:0;color:inherit;cursor:pointer;min-width:0;align-content:start}
+.rf{position:relative;aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:#111;box-shadow:0 1px 2px rgba(30,34,64,.1),0 18px 34px -16px rgba(30,34,64,.45)}
+.rf img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.reel:hover .rf img{transform:scale(1.03)}
+.rf::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 18%,rgba(0,0,0,0) 48%,rgba(0,0,0,.72) 100%);pointer-events:none}
+.rf .pl{position:absolute;top:10px;left:10px;z-index:2;font-family:var(--fm);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.42);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:4px 8px;border-radius:999px;display:flex;align-items:center;gap:5px}
+.rf .pl svg{width:9px;height:9px;fill:#fff}
+.rf .tm{position:absolute;top:10px;right:10px;z-index:2;font-family:var(--fm);font-size:.62rem;color:#fff;background:rgba(0,0,0,.42);padding:4px 7px;border-radius:999px}
+.rf .side{position:absolute;right:8px;bottom:64px;z-index:2;display:grid;gap:14px;justify-items:center}
+.rf .side svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linejoin:round;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.rf .cap2{position:absolute;left:12px;right:44px;bottom:30px;z-index:2;display:grid;gap:6px}
+.rf .hk{font-family:var(--fb);font-weight:800;font-size:.95rem;line-height:1.5;color:var(--ik)}
+.rf .hk span{background:#fff;padding:2px 6px;border-radius:4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.rf .hd{display:flex;align-items:center;gap:6px;font-size:.72rem;font-weight:600;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5);min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.rf .hd i{width:18px;height:18px;border-radius:50%;background:var(--nv);border:1.5px solid #fff;display:inline-block;flex-shrink:0}
+.rf .bar2{position:absolute;left:12px;right:12px;bottom:14px;z-index:2;height:3px;border-radius:2px;background:rgba(255,255,255,.35)}
+.rf .bar2 b{display:block;height:100%;width:28%;background:#fff;border-radius:2px}
+.reel h3{font-size:1.02rem;line-height:1.25}
+.reel .meta{display:flex;justify-content:space-between;gap:8px;font-family:var(--fm);font-size:.64rem;letter-spacing:.07em;text-transform:uppercase;color:var(--i2)}
+.reels-note{grid-column:1/-1;font-family:var(--fm);font-size:.72rem;color:var(--ft);margin-top:-6px}
+@media (max-width:640px){.rf .hk{font-size:.8rem}.rf .side{display:none}.rf .cap2{right:12px}}
+
+/* present mode */
+.pm-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:7px;font-family:var(--fm);font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;background:var(--nv);color:#fff;border:0;border-radius:999px;padding:8px 14px;cursor:pointer}
+.pm-btn:hover{background:var(--nd)}
+.pm-btn svg{width:12px;height:12px;fill:currentColor}
+.pm-ctl{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:90;display:none;align-items:center;gap:4px;background:rgba(29,33,64,.92);color:#fff;border-radius:999px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.25);font-family:var(--fm);font-size:.74rem;transition:opacity .3s}
+.pm-ctl button{background:none;border:0;color:#fff;cursor:pointer;padding:8px 12px;border-radius:999px;font-family:var(--fm);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase}
+.pm-ctl button:hover{background:rgba(255,255,255,.14)}
+.pm-ctl .cnt{padding:0 8px;min-width:4.5em;text-align:center;font-variant-numeric:tabular-nums;opacity:.85}
+.pm-ctl.idle{opacity:.15}
+body.pm .pm-ctl{display:flex}
+body.pm .bar,body.pm .foot{display:none}
+body.pm main>section{min-height:100vh;min-height:100dvh;display:flex;align-items:center}
+body.pm main>section>.wrap{width:100%}
+body.pm main>section.hero>.wrap{padding-block:64px}
+html.pm{scroll-padding-top:0}
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap">
+ <div class="lockup"><span class="chip-logo"><img src="img/heron-logo.png" alt="Heron Guided Healthcare"></span><span class="x">×</span><span class="chip-logo hp"><img src="img/hp-logo.svg" alt="Happy Productions"></span></div>
+ <nav class="rail" aria-label="Sections">
+  <a href="#heard">Goals</a><a href="#library">Library</a><a href="#awareness">Awareness</a><a href="#heroes">Heron Heroes</a><a href="#founder">Chris’s story</a><a href="#social">Social</a><a href="#email">Email</a><a href="#partners">Care teams</a><a href="#journey">Journey</a><a href="#timeline">Timeline</a>
+ </nav>
+ <button class="pm-btn" id="pmBtn" type="button" aria-label="Start presenting"><svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg>Present</button>
+</div></header>
+<div class="pm-ctl" id="pmCtl" role="toolbar" aria-label="Presentation controls"><button type="button" id="pmPrev" aria-label="Previous slide">&larr;</button><span class="cnt" id="pmCnt">1 / 1</span><button type="button" id="pmNext" aria-label="Next slide">&rarr;</button><button type="button" id="pmExit">Exit</button></div>
+
+<main>
+<section class="hero" id="top">
+ <div class="hero-media"><img src="img/hero.jpg" alt=""></div>
+ <div class="wrap">
+  <p class="eyebrow">Heron Story Studio · A look at what could be</p>
+  <h1>Nobody should navigate a diagnosis <span class="hl">alone.</span></h1>
+  <p class="lede">Most families have never heard of a health navigator until the week they need one. Honest video content can show them what Heron does, introduce the people it has helped, and bring them to a first call.</p>
+  <div class="prepared"><span>Prepared for <b>Christopher G. Kelly, MEd</b> &amp; <b>Finn Kelly</b></span><span>Heron Guided Healthcare · Doylestown, PA</span><span>By <b>Happy Productions</b> · 16 Oct 2026</span></div>
+  <div class="cards">
+   <div class="cd"><div class="k">Conditions Heron navigates</div><div class="v num">100+<small>one navigator, eight specialties</small></div></div>
+   <div class="cd"><div class="k">Channels ready for video</div><div class="v num">4<small>website, Facebook, LinkedIn, email</small></div></div>
+   <div class="cd"><div class="k">Until GivingTuesday</div><div class="v num"><span id="days">—</span><small>days · 1 Dec 2026</small></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="band" id="heard"><div class="wrap">
+ <div class="sec-head"><p class="eyebrow">From your intake form</p><h2>Your goals, and where you’re starting</h2><p class="intro">Two goals in your own words, two channels you’ve just opened, and two things we noticed on heroncare.org. Each one maps to a piece of content or a channel further down.</p></div>
+ <div class="heard">
+  <article><div class="tag"><i></i>Goal · Understanding</div><q>Increase understanding and awareness of the benefit of nonprofit, community-based health navigation.</q><p class="means">Health navigation is a service most people can’t picture. <b>Ninety seconds of a navigator at a kitchen table explains it better than a page of text.</b></p></article>
+  <article><div class="tag"><i></i>Goal · Honor</div><q>Honor the people living with complex health conditions through their emotive stories.</q><p class="means">You already call them <b>Heron Heroes</b>. Each one gets a short documentary that opens on their life, not their diagnosis.</p></article>
+  <article><div class="tag"><i class="st"></i>Starting point · Social</div><h3>Facebook and LinkedIn pages, just launched</h3><p class="means">A new page is an advantage: <b>every post from day one can follow one plan</b>, with nothing old to clean up.</p></article>
+  <article><div class="tag"><i class="st"></i>Starting point · Email</div><h3>A targeted email campaign, planned</h3><p class="means">Email is where a worried caregiver reads at 11pm. <b>Build the sequence around video content</b> and every email has a reason to be opened.</p></article>
+  <article><div class="tag"><i class="ch"></i>What we noticed · The website</div><h3>Strong words, no one on screen</h3><p class="means">heroncare.org explains the service clearly, but apart from Chris’s headshot <b>it shows no people and no navigation in action.</b> Families are deciding whether to trust a stranger with their care.</p></article>
+  <article><div class="tag"><i class="ch"></i>What we noticed · Proof</div><h3>One testimonial, carrying a lot</h3><p class="means">Weston’s family quote (“he came with a plan”) is the most persuasive line on the site. <b>On camera, that family could do far more for Heron than a quote can.</b></p></article>
+ </div>
+ <div class="thesis"><div class="big">ROI</div><div>
+  <p>We don’t make video for its own sake. Every piece of content below has a job, a place it lives, and a number it should move: calls booked, care teams referring, donors giving, families who stay.</p>
+  <p>For a new nonprofit every dollar counts, so the ideas below are a starting point for a conversation about what Heron actually needs across its website, Facebook, LinkedIn and email.</p>
+ </div></div>
+</div></section>
+
+<section class="band tint" id="library"><div class="wrap">
+ <div class="sec-head"><p class="eyebrow">The library</p><h2>Content that could <span class="hl">work for Heron</span></h2><p class="intro">Six examples. Filter by where each piece works, or open any title to see its treatment, where it lives and what it should move.</p></div>
+ <div class="kpis">
+  <div class="kpi"><div class="k">Conditions covered</div><div class="v num">100+</div><div class="s">Chris’s subject-matter range</div></div>
+  <div class="kpi"><div class="k">Specialty areas</div><div class="v num">8</div><div class="s">From cancer to end-of-life care</div></div>
+  <div class="kpi"><div class="k">Years in health education</div><div class="v num">25+</div><div class="s">Building learning systems for pharma</div></div>
+  <div class="kpi"><div class="k">Certifications</div><div class="v num">3</div><div class="s">Patient navigation, dementia, mental health first aid</div></div>
+ </div>
+ <p class="src">Source: heroncare.org (October 2026).</p>
+ <div class="lib-tools" role="group" aria-label="Filter content by use">
+  <button class="chip" aria-pressed="true" data-f="all">All content</button>
+  <button class="chip" aria-pressed="false" data-f="web">Website</button>
+  <button class="chip" aria-pressed="false" data-f="stories">Heron Heroes</button>
+  <button class="chip" aria-pressed="false" data-f="social">Social</button>
+  <button class="chip" aria-pressed="false" data-f="email">Email</button>
+  <button class="chip" aria-pressed="false" data-f="partners">Care teams</button>
+  <button class="chip" aria-pressed="false" data-f="funders">Donors &amp; funders</button>
+ </div>
+ <div class="lib" id="lib"></div>
+ <p class="concept-note">Concept frames. The people shown are illustrations created for this proposal, not Heron clients. Final content features real people, recorded only with their written consent.</p>
+</div></section>
+
+<section class="band" id="awareness"><div class="wrap">
+ <div class="sec-head"><p class="eyebrow">Need 01 · Understanding</p><h2>Show what a navigator does <span class="hl">before anyone has to ask</span></h2><p class="intro">The navigator video replaces the hero of heroncare.org: Chris at a kitchen table with a family, turning a diagnosis into a one-page plan. A visitor sees the service in 90 seconds, then books a call.</p></div>
+ <div class="ba">
+  <div class="shot"><div class="lbl"><span class="pill before">Before</span><span>heroncare.org · 16 Oct 2026</span></div><div class="img" data-zoom="img/before_web.jpg"><img src="img/before_web.jpg" alt="heroncare.org homepage as of 16 October 2026"></div></div>
+  <div class="shot"><div class="lbl"><span class="pill after">After</span><span>Concept mockup</span></div><div class="img" data-zoom="img/after_web.jpg"><img src="img/after_web.jpg" alt="Concept: heroncare.org homepage with a video hero"></div></div>
+ </div>
+ <div class="changes">
+  <div class="change"><span class="n">1</span><div><h4>A person in the first frame</h4><p>The navigator video plays behind the headline, so the first thing a visitor sees is a navigator helping a family.</p></div></div>
+  <div class="change"><span class="n">2</span><div><h4>Two doors, not one</h4><p>“Book a call” for people ready now, “I’m a caregiver” for the many who are searching on someone else’s behalf.</p></div></div>
+  <div class="change"><span class="n">3</span><div><h4>Proof above the fold</h4><p>100+ conditions, certified navigator, 25 years in health education: the credentials already on the page, moved up to where they build trust.</p></div></div>
+  <div class="change"><span class="n">4</span><div><h4>Every video has a home</h4><p>Heron Heroes, For Care Teams and About Chris each get a page with their video, so links from email and social land on the right story.</p></div></div>
+ </div>
+ <div class="roi-line" style="margin-top:28px"><span class="ic">$</span><p><b>What it moves:</b> homepage visits that become booked calls. We tag every “Book a call” click that follows a play, so the video’s effect is counted, not guessed.</p></div>
+</div></section>
+
+<section class="band tint" id="heroes"><div class="wrap">
+ <div class="need-row">
+  <div class="need-media">
+   <div class="pair">
+    <button class="film" data-open="alz"><div class="frame"><img src="img/t_hero_alz.jpg" alt="He Came With a Plan"><span class="play"><i class="pi"></i>2:45</span></div></button>
+    <button class="film" data-open="cancer"><div class="frame"><img src="img/t_hero_cancer.jpg" alt="Back to Life"><span class="play"><i class="pi"></i>2:45</span></div></button>
+   </div>
+   <span class="cap">Heron Heroes · short documentaries</span>
+  </div>
+  <div class="need-copy">
+   <p class="eyebrow">Need 02 · Honoring the people you serve</p>
+   <h2>Heron Heroes, <span class="hl">in their own words</span></h2>
+   <p class="body">Your site ends with one line from Weston’s family. Heron Heroes turns lines like that into short documentaries: people or families, recorded at home doing what they love, telling what changed when someone came with a plan. Your own phrase is the series rule: <i>we are not defined by a diagnosis.</i></p>
+   <ul class="rules">
+    <li><span><b>Consent first.</b> Written releases, a plain-language explanation of where the video will run, and the right to withdraw before release.</span></li>
+    <li><span><b>Their review before anyone else’s.</b> Every subject sees their cut before it is published.</span></li>
+    <li><span><b>No clinical detail without permission.</b> We capture life at home, not exam rooms, and name a condition only if the person wants it named.</span></li>
+   </ul>
+   <div class="roi-line"><span class="ic">$</span><p><b>What it moves:</b> trust. Families decide faster when they meet someone like them, and these stories are the heart of the email sequence and the GivingTuesday appeal.</p></div>
+  </div>
+ </div>
+</div></section>
+
+<section class="band" id="founder"><div class="wrap">
+ <div class="founder">
+  <div class="need-media">
+   <button class="film" data-open="chris"><div class="frame"><img src="img/t_meetchris.jpg" alt="Born to Advocate"><span class="play"><i class="pi"></i>2:00</span></div></button>
+   <div class="badges"><img src="img/oncology_pn_badge.png" alt="Oncology patient navigator certification"><img src="img/alzheimers_carespec_badge.png" alt="Alzheimer’s care specialist certification"><img src="img/mental_health_firstaid_badge.png" alt="Mental Health First Aid certification"></div>
+  </div>
+  <div class="need-copy">
+   <p class="eyebrow">Need 03 · Why Heron exists</p>
+   <h2>Born to Advocate: <span class="hl">the story behind Heron</span></h2>
+   <p class="pull">A boy with a debilitating form of autism, a mother who would not stop advocating, and the career that followed.</p>
+   <p class="body">That story is on your About section in four lines. On video it explains in two minutes why a nonprofit like Heron exists, and why families can trust the person who walks into their home. It is also the piece of content donors and funders most want to see.</p>
+   <div class="spec"><div><div class="k">Runtime</div><div class="v">2:00 + 0:45 cut</div></div><div><div class="k">Lives on</div><div class="v">About page, LinkedIn Featured, appeals</div></div><div><div class="k">First use</div><div class="v">GivingTuesday, 1 Dec</div></div></div>
+   <div class="roi-line"><span class="ic">$</span><p><b>What it moves:</b> first gifts and foundation interest. A founder story is the case for support that an early-stage nonprofit can’t yet make with years of data.</p></div>
+  </div>
+ </div>
+</div></section>
+
+<section class="band tint" id="social"><div class="wrap">
+ <div class="sec-head"><p class="eyebrow">Need 04 · Social media</p><h2>Two new pages, <span class="hl">built right from the first post</span></h2><p class="intro">Your Facebook and LinkedIn pages launched this month, so the “before” is a blank page. Here is what each looks like with the content in place, and the first 90 days of posting.</p></div>
+ <div class="tabs" role="tablist" aria-label="Platform">
+  <button class="tab" role="tab" id="tab-fb" aria-controls="p-fb" aria-selected="true">Facebook</button>
+  <button class="tab" role="tab" id="tab-li" aria-controls="p-li" aria-selected="false" tabindex="-1">LinkedIn</button>
+ </div>
+ <div role="tabpanel" id="p-fb" aria-labelledby="tab-fb">
+  <div class="now"><span>Audience: <b>families, caregivers, neighbors in Bucks County</b></span><span>Job: <b>trust and booked calls</b></span></div>
+  <div class="ba">
+   <div class="shot"><div class="lbl"><span class="pill after">After · 90 days</span><span>Concept mockup · counts are placeholders</span></div><div class="img" data-zoom="img/after_fb.jpg"><img src="img/after_fb.jpg" alt="Concept: Heron Guided Healthcare Facebook page with Book a free call button and featured videos"></div></div>
+   <div class="need-copy">
+    <div class="change"><span class="n">1</span><div><h4>“Book a call” as the main button</h4><p>Facebook lets a Page swap Follow for an action. Heron’s action is the Calendly link.</p></div></div>
+    <div class="change"><span class="n">2</span><div><h4>Two videos pinned to Featured</h4><p>What a navigator does, and one Heron Hero. A new visitor understands Heron in four minutes.</p></div></div>
+    <div class="change"><span class="n">3</span><div><h4>A cover that says the promise</h4><p>“Nobody should navigate a diagnosis alone,” over a real frame from the shoot.</p></div></div>
+    <div class="change"><span class="n">4</span><div><h4>Reels for the caregiver feed</h4><p>Short vertical cuts from every piece, written for the adult child who is managing a parent’s care.</p></div></div>
+   </div>
+  </div>
+ </div>
+ <div role="tabpanel" id="p-li" aria-labelledby="tab-li" hidden>
+  <div class="now"><span>Audience: <b>physicians, nurses, social workers, funders</b></span><span>Job: <b>referrals and credibility</b></span></div>
+  <div class="ba">
+   <div class="shot"><div class="lbl"><span class="pill after">After · 90 days</span><span>Concept mockup · counts are placeholders</span></div><div class="img" data-zoom="img/after_li.jpg"><img src="img/after_li.jpg" alt="Concept: Heron Guided Healthcare LinkedIn page with featured video content"></div></div>
+   <div class="need-copy">
+    <div class="change"><span class="n">1</span><div><h4>The founder story in Featured</h4><p>Born to Advocate sits at the top of the page, so every visitor meets Chris and his reason for starting Heron first.</p></div></div>
+    <div class="change"><span class="n">2</span><div><h4>Chris posts, the page shares</h4><p>On LinkedIn a founder’s post reaches far more people than a company page. Each piece of content goes out from Chris first.</p></div></div>
+    <div class="change"><span class="n">3</span><div><h4>Content made for care teams</h4><p>An Extension of Your Care Team sits in Featured for the nurse navigator or social worker deciding whether to refer.</p></div></div>
+    <div class="change"><span class="n">4</span><div><h4>One look everywhere</h4><p>Navy, teal and gold on every thumbnail, so Heron is recognizable in a crowded feed.</p></div></div>
+   </div>
+  </div>
+ </div>
+ <div class="plan"><table>
+  <thead><tr><th>Weeks</th><th>Facebook</th><th>LinkedIn</th><th>Goal</th></tr></thead>
+  <tbody>
+   <tr><td>1–4</td><td>Navigator video pinned; Reels from it and For the Caregiver</td><td>Born to Advocate from Chris, then short clips from it</td><td>Explain what Heron is</td></tr>
+   <tr><td>5–8</td><td>First Heron Hero, then Reels cut from it; GivingTuesday appeal</td><td>An Extension of Your Care Team</td><td>Trust, first gifts, first referrals</td></tr>
+   <tr><td>9–12</td><td>Second Heron Hero; caregiver Q&amp;A Reels</td><td>Heron Hero clips for clinicians and funders</td><td>Booked calls and partner meetings</td></tr>
+  </tbody></table></div>
+</div></section>
+
+<section class="band" id="email"><div class="wrap">
+ <div class="sec-head"><p class="eyebrow">Need 05 · The email campaign</p><h2>Every email has <span class="hl">content worth opening</span></h2><p class="intro">One targeted campaign, three tracks. Each email leads with a thumbnail that opens the video on heroncare.org, so you can see who watched and who booked. Choose a track to see its sequence.</p></div>
+ <div class="email">
+  <div class="phone" data-zoom="img/email.jpg"><img src="img/email.jpg" alt="Concept: Heron email with a Heron Heroes video thumbnail"></div>
+  <div>
+   <div class="tracks" role="group" aria-label="Email track">
+    <button class="chip" aria-pressed="true" data-t="families">Families &amp; caregivers</button>
+    <button class="chip" aria-pressed="false" data-t="care">Care teams</button>
+    <button class="chip" aria-pressed="false" data-t="donors">Donors</button>
+   </div>
+   <div class="seq" id="seq" aria-live="polite"></div>
+   <div class="roi-line" style="margin-top:16px"><span class="ic">$</span><p><b>What it moves:</b> booked calls, referrals and gifts. Emails with a video thumbnail usually draw more clicks than text alone, and every click lands on a page with a single next step.</p></div>
+  </div>
+ </div>
+</div></section>
+
+<section class="band tint" id="partners"><div class="wrap">
+ <div class="need-row flip">
+  <div class="need-media">
+   <button class="film" data-open="careteams"><div class="frame"><img src="img/t_careteams.jpg" alt="An Extension of Your Care Team"><span class="play"><i class="pi"></i>1:30</span></div></button>
+   <span class="cap">For oncology practices, hospital social workers, senior living and elder-law partners</span>
+  </div>
+  <div class="need-copy">
+   <p class="eyebrow">Need 06 · Referral partners</p>
+   <h2>Give care teams <span class="hl">a reason to refer</span></h2>
+   <p class="body">Your site describes Heron as an extension of the care team. Clinicians refer when they trust that a navigator will make their job easier, not harder. A 90-second video for practices shows how Heron works alongside them and what a referral looks like.</p>
+   <div class="spec"><div><div class="k">Runtime</div><div class="v">1:30 for clinicians</div></div><div><div class="k">Lives on</div><div class="v">LinkedIn Featured, practice visits</div></div><div><div class="k">Sent by</div><div class="v">Chris, one email to each practice</div></div></div>
+   <div class="roi-line"><span class="ic">$</span><p><b>What it moves:</b> referring partners. One practice that refers regularly is worth more than any single post.</p></div>
+  </div>
+ </div>
+</div></section>
+
+<section class="band" id="journey"><div class="wrap">
+ <div class="sec-head"><p class="eyebrow">How it fits together</p><h2>Who’s watching, <span class="hl">and what they see next</span></h2><p class="intro">Every audience takes a different path through the same content. Choose one to follow it from first view to first step.</p></div>
+ <div class="who" role="group" aria-label="Audience" id="who"></div>
+ <div class="path" id="path"></div>
+ <p class="who-note" id="whoNote"></p>
+</div></section>
+
+<section class="band tint" id="timeline"><div class="wrap">
+ <div class="sec-head"><p class="eyebrow">A practical schedule</p><h2>From this call <span class="hl">to launch</span></h2><p class="intro">One possible path, with the founder story ready for GivingTuesday and everything live in the new year. Scope comes first, once we know what Heron needs.</p></div>
+ <div class="tl">
+  <div class="tl-item"><span class="d">Fri 16 Oct</span><span class="dot"></span><div><h4>Discovery call</h4><p>Goals, audiences, and which Heron Heroes might want to share their story.</p><span class="who-l">Chris, Finn + Happy Productions</span></div></div>
+  <div class="tl-item"><span class="d">Late Oct</span><span class="dot"></span><div><h4>Scope agreed, subjects invited</h4><p>Heron invites the families; we hold consent conversations with each before anything is scheduled.</p><span class="who-l">Heron + HP</span></div></div>
+  <div class="tl-item"><span class="d">Early Nov</span><span class="dot"></span><div><h4>Scripts and shot lists approved</h4><p>The navigator video, Born to Advocate and the email sequence outline.</p><span class="who-l">HP</span></div></div>
+  <div class="tl-item key"><span class="d">Mid Nov</span><span class="dot"></span><div><h4>Production</h4><p>Chris and the navigator video first, then Heron Heroes at home and Doylestown exteriors.</p><span class="who-l">HP</span></div></div>
+  <div class="tl-item key"><span class="d">Tue 1 Dec</span><span class="dot"></span><div><h4>GivingTuesday</h4><p>Born to Advocate and the navigator video go live with the first donor email.</p><span class="who-l">Heron + HP</span></div></div>
+  <div class="tl-item"><span class="d">Dec 2026</span><span class="dot"></span><div><h4>Heron Heroes and care-team content delivered</h4><p>Each subject reviews their cut before release.</p><span class="who-l">HP → Heron</span></div></div>
+  <div class="tl-item final"><span class="d">Jan 2027</span><span class="dot"></span><div><h4>Full launch</h4><p>New homepage hero, all three email tracks live, regular posting on Facebook and LinkedIn.</p><span class="who-l">Heron</span></div></div>
+ </div>
+ <div class="early"><img src="img/t_meetchris.jpg" alt=""><div><p class="eyebrow">Optional · an early win</p><p style="margin-top:6px">If we record Chris first, Born to Advocate is ready for <b>GivingTuesday on 1 December</b>, giving Heron a founder story for its first year-end appeal.</p></div></div>
+</div></section>
+
+<section class="band" id="proof"><div class="wrap">
+ <div class="sec-head"><p class="eyebrow">Work in the same world</p><h2>We have told <span class="hl">health stories with care</span></h2><p class="intro">Patients, families and providers on camera, recorded with written consent and reviewed before release.</p></div>
+ <div class="proof">
+  <div><span class="where">Uganda · Watsi</span><h4>Patient stories from rural hospitals</h4><p>Eight-day field production across five locations: patient stories and provider interviews.</p><span class="stat">Closest match to Heron Heroes</span></div>
+  <div><span class="where">Nebraska · MHA Nebraska</span><h4>A mental health nonprofit’s first library</h4><p>A 25-year-old nonprofit with no library: two days, about 40 interviews, a year of content.</p><span class="stat">≈$8,000 in matched gifts attributed</span></div>
+  <div><span class="where">Somalia &amp; Kenya · Baitulmaal</span><h4>Lives changed, told by the people who lived them</h4><p>Former sponsored children, now teachers, health workers and entrepreneurs, each shown with a childhood photo.</p><span class="stat">Structure of a Heron Hero story</span></div>
+ </div>
+</div></section>
+</main>
+
+<footer class="foot"><div class="wrap"><img src="img/hp-logo.svg" alt="Happy Productions"><span>Video for nonprofits, measured in return · happypeople.me</span><span>Prepared for Heron Guided Healthcare · 16 October 2026</span></div></footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Details"><button class="lb-close" id="lbClose">Close</button><div class="lb-card" id="lbCard"></div></div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+var PLAY='<svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg>';
+document.querySelectorAll('i.pi').forEach(function(e){e.outerHTML=PLAY});
+try{var d=Math.ceil((new Date('2026-12-01T09:00:00-05:00')-new Date())/864e5);$('days').textContent=d>0?d:'0'}catch(e){}
+
+var F={
+ navigator:{img:'t_navigator.jpg',t:'What Does a Health Navigator Do?',n:'Website hero',rt:'1:30',tags:['web','social','email','partners'],core:1,
+  need:'Understanding what Heron is',log:'Chris at a family’s kitchen table, turning a new diagnosis into a one-page plan.',
+  lives:'Homepage hero · Facebook Featured · first email in every track',moves:'Homepage visits that become booked calls',
+  beats:'Open on the moment after a diagnosis: the folder of papers, the unanswered questions. Chris arrives, listens, and the plan takes shape. End on “Book a call.”'},
+ chris:{img:'t_meetchris.jpg',t:'Born to Advocate',n:'Founder story',rt:'2:00',tags:['web','social','funders','email'],core:1,
+  need:'Why Heron exists, and why to trust it',log:'A boy with autism, a mother who would not stop advocating, and the navigator he became.',
+  lives:'About page · LinkedIn Featured · GivingTuesday appeal',moves:'First gifts and foundation interest',
+  beats:'Family photographs and Chris in his own words. His mother’s advocacy becomes Heron’s method: clear guidance, a plan, and someone in your corner.'},
+ alz:{img:'t_hero_alz.jpg',t:'He Came With a Plan',n:'Heron Heroes · 1',rt:'2:45',tags:['stories','social','email','web','funders'],core:1,
+  need:'Honoring a family living with Alzheimer’s',log:'A father, his son, and the conversation that became manageable.',
+  lives:'Heron Heroes page · Facebook Featured · families email track',moves:'Trust and booked calls from caregivers',
+  beats:'Built around the family behind your Weston testimonial, if they are willing. Life on the porch first, the diagnosis second, the plan third.'},
+ cancer:{img:'t_hero_cancer.jpg',t:'Back to Life',n:'Heron Heroes · 2',rt:'2:45',tags:['stories','social','email','partners'],
+  need:'Honoring someone living through cancer',log:'Treatment, a daughter, and getting back to the things that matter.',
+  lives:'Heron Heroes page · Facebook · LinkedIn · oncology partner emails',moves:'Referrals from oncology practices and families',
+  beats:'Recorded on a walk she loves, not in a clinic. What it was like to have someone keep track of the appointments so she could keep track of her life.'},
+ caregiver:{img:'t_caregiver.jpg',t:'For the Caregiver',n:'Social cut',rt:'0:60',tags:['social','email'],
+  need:'Reaching the adult child managing a parent’s care',log:'Sixty seconds for the person sitting in a hospital parking lot at dusk.',
+  lives:'Facebook and Instagram Reels · paid social · families email track',moves:'Calls from caregivers, the biggest audience Heron serves',
+  beats:'No narration until the last line: “You don’t have to figure it out alone.” Ends on the booking link.'},
+ careteams:{img:'t_careteams.jpg',t:'An Extension of Your Care Team',n:'For clinicians',rt:'1:30',tags:['partners'],
+  need:'Referrals from practices and hospitals',log:'How Heron works alongside physicians, nurses and social workers.',
+  lives:'LinkedIn Featured · care-teams email track · practice visits',moves:'New referring partners',
+  beats:'A nurse navigator and a physician on what non-clinical support frees them to do, and Chris on how a referral works, step by step.'}
+};
+var order=['navigator','chris','alz','cancer','caregiver','careteams'];
+var lib=$('lib');
+var R={
+ navigator:{v:'v_navigator.jpg',p:'Facebook Reel',d:'0:45',h:'What does a health navigator actually do?'},
+ chris:{v:'v_chris.jpg',p:'LinkedIn · Chris',d:'0:45',h:'My mom never stopped advocating for me. So I never stopped either.'},
+ alz:{v:'v_alz.jpg',p:'Facebook Reel',d:'0:30',h:'“He came with a plan.”'},
+ cancer:{v:'v_cancer.jpg',p:'Facebook Reel',d:'0:30',h:'She wanted her life back, not just a treatment schedule.'},
+ caregiver:{v:'v_caregiver.jpg',p:'Facebook Reel',d:'0:60',h:'If you’re sitting in a hospital parking lot right now, this is for you.'}
+};
+var IC={h:'<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>',c:'<svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/></svg>',s:'<svg viewBox="0 0 24 24"><path d="M21 4 3 11l7 2 2 7z"/></svg>'};
+function card(k){var f=F[k];return '<button class="film" data-open="'+k+'"><div class="frame"><img loading="lazy" src="img/'+f.img+'" alt="'+esc(f.t)+'">'+(f.core?'<span class="badge">Core piece</span>':'')+'<span class="play">'+PLAY+f.rt+'</span></div><div class="meta"><span>'+esc(f.n)+'</span><span>'+f.rt+'</span></div><h3>'+esc(f.t)+'</h3><p class="need"><b>For:</b> '+esc(f.need)+'</p></button>'}
+function reel(k){var f=F[k],r=R[k];return '<button class="reel" data-open="'+k+'"><div class="rf"><img loading="lazy" src="img/'+r.v+'" alt="'+esc(f.t)+', vertical social cut"><span class="pl">'+PLAY+esc(r.p)+'</span><span class="tm">'+r.d+'</span><div class="side">'+IC.h+IC.c+IC.s+'</div><div class="cap2"><span class="hd"><i></i>heronguidedhealthcare</span><div class="hk"><span>'+esc(r.h)+'</span></div></div><div class="bar2"><b></b></div></div><div class="meta"><span>'+esc(f.n)+'</span><span>9:16</span></div><h3>'+esc(f.t)+'</h3></button>'}
+function renderLib(f){
+ if(f==='social'){lib.classList.add('reels');lib.innerHTML=order.filter(function(k){return R[k]&&F[k].tags.indexOf('social')>-1}).map(reel).join('')+'<p class="reels-note">Vertical 9:16 cuts for Facebook Reels and LinkedIn, captioned for sound-off viewing. Hooks are draft lines.</p>';return}
+ lib.classList.remove('reels');lib.innerHTML=order.filter(function(k){return f==='all'||F[k].tags.indexOf(f)>-1}).map(card).join('')}
+renderLib('all');
+document.querySelectorAll('.lib-tools .chip').forEach(function(c){c.addEventListener('click',function(){
+ document.querySelectorAll('.lib-tools .chip').forEach(function(x){x.setAttribute('aria-pressed','false')});c.setAttribute('aria-pressed','true');
+ renderLib(c.dataset.f)})});
+
+/* lightbox */
+var lb=$('lb'),card=$('lbCard'),last=null;
+function open(h,wide){last=document.activeElement;card.className='lb-card'+(wide?' wide':'');card.innerHTML=h;lb.hidden=false;document.body.style.overflow='hidden';$('lbClose').focus()}
+function close(){lb.hidden=true;card.innerHTML='';document.body.style.overflow='';if(last)last.focus()}
+$('lbClose').addEventListener('click',close);lb.addEventListener('click',function(e){if(e.target===lb)close()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden)close()});
+document.addEventListener('click',function(e){
+ var o=e.target.closest('[data-open]');
+ if(o){var f=F[o.dataset.open];if(!f)return;open('<img src="img/'+f.img+'" alt="'+esc(f.t)+'"><div class="lb-body"><p class="eyebrow">'+esc(f.n)+' · '+f.rt+'</p><h3>'+esc(f.t)+'</h3><p>'+esc(f.log)+'</p><dl><dt>Lives on</dt><dd>'+esc(f.lives)+'</dd><dt>Answers</dt><dd>'+esc(f.need)+'</dd><dt>Moves</dt><dd style="color:var(--ok);font-weight:700">'+esc(f.moves)+'</dd></dl><p class="beats">'+esc(f.beats)+'</p></div>');return}
+ var z=e.target.closest('[data-zoom]');if(z)open('<img src="'+z.dataset.zoom+'" alt="Enlarged image">',true)});
+
+/* tabs */
+var tabs=[].slice.call(document.querySelectorAll('.tab'));
+function sel(t){tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;$(x.getAttribute('aria-controls')).hidden=!on})}
+tabs.forEach(function(t,i){t.addEventListener('click',function(){sel(t)});t.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowLeft'){var n=tabs[(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length];sel(n);n.focus()}})});
+
+/* email tracks */
+var T={
+ families:[['Day 0','You don’t have to figure this out alone','navigator','What a navigator does, in 90 seconds','Welcome'],['Day 3','He came with a plan','alz','A family’s story of Alzheimer’s','Trust'],['Day 7','For the caregiver in the parking lot','caregiver','A 60-second video for the person holding it together','Recognition'],['Day 12','Getting back to the things that matter','cancer','A Heron Hero on life during treatment','Hope'],['Day 18','Let’s make your plan together','chris','Why Chris started Heron, and a link to book','Book a call']],
+ care:[['Week 1','A navigator for your most complex patients','careteams','How Heron works alongside your team','Introduce'],['Week 2','What families tell us after a diagnosis','cancer','A Heron Hero your patients will recognize','Trust'],['Week 3','What a first visit looks like','navigator','The plan your patients leave with','Value'],['Week 5','How a referral works','careteams','One page, one call, one plan','Refer']],
+ donors:[['1 Dec','GivingTuesday: why I started Heron','chris','Chris’s story, in two minutes','First gift'],['Mid Dec','Your gift, at a kitchen table','alz','What one family’s plan looked like','Proof'],['Spring','Nobody should navigate this alone','cancer','Why community-based navigation matters','Renew / give more']]
+};
+function track(k){$('seq').innerHTML=T[k].map(function(m,i){var f=F[m[2]];return '<div class="mail enter" style="animation-delay:'+(i*60)+'ms"><span class="day">'+m[0]+'</span><img src="img/'+f.img+'" alt=""><div><div class="sub">'+esc(m[1])+'</div><div class="what">'+esc(m[3])+' · <i>'+esc(f.t)+'</i></div><div class="goal">Goal: '+esc(m[4])+'</div></div></div>'}).join('')}
+document.querySelectorAll('.tracks .chip').forEach(function(c){c.addEventListener('click',function(){document.querySelectorAll('.tracks .chip').forEach(function(x){x.setAttribute('aria-pressed','false')});c.setAttribute('aria-pressed','true');track(c.dataset.t)})});
+track('families');
+
+/* journey */
+var J={
+ caregivers:{l:'Caregivers',note:'<b>The largest audience.</b> Usually an adult child, searching late at night on a phone, on someone else’s behalf.',s:[['Discover','A Reel in their feed','caregiver','Facebook · Instagram'],['Understand','What a navigator does','navigator','heroncare.org'],['Trust','A family like theirs','alz','Email · Heron Heroes page'],['Act','Book a call','chris','Calendly link']]},
+ patients:{l:'Patients',note:'<b>People living with a condition</b> want to know they will be treated as a person first. Every piece opens on a life, not a diagnosis.',s:[['Discover','A story like theirs','cancer','Facebook Reel'],['Understand','What Heron does','navigator','heroncare.org'],['Trust','Someone who has been there','alz','Heron Heroes page'],['Act','Book a call','chris','Calendly link']]},
+ clinicians:{l:'Care teams',note:'<b>Physicians, nurse navigators and social workers</b> refer when they trust Heron will make their job easier.',s:[['Discover','The founder on LinkedIn','chris','LinkedIn'],['Understand','How Heron works with them','careteams','Email · practice visit'],['Trust','Outcomes for their patients','cancer','LinkedIn Featured'],['Act','Make a first referral','navigator','Referral page']]},
+ donors:{l:'Donors & funders',note:'<b>Early donors give to a founder and a mission.</b> Foundations want to see the need and the people served.',s:[['Discover','The founder’s story','chris','GivingTuesday email'],['Understand','What navigation looks like','navigator','Giving page · grant'],['Trust','The people it serves','cancer','Donor email'],['Act','Give, or fund a year of navigation','alz','Giving page']]}
+};
+var who=$('who');who.innerHTML=Object.keys(J).map(function(k,i){return '<button class="chip" aria-pressed="'+(i===0)+'" data-w="'+k+'">'+esc(J[k].l)+'</button>'}).join('');
+function path(k){var j=J[k];$('path').innerHTML=j.s.map(function(s,i){var f=F[s[2]];return '<div class="step enter" style="animation-delay:'+(i*70)+'ms"><span class="k">0'+(i+1)+' · '+s[0]+'</span><h3>'+esc(s[1])+'</h3><button class="film" data-open="'+s[2]+'" style="gap:6px"><img src="img/'+f.img+'" alt="'+esc(f.t)+'"></button><p>'+esc(f.t)+'</p><span class="ch">'+esc(s[3])+'</span></div>'}).join('');$('whoNote').innerHTML=j.note}
+who.addEventListener('click',function(e){var b=e.target.closest('[data-w]');if(!b)return;who.querySelectorAll('.chip').forEach(function(x){x.setAttribute('aria-pressed','false')});b.setAttribute('aria-pressed','true');path(b.dataset.w)});
+path('caregivers');
+
+/* rail */
+var links=[].slice.call(document.querySelectorAll('.rail a'));
+/* present mode */
+var S=[].slice.call(document.querySelectorAll('main>section')),pmOn=false,idleT;
+function cur(){var y=window.innerHeight*.35,i=0;S.forEach(function(s,k){if(s.getBoundingClientRect().top<=y)i=k});return i}
+function go(i){i=Math.max(0,Math.min(S.length-1,i));S[i].scrollIntoView({behavior:'smooth',block:'start'});$('pmCnt').textContent=(i+1)+' / '+S.length}
+function step(d,whole){var i=cur(),r=S[i].getBoundingClientRect(),h=window.innerHeight;
+ if(!whole&&d>0&&r.bottom>h+8){window.scrollBy({top:h*.85,behavior:'smooth'});return}
+ if(!whole&&d<0&&r.top<-8){window.scrollBy({top:-h*.85,behavior:'smooth'});return}
+ go(i+d)}
+function wake(){var c=$('pmCtl');c.classList.remove('idle');clearTimeout(idleT);idleT=setTimeout(function(){c.classList.add('idle')},2500)}
+function pmStart(){pmOn=true;document.body.classList.add('pm');document.documentElement.classList.add('pm');try{var el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(function(){})}catch(e){}go(0);wake()}
+function pmStop(){pmOn=false;document.body.classList.remove('pm');document.documentElement.classList.remove('pm');try{if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(function(){})}catch(e){}}
+$('pmBtn').addEventListener('click',pmStart);$('pmExit').addEventListener('click',pmStop);
+$('pmPrev').addEventListener('click',function(){step(-1,true)});$('pmNext').addEventListener('click',function(){step(1,true)});
+document.addEventListener('fullscreenchange',function(){if(!document.fullscreenElement&&pmOn)pmStop()});
+document.addEventListener('mousemove',function(){if(pmOn)wake()});
+window.addEventListener('scroll',function(){if(pmOn)$('pmCnt').textContent=(cur()+1)+' / '+S.length},{passive:true});
+document.addEventListener('keydown',function(e){
+ var t=e.target;if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'))return;
+ if(!lb.hidden)return;
+ if(!pmOn){if((e.key==='p'||e.key==='P')&&!e.metaKey&&!e.ctrlKey){pmStart();e.preventDefault()}return}
+ var k=e.key;
+ if(k==='ArrowRight'){step(1,true)}else if(k==='ArrowLeft'){step(-1,true)}
+ else if(k==='ArrowDown'||k==='PageDown'||k===' '){step(1,false)}
+ else if(k==='ArrowUp'||k==='PageUp'){step(-1,false)}
+ else if(k==='Home'){go(0)}else if(k==='End'){go(S.length-1)}
+ else if(k==='Escape'){pmStop()}else{return}
+ e.preventDefault();wake()});
+
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})})},{rootMargin:'-45% 0px -50% 0px'});links.forEach(function(a){var t=document.querySelector(a.getAttribute('href'));if(t)io.observe(t)})}
+})();
+</script>
+</body>
+</html>
