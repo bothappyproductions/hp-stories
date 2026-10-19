@@ -85,6 +85,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--pop);outline:none}
 .acl li span{font-size:13px;color:var(--soft)}
 .acl li[aria-selected=true],.acl li:hover{background:var(--blush)}
 .picked{font-size:13px;color:var(--mint);font-weight:700}
+.paym{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.paym .toggle{justify-content:center;padding:12px 8px;text-align:center}
+.paym .toggle input{width:18px;height:18px}
+@media (max-width:420px){.paym{grid-template-columns:1fr}.paym .toggle{justify-content:flex-start}}
 .kid{display:grid;grid-template-columns:1fr 110px 36px;gap:8px;align-items:end}
 .kid button{height:48px;border:0;background:transparent;color:var(--soft);font-size:22px;cursor:pointer}
 .link{background:none;border:0;color:var(--pop);font-weight:700;padding:0;cursor:pointer;text-align:left;width:max-content}
@@ -220,6 +224,7 @@ body.lock{overflow:hidden}
           <div class="payrow"><span>Big brothers &amp; sisters</span><span>Welcome 💛</span></div>
         </div>
         <p class="soft small">We have budget for one baby. Siblings are welcome to join for fun.</p>
+        <p class="soft small"><b>Paid the same day</b> by Zelle, PayPal or direct deposit.</p>
       </div>
 
       <div class="card">
@@ -303,6 +308,18 @@ body.lock{overflow:hidden}
         <label>Anything I should know?<textarea id="notes" rows="2" placeholder="Parking, nap times, doorman…"></textarea></label>
       </div>
 
+
+      <div class="card">
+        <h2>How should we pay you?</h2>
+        <p class="soft small">We pay the same day we film.</p>
+        <div class="paym" role="radiogroup" aria-label="Payment method">
+          <label class="toggle"><input type="radio" name="paym" value="Zelle"><span>Zelle</span></label>
+          <label class="toggle"><input type="radio" name="paym" value="PayPal"><span>PayPal</span></label>
+          <label class="toggle"><input type="radio" name="paym" value="Direct deposit"><span>Direct deposit</span></label>
+        </div>
+        <label id="payhL" hidden><span id="payhT">Zelle phone or email</span><input type="text" id="payh"></label>
+        <p class="note" id="ddnote" hidden>Email your account and routing numbers to <b>atdhe@happypeople.me</b>. Please don't type them here.</p>
+      </div>
       <div class="card pay" aria-live="polite">
         <div class="payrow"><span>Mom</span><span>$200</span></div>
         <div class="payrow"><span>Baby</span><span>$200</span></div>
@@ -517,6 +534,8 @@ function check1(){
   const need=[['name','your name'],['email','your email'],['phone','your phone'],['address','your address'],['area','your neighborhood'],['baby',"your baby's name"]];
   for (const [id,l] of need) if(!$('#'+id).value.trim()) return `Add ${l}.`;
   if(!/^\S+@\S+\.\S+$/.test($('#email').value.trim())) return 'Check your email.';
+  if(!payMethod()) return 'Pick how you want to be paid.';
+  if(payMethod()!=='Direct deposit' && !$('#payh').value.trim()) return `Add your ${payMethod()} details.`;
   return '';
 }
 
@@ -575,6 +594,17 @@ acIn.addEventListener('keydown',e=>{
 });
 acL.addEventListener('mousedown',e=>{ const li=e.target.closest('li'); if(li){ e.preventDefault(); acChoose(+li.dataset.i); } });
 acIn.addEventListener('blur',()=>setTimeout(acClose,150));
+
+
+/* ---------- payment ---------- */
+document.querySelectorAll('input[name=paym]').forEach(r=>r.addEventListener('change',()=>{
+  document.querySelectorAll('.paym .toggle').forEach(t=>t.classList.toggle('on',t.querySelector('input').checked));
+  const v=r.value, dd=v==='Direct deposit';
+  $('#ddnote').hidden=!dd; $('#payhL').hidden=dd;
+  $('#payhT').textContent = v==='Zelle' ? 'Zelle phone or email' : 'PayPal email';
+}));
+function payMethod(){ const r=document.querySelector('input[name=paym]:checked'); return r?r.value:''; }
+function payLine(){ const m=payMethod(); return m==='Direct deposit' ? 'Direct deposit (will email account details)' : `${m}: ${$('#payh').value.trim()}`; }
 
 /* ---------- step 2 ---------- */
 function renderScripts(){
@@ -777,7 +807,7 @@ $('#send').onclick = async ()=>{
     address:[$('#address').value.trim(), $('#apt').value.trim()].filter(Boolean).join(', ') + (AC.pick?`\nMap: https://maps.google.com/?q=${AC.pick.lat},${AC.pick.lon}`:''), area:$('#area').value,
     slot: slot ? `${slot.day} · ${slot.t}` : 'Waitlist (next shoot day)', slot_id:S.slot,
     who, dad: dad?'true':'false', kids: kids.join('\n'), pay: String(400+(dad?200:0)),
-    scripts_ok: yes.join('\n'), scripts_not_ok: no.join('\n'), home, notes:$('#notes').value.trim(),
+    scripts_ok: yes.join('\n'), scripts_not_ok: no.join('\n'), home, notes:['Payment: '+payLine(), $('#notes').value.trim()].filter(Boolean).join('\n'),
     social_ok:'true', release_signed:'true', signed_name:$('#signname').value.trim(),
     guardian_for: kids.join(', '), signed_at: new Date().toString(), signature: sigData()
   };
@@ -787,7 +817,8 @@ $('#send').onclick = async ()=>{
   $('#preview').hidden=!preview;
   $('#donetitle').textContent = S.slot==='waitlist' ? "You're on the list!" : "You're in!";
   $('#donesub').textContent = S.slot==='waitlist' ? "I'll reach out when the next day is set." : "I'll text you to confirm the day before.";
-  $('#sum').innerHTML = [['When',data.slot],['Where',data.address.split('\n')[0]],['Scripts',yes.length+' accepted'],['You earn at least','$'+data.pay]].map(([a,b])=>`<div><span>${a}</span><span>${esc(b)}</span></div>`).join('');
+  $('#sum').innerHTML = [['When',data.slot],['Where',data.address.split('\n')[0]],['Scripts',yes.length+' accepted'],['You earn at least','$'+data.pay],['Paid by',payMethod()+' · same day']].map(([a,b])=>`<div><span>${a}</span><span>${esc(b)}</span></div>`).join('');
+  if (payMethod()==='Direct deposit') $('#sum').innerHTML += `<p class="note">Last step: email your account and routing numbers to <b>atdhe@happypeople.me</b> so we can pay you the same day.</p>`;
   go(5);
 };
 
