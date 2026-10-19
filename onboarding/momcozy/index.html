@@ -169,7 +169,7 @@ ol.shots q{font-style:italic;color:var(--soft)}
       </div>
       <div class="card">
         <h2>Your pay</h2>
-        <p class="soft small">$100 an hour. 2-hour minimum.</p>
+        <p class="soft small">$100 an hour per person. 2-hour minimum. Run over? You get paid for every extra hour.</p>
         <div class="pay">
           <div class="payrow"><span>Mom</span><span>$200</span></div>
           <div class="payrow"><span>Your baby</span><span>$200</span></div>
@@ -245,7 +245,8 @@ ol.shots q{font-style:italic;color:var(--soft)}
         <div class="payrow"><span>Mom</span><span>$200</span></div>
         <div class="payrow"><span>Baby</span><span>$200</span></div>
         <div class="payrow" id="dadPay" hidden><span>Dad</span><span>$200</span></div>
-        <div class="payrow total"><span>You earn</span><span id="total">$400</span></div>
+        <div class="payrow total"><span>You earn at least</span><span id="total">$400</span></div>
+        <p class="soft small">That's for 2 hours. If we go longer, it's $100 more per hour for each paid person.</p>
       </div>
 
       <p class="err" id="err1" hidden></p>
@@ -546,7 +547,7 @@ $('#send').onclick = async ()=>{
   $('#preview').hidden=!preview;
   $('#donetitle').textContent = S.slot==='waitlist' ? "You're on the list!" : "You're in!";
   $('#donesub').textContent = S.slot==='waitlist' ? "I'll reach out when the next day is set." : "I'll text you to confirm the day before.";
-  $('#sum').innerHTML = [['When',data.slot],['Where',data.address.split('\n')[0]],['Videos',yes.length+' picked'],['You earn','$'+data.pay]].map(([a,b])=>`<div><span>${a}</span><span>${esc(b)}</span></div>`).join('');
+  $('#sum').innerHTML = [['When',data.slot],['Where',data.address.split('\n')[0]],['Videos',yes.length+' picked'],['You earn at least','$'+data.pay]].map(([a,b])=>`<div><span>${a}</span><span>${esc(b)}</span></div>`).join('');
   go(5);
 };
 
