@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Momcozy Mom Shoot</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="robots" content="noindex">
@@ -5,6 +10,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
 <style>
+html{-webkit-text-size-adjust:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+
 /* Layout: one phone-width column of steps, sticky progress dots on top, one bold display face for headlines only. */
 /* Single light look by choice: white page, white cards. */
 :root{
@@ -99,6 +110,28 @@ ol.shots q{font-style:italic;color:var(--soft)}
 .yn button[aria-pressed=true].y{background:var(--mint);border-color:var(--mint);color:#0D2A1F}
 .yn button[aria-pressed=true].n{background:var(--line);border-color:var(--line)}
 .tally{font-weight:700}
+.yn.one{grid-template-columns:1fr}
+.readfull{border:0;background:none;color:var(--pop);font-weight:700;padding:0;cursor:pointer;text-align:left;width:max-content}
+.shead[data-read]{cursor:pointer}
+.sheet{position:fixed;inset:0;z-index:20;background:rgba(36,25,59,.45);display:flex;align-items:flex-end;justify-content:center}
+.sheet[hidden]{display:none}
+.panel{background:#fff;width:100%;max-width:640px;max-height:92vh;border-radius:24px 24px 0 0;display:grid;grid-template-rows:auto 1fr auto;padding-bottom:env(safe-area-inset-bottom,0px)}
+.ptop{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:18px max(18px,env(safe-area-inset-left,0px)) 12px;border-bottom:1px solid var(--line)}
+.ptop h3{margin:0;font-size:20px;font-weight:800;line-height:1.25;text-wrap:balance}
+.ptop button{flex:none;border:0;background:var(--field);width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer}
+.pbody{overflow:auto;padding:14px 18px;display:grid;gap:12px;align-content:start;font-size:15px}
+.pbody .meta{font-weight:700;color:var(--soft);font-size:14px}
+.pbody .must{background:var(--blush);border-radius:12px;padding:10px 12px;font-size:14px}
+.fs{border-left:3px solid var(--sun);padding-left:12px;display:grid;gap:6px}
+.fs h4{margin:0;font-size:15px;font-weight:800}
+.fs h4 span{font-weight:600;color:var(--soft);font-size:13px}
+.ost{background:var(--sky);border-radius:10px;padding:6px 10px;font-size:14px;font-weight:600}
+.line{font-size:15px}
+.pbody a{color:var(--pop);font-weight:700}
+.pfoot{padding:12px 18px;border-top:1px solid var(--line)}
+body.lock{overflow:hidden}
+@media (min-width:700px){.sheet{align-items:center}.panel{border-radius:24px;max-height:86vh}}
+
 
 /* release */
 .legal{max-height:240px;overflow:auto;border:2px solid var(--line);border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.55;background:var(--bg);display:grid;gap:8px}
@@ -140,6 +173,8 @@ ol.shots q{font-style:italic;color:var(--soft)}
 @media (max-width:420px){.facts{grid-template-columns:1fr}.row2{grid-template-columns:1fr}.kid{grid-template-columns:1fr 84px 32px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <div class="bar" aria-label="Progress"><div class="dots" id="dots"></div><b id="steplabel"></b></div>
@@ -270,8 +305,8 @@ ol.shots q{font-style:italic;color:var(--soft)}
     <div class="wrap">
       <div class="card">
         <h2>The scripts</h2>
-        <p>Tap <b>I'm in</b> on every video you're comfortable with. Skip any you're not.</p>
-        <p class="soft small">I read you every line on the day. We can change things if the baby isn't in the mood.</p>
+        <p>Tap each script to read it, then tap <b>I'm comfortable with this</b>. All scripts are part of the shoot.</p>
+        <p class="soft small">I read you every line on the day. If the baby isn't in the mood, we adjust on the spot.</p>
         <p class="tally" id="tally">0 picked</p>
       </div>
       <div id="scripts" class="wrap" style="gap:12px"></div>
@@ -297,7 +332,7 @@ ol.shots q{font-style:italic;color:var(--soft)}
 
       <div class="card">
         <h2>Social media</h2>
-        <p>The videos will post on Momcozy's social channels and ads (TikTok, Instagram, Facebook, YouTube and more), and on Happy Productions' channels.</p>
+        <p>The videos will post on Momcozy's social channels and ads (TikTok, Instagram, Facebook, YouTube and more).</p>
         <label class="toggle" id="socialT"><input type="checkbox" id="social"><span>Yes, my family can appear on social media</span></label>
       </div>
 
@@ -350,15 +385,21 @@ ol.shots q{font-style:italic;color:var(--soft)}
   </section>
 </div>
 
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="shtitle">
+  <div class="panel">
+    <div class="ptop"><h3 id="shtitle"></h3><button type="button" id="shclose" aria-label="Close">×</button></div>
+    <div class="pbody" id="shbody"></div>
+    <div class="pfoot yn" id="shfoot"></div>
+  </div>
+</div>
+
 <script>
-const WEBHOOK = ''; // Airtable webhook URL, set when the automation is live
+const WEBHOOK = 'https://hooks.airtable.com/workflows/v1/genericWebhook/appreW2VAnC7Uj2Lj/wfl8DPIxeZbxDsi8k/wtrdWl31ZEv3X3ZKc';
 const DAY = 'Wed, Oct 21';
 const SLOTS = [
   { id:'s1', t:'8:00 – 10:00 AM', s:'Morning light', ic:'🌅' },
-  { call:'10:00 call · I take it between moms' },
   { id:'s2', t:'11:00 AM – 1:00 PM', s:'Bright midday', ic:'☀️' },
   { id:'s3', t:'1:15 – 3:15 PM', s:'Afternoon', ic:'🌤️' },
-  { call:'3:30 call · I take it between moms' },
   { id:'s4', t:'4:00 – 6:00 PM', s:'Golden hour, wraps at dusk', ic:'🌇' },
 ];
 const ORDER = ['s1','s2','s3','s4'];
@@ -509,18 +550,125 @@ function renderScripts(){
     const p=S.picks[s.id];
     const needs=(s.dad?['<span class="dad">Needs dad</span>']:[]).concat(s.needs.map(n=>`<span>${n}</span>`)).join('');
     return `<article class="script ${p==='y'?'yes':p==='n'?'no':''}">
-      <div class="shead"><span class="snum">${i+1}</span><div><b>${s.title}</b><span class="soft small">${s.sum}</span></div></div>
+      <div class="shead" data-read="${s.id}" role="button" tabindex="0"><span class="snum">${i+1}</span><div><b>${s.title}</b><span class="soft small">${s.sum}</span></div></div>
       <div class="needs">${needs}</div>
-      <details><summary>See the shots</summary><ol class="shots">${s.shots.map(x=>`<li>${x}</li>`).join('')}</ol></details>
-      ${s.dad && !dad ? `<p class="soft small">Dad isn't joining, so we'll skip this one.</p>` :
-      `<div class="yn"><button type="button" class="y" data-id="${s.id}" data-v="y" aria-pressed="${p==='y'}">I'm in</button><button type="button" class="n" data-id="${s.id}" data-v="n" aria-pressed="${p==='n'}">Skip</button></div>`}
+      <button type="button" class="readfull" data-read="${s.id}">Read the full script →</button>
+      ${s.dad && !dad ? `<p class="soft small">Needs dad. Since he isn't joining, this one's not part of your shoot.</p>` :
+      `<div class="yn one"><button type="button" class="y" data-id="${s.id}" data-v="${p==='y'?'':'y'}" aria-pressed="${p==='y'}">${p==='y'?'✓ Accepted':"I'm comfortable with this"}</button></div>`}
     </article>`;
   }).join('');
   if(!dad) SCRIPTS.filter(s=>s.dad).forEach(s=>{ if(S.picks[s.id]==='y') delete S.picks[s.id]; });
-  const n=Object.values(S.picks).filter(v=>v==='y').length;
-  $('#tally').textContent = n===1 ? '1 picked' : `${n} picked`;
+  const need=SCRIPTS.filter(s=>!s.dad||dad), n=need.filter(s=>S.picks[s.id]==='y').length;
+  $('#tally').textContent = `${n} of ${need.length} accepted`;
 }
-$('#scripts').addEventListener('click',e=>{ const b=e.target.closest('[data-v]'); if(!b) return; S.picks[b.dataset.id]=b.dataset.v; const y=scrollY; renderScripts(); scrollTo(0,y); });
+$('#scripts').addEventListener('click',e=>{ const b=e.target.closest('[data-v]'); if(!b) return; if(b.dataset.v) S.picks[b.dataset.id]=b.dataset.v; else delete S.picks[b.dataset.id]; const y=scrollY; renderScripts(); scrollTo(0,y); });
+
+/* ---------- full scripts, word for word from the brief ---------- */
+const sh=(n,t,x)=>`<div class="fs"><h4>${n}${t?` <span>${t}</span>`:''}</h4>${x}</div>`;
+const ost=t=>`<p class="ost">On-screen text: “${t}”</p>`;
+const say=(w,t)=>`<p class="line"><b>${w}:</b> “${t}”</p>`;
+const FULL = {
+'bn02-bf': `<p class="meta">Concept: Things I’m Glad I Have as a Mom · Under 30 seconds</p>
+${sh('Shot 1: The Hook','0–2 sec','<p>Mom casually sits in the nursery with her baby.</p>'+ost('Things I’m glad I have as a mom 💗'))}
+${sh('Shot 2: A Little Parenting Moment','2–4 sec','<p>Mom notices her baby has a stuffy nose and gives the camera a relatable, slightly helpless look. She reaches for the BN02 nasal aspirator from her baby care essentials.</p>'+ost('Because little noses need a little extra care.'))}
+${sh('Shot 3: The Everyday Helper','4–8 sec','<p>Mom gently uses the BN02 on her baby, following the product instructions. Capture natural close-ups of the soft silicone tip and Mom adjusting the suction level.</p>'+ost('Adjustable suction. Soft silicone tips.'))}
+${sh('Shot 4: The Little Details','8–11 sec','<p>Show the aspirator operating during use, including its soothing lights and lullabies. Then capture Mom cleaning the removable parts after use.</p>'+ost('Quiet, soothing, and easy to clean.'))}
+${sh('Shot 5: Black Friday Promotion','11–15 sec','<p>Mom puts the BN02 back with her baby care essentials and looks at the camera as if sharing a helpful recommendation. Cut to a quick product shot with the Black Friday offer.</p>'+ost('A little helper worth adding to your baby care routine. 💗')+ost('Shop BN02 this Black Friday! 🛒'))}`,
+'wn02-bf': `<p class="meta">Concept: A Little Help with Our Nighttime Routine · TikTok-style · 15–20 seconds · A typical American family home in fall or winter</p>
+${sh('Shot 1: The Nighttime Wake-Up','0–3 sec','<p>It’s late at night. Mom is relaxing in bed when she hears her baby crying. She looks tired, puts down her book, and heads to the nursery.</p>'+ost('When your baby wakes up right as you’re about to relax 😅'))}
+${sh('Shot 2: Teamwork at Night','3–6 sec','<p>Mom picks up the baby and gently rocks them. Dad walks into the nursery and joins her, naturally helping with the nighttime routine.</p>')}
+${sh('Shot 3: Bring in WN02','6–9 sec','<p>Dad turns on the WN02 white noise machine and selects a sound. Show a quick close-up of the actual operation, then a wider shot of the machine playing in the nursery.</p>'+ost('One of our nighttime essentials 🤍'))}
+${sh('Shot 4: Keep the Routine Going','9–14 sec','<p>Mom continues soothing the baby while Dad stays nearby. The WN02 plays in the background as they take care of their little one together. Casual handheld footage and quick cuts keep the scene natural.</p>')}
+${sh('Shot 5: Black Friday Offer','14–18 sec','<p>Show the WN02 operating on the nursery shelf in its real setting. Keep the shot simple and natural, then overlay the Black Friday promotion.</p>'+ost('A little extra comfort for your baby’s sleep space.')+ost('Shop WN02 this Black Friday 🛒'))}`,
+'perfect-real': `<p class="meta">Theme: Perfect Mom vs. Real Mom</p>
+${sh('Shot 1','','<p>Title: <i>What I Imagined Life with a Baby Would Be Like</i> (blurred background)</p>')}
+${sh('Shot 2','','<p>Mom wakes up and does her skincare routine. The image turns clear within 2 seconds.</p>')}
+${sh('Shot 3','','<p>Mom checks on her baby, picks them up, and soothes them for a little while.</p>')}
+${sh('Shot 4','','<p>Mom prepares breakfast and enjoys a peaceful meal.</p>')}
+${sh('Shot 5','','<p>Mom does Pilates in a stylish, form-fitting workout outfit.</p>')}
+${sh('Shot 6','','<p>Mom sits on the couch and enjoys reading a book.</p>')}
+${sh('Title card','','<p><i>Reality…</i> (black background)</p>')}
+${sh('Shot 7','','<p>Mom wakes up to her baby crying, looking sleepy and disheveled. She skips her skincare routine.</p>')}
+${sh('Shot 8','','<p>Mom is preparing breakfast when she hears her baby crying and immediately leaves the frame.</p>')}
+${sh('Shot 9','','<p>Mom is doing Pilates in casual clothes when she hears her baby crying and immediately leaves the frame.</p>')}
+${sh('Shot 10','','<p>Mom is sitting on the couch reading a book when she hears her baby crying. She gets up and walks away.</p>')}
+${sh('Shot 11','','<p>Mom is vacuuming when she hears her baby crying. She parks the vacuum against the wall and walks away to check on her baby.</p>')}`,
+'ugc-mom': `<p class="meta">Theme: Helping Mom Enjoy a More Reassuring Parenting Experience with the BM04 baby monitor and BN02 nasal aspirator</p>
+<p class="must">Must-haves: products used correctly · real use on the baby, clearly shown · whenever the monitor is shown, the baby is on its screen</p>
+${sh('Shot 1','','<p>Mom is working in her home office when a notification appears on her phone. She picks up her phone to check it.</p>')}
+${sh('Shot 2','','<p>Mom opens the baby monitor app and checks on her baby. Hold 3–4 seconds, with the baby clearly visible on the screen.</p>')}
+${sh('Shot 3','','<p>Transition shot showing that some time has passed.</p>')}
+${sh('Shot 4','','<p>Mom opens the front door and returns home.</p>')}
+${sh('Shot 5','','<p>After changing into comfortable loungewear, Mom notices that her baby’s nose is congested.</p>')}
+${sh('Shot 6','','<p>Mom uses the BN02 nasal aspirator to gently clear the baby’s nose. Three different angles, 3 seconds each. Used correctly, actual use clearly visible.</p>')}
+${sh('Shot 7','','<p>After soothing her baby, Mom gently places the baby in the crib.</p>')}
+${sh('Shot 8','','<p>Mom sits on the sofa reading a magazine, with the BM04 monitor nearby and its screen visible.</p>')}
+${sh('Shot 9','','<p>Close-up of the BM04 monitor screen, clearly showing the baby sleeping peacefully.</p>')}`,
+'ugc-dad': `<p class="meta">Theme: Helping Dad Enjoy a More Confident Parenting Experience with the BM04 baby monitor and BN02 nasal aspirator</p>
+<p class="must">Must-haves: products used correctly · real use on the baby, clearly shown · whenever the monitor is shown, the baby is on its screen</p>
+${sh('Shot 1','','<p>Dad speaks directly to the camera.</p>'+say('Dad','My wife is out today, so I’m in charge of taking care of the baby. Come along with me and see how it goes!'))}
+${sh('Shot 2','','<p>Dad prepares a meal in the kitchen while the baby sleeps nearby. The BM04 monitor is beside him, with the baby clearly visible on the screen.</p>')}
+${sh('Shot 3','','<p>Dad feeds the baby with a bottle.</p>')}
+${sh('Shot 4','','<p>Dad uses the BN02 nasal aspirator to gently clear the baby’s nose. 2–3 different angles, 3 seconds each. Used correctly, actual use clearly visible.</p>')}
+${sh('Shot 5','','<p>In the afternoon, Dad soothes the baby to sleep and gently places the baby in the crib.</p>')}
+${sh('Shot 6','','<p>While fixing a household appliance, Dad opens the baby monitor app on his phone to check on the baby. The baby is clearly visible on the screen.</p>')}
+${sh('Shot 7','','<p>Mom returns home. Dad greets her.</p>'+say('Dad','Hey, honey! How was the get-together?')+say('Mom','It was great! Was the baby good today?'))}
+${sh('Shot 8','','<p>Mom picks up the baby while Dad playfully interacts with them. A relaxed, happy family moment, Mom and Dad enjoying time together with their baby.</p>')}`,
+'life-1': `<p class="meta">Theme: A Mom’s Challenges During the Fall-to-Winter Transition · First-person, selfie style</p>
+${sh('Shot 1','','<p>The video opens with Mom filming herself in selfie mode.</p>'+say('Mom','During fall and winter, babies can experience issues like fever, nasal congestion that disrupts their sleep, and restlessness when temperatures suddenly drop.'))}
+${sh('Shot 2','','<p>Mom walks around the living room.</p>'+say('Mom','These were the kinds of things that used to worry me all the time.'))}
+${sh('Shot 3','','<p>Mom walks into the bedroom.</p>'+say('Mom','But now, I’ve found ways to make things easier!'))}
+${sh('Shot 4','','<p>Mom picks up the BM04 baby monitor. Insert: Mom checks on her baby through the monitor, baby clearly visible on the screen.</p>'+say('Mom','I can check on my baby from anywhere in the house. Look! I can clearly see what my little one is up to, whether they’re playing or sleeping.'))}
+${sh('Shot 5','','<p>Mom picks up the BN02 nasal aspirator. Change to a different outfit. Insert: Mom gently uses the nasal aspirator on her baby.</p>'+say('Mom','When my baby has more nasal mucus, I gently use this to help clear it out. Afterward, my baby’s little nose feels much clearer.'))}
+${sh('Shot 6','','<p>Mom gently lifts the baby’s clothing to show the temperature patch under the arm, then opens the app to show the temperature readings.</p>'+say('Mom','I used to take my baby’s temperature over and over with a traditional thermometer. Now, I can check the temperature readings in the app whenever I need to. It saves me from repeated manual checks, and I can keep an eye on temperature trends over time.'))}
+${sh('Shot 7','','<p>Mom picks up the WN02 white noise machine. Insert: the machine beside the crib, 3 seconds.</p>'+say('Mom','You may have already noticed this little helper. It helps create a soothing sleep environment for my baby. At bedtime, I turn on the white noise to help my little one drift off to sleep.'))}
+${sh('Shot 8','','<p>Mom keeps talking directly to the camera.</p>'+say('Mom','This is what parenting looks like for me as a first-time mom. These little helpers make caring for my baby easier, and I genuinely love having them as part of our daily routine.'))}`,
+'life-2': `<p class="meta">Theme: An Experienced Mom’s Fall and Winter Baby Care Routine</p>
+<p>Starting with the change from fall to winter, the video follows an experienced mom through her baby’s daily care routine. No dialogue. The focus is real, practical caregiving and the natural use of baby care products.</p>
+<p class="must">Must-haves: no dialogue at all · show the real care routine, with products used correctly on the baby · care feels natural, like an experienced mom’s habits</p>
+<p><a href="https://www.tiktok.com/@mckenziewidel/video/7666267048967736590" target="_blank" rel="noopener">Watch the reference video ↗</a></p>`,
+'tips': `<p class="meta">Theme: What I Do When My Baby Gets Stuffy?</p>
+<p class="must">Must-haves: use the BN02 nasal aspirator correctly, following its instructions · bring the aspirator in naturally as part of the routine · keep the product mention short and low-key, no sales pitch</p>
+<p>You share your real routine for a stuffy baby. I’ll talk it through with you on the day and feed you the lines.</p>`,
+'bm08': `<p class="meta">Baby Monitor (BM08) creative video · Stop-motion style</p>
+<p>Shot as still photos with dynamic motion blur, strong visual tension and powerful impact. The movements are exaggerated and expressive for a dramatic effect.</p>
+${sh('The story','','<p>The mom is holding the baby monitor. At first glance, she sees that her baby is peacefully sleeping, and she lets out a sigh of relief. Then she looks at the monitor again and suddenly notices that the baby is trying to climb over the crib railing.</p><p class="must">Key point: show the safety alert function in the red highlighted area. This is set up in the mobile app.</p><p>Her expression instantly changes to shock and panic. She quickly puts down the monitor, gently places the cat that was sitting on her lap onto the floor, and starts running. At the corner, she leans into the turn like a motorcycle racer taking a sharp curve, rushing forward at full speed. She runs up the stairs so fast that even her slippers fly off. In the hallway leading to the bedroom, she makes an exaggerated, dramatic sprint like an action movie hero. She reaches the crib, only to find that the baby is still safely lying inside, smiling at her. The mom finally relaxes and lets out another sigh of relief.</p>')}
+<p class="soft small">No cat? No problem. No stairs? We'll use a hallway. Baby stays safely in the crib the whole time.</p>
+<p><a href="https://www.tiktok.com/@katymundy/video/7598235122604838175" target="_blank" rel="noopener">Watch the reference video ↗</a></p>`,
+'purifier': `<p class="meta">Momcozy CozyBreath Baby Air Purifier · Daily parenting vlog</p>
+${sh('1','',say('You','A lot of people are curious about what an air purifier filter actually looks like after using it for a while, and whether it really makes a difference.'))}
+${sh('2','',say('You','I’ve had my Momcozy air purifier for a while, so today, I’m going to do a little test.'))}
+${sh('3','',say('You','Here’s a brand-new filter. I’m going to open it up and put it in.'))}
+${sh('4','',say('You','Now, let’s turn it on.'))}
+${sh('5','','<p>[1 month later]</p>')}
+${sh('6','',say('You','Okay, eight hours later, let’s see what the filter looks like now.'))}
+${sh('7','',say('You','Yep, it’s picked up quite a bit of dust and other particles. You can really see the difference.'))}
+${sh('8','',say('You','I usually move it around different areas of the house. At night, when my baby is sleeping, I keep it in the bedroom.'))}
+${sh('9','',say('You','During the day, when we’re playing together, I move it to the living room.'))}
+${sh('10','',say('You','It runs really quietly, so it doesn’t disturb us.'))}
+${sh('11','',say('You','I’ve always worried about the air quality around my baby, but having an air purifier running gives me a little more peace of mind.'))}
+<p class="must">Notes: no unboxing, it should feel like you’ve used it a while and like it · baby is on camera, using or benefiting from it · the video flows naturally to the end</p>
+<p class="soft small">I bring a filter that’s been used for a month, so you see the real difference.</p>
+<p><a href="https://momcozy.com/products/momcozy-baby-air-purifier" target="_blank" rel="noopener">See the air purifier ↗</a></p>`
+};
+
+let openId=null;
+function openScript(id){
+  const s=SCRIPTS.find(x=>x.id===id); if(!s) return; openId=id;
+  $('#shtitle').textContent=s.title; $('#shbody').innerHTML=FULL[id]||''; $('#shbody').scrollTop=0;
+  const blocked = s.dad && !$('#dad').checked, p=S.picks[id];
+  $('#shfoot').innerHTML = blocked ? '<p class="soft small">This one needs dad. Turn on "Dad joins too" to pick it.</p>' :
+    `<button type="button" class="y" data-pick="y" aria-pressed="${p==='y'}">${p==='y'?'✓ Accepted':"I'm comfortable with this"}</button>`;
+  $('#shfoot').classList.add('one');
+  $('#sheet').hidden=false; document.body.classList.add('lock'); $('#shclose').focus();
+}
+function closeScript(){ $('#sheet').hidden=true; document.body.classList.remove('lock'); const t=document.querySelector(`[data-read="${openId}"]`); if(t) t.focus(); }
+$('#shclose').onclick=closeScript;
+$('#sheet').addEventListener('click',e=>{ if(e.target.id==='sheet') closeScript(); });
+addEventListener('keydown',e=>{ if(e.key==='Escape' && !$('#sheet').hidden) closeScript(); });
+$('#shfoot').addEventListener('click',e=>{ const b=e.target.closest('[data-pick]'); if(!b) return; S.picks[openId]=b.dataset.pick; const y=scrollY; renderScripts(); scrollTo(0,y); closeScript(); });
+$('#scripts').addEventListener('click',e=>{ const r=e.target.closest('[data-read]'); if(r) openScript(r.dataset.read); });
+$('#scripts').addEventListener('keydown',e=>{ const r=e.target.closest('.shead[data-read]'); if(r && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); openScript(r.dataset.read); } });
 
 /* ---------- step 3 ---------- */
 $('#legal').innerHTML = RELEASE.map(p=>`<p>${p}</p>`).join('');
@@ -569,7 +717,7 @@ document.addEventListener('click',e=>{
   if (e.target.closest('[data-back]')) return go(S.step-1);
   if (!e.target.closest('[data-next]')) return;
   if (S.step===1){ const m=check1(); err(1,m); if(m) return; renderScripts(); }
-  if (S.step===2){ const n=Object.values(S.picks).filter(v=>v==='y').length; if(n<2){ err(2,'Pick at least 2 videos you\'re comfortable with.'); return; } err(2); }
+  if (S.step===2){ const dad=$('#dad').checked; const left=SCRIPTS.filter(s=>(!s.dad||dad) && S.picks[s.id]!=='y'); if(left.length){ err(2, left.length===1 ? '1 script still needs your OK.' : `${left.length} scripts still need your OK.`); return; } err(2); }
   if (S.step===3){
     const m = !$('#social').checked ? 'Tick the social media box to continue.' : !$('#signname').value.trim() ? 'Type your full name.' : !S.signed ? 'Sign in the box.' : !$('#agree').checked ? 'Tick the box to agree.' : '';
     err(3,m); if(m) return;
@@ -607,7 +755,7 @@ $('#send').onclick = async ()=>{
   $('#preview').hidden=!preview;
   $('#donetitle').textContent = S.slot==='waitlist' ? "You're on the list!" : "You're in!";
   $('#donesub').textContent = S.slot==='waitlist' ? "I'll reach out when the next day is set." : "I'll text you to confirm the day before.";
-  $('#sum').innerHTML = [['When',data.slot],['Where',data.address.split('\n')[0]],['Videos',yes.length+' picked'],['You earn at least','$'+data.pay]].map(([a,b])=>`<div><span>${a}</span><span>${esc(b)}</span></div>`).join('');
+  $('#sum').innerHTML = [['When',data.slot],['Where',data.address.split('\n')[0]],['Scripts',yes.length+' accepted'],['You earn at least','$'+data.pay]].map(([a,b])=>`<div><span>${a}</span><span>${esc(b)}</span></div>`).join('');
   go(5);
 };
 
@@ -616,3 +764,6 @@ dots(); money(); renderKids(); loadTaken();
 const prior = store.get('mc-booking');
 if (prior && prior.label){ $('#donetitle').textContent="You're already booked"; $('#donesub').textContent=prior.label; $('#sum').innerHTML=''; }
 </script>
+
+</body>
+</html>
