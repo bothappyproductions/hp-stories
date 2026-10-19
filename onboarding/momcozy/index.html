@@ -183,10 +183,10 @@ body.lock{overflow:hidden}
   <section class="step" data-step="0">
     <div class="wrap">
       <div class="card hero">
-        <span class="tag">Momcozy × NYC moms</span>
+        <span class="tag">Momcozy × NY · NJ · CT moms</span>
         <h1>Film a Momcozy video at home</h1>
         <p class="soft">Two hours. Your home. Your baby. Paid.</p>
-        <div class="when"><span class="chip" style="background:var(--sun);color:#24193B">Wed, Oct 21</span><span class="chip" style="background:var(--sun);color:#24193B">8 AM – 6 PM slots</span><span class="chip" style="background:var(--sun);color:#24193B">New York</span></div>
+        <div class="when"><span class="chip" style="background:var(--sun);color:#24193B">Wed, Oct 21</span><span class="chip" style="background:var(--sun);color:#24193B">8 AM – 6 PM slots</span><span class="chip" style="background:var(--sun);color:#24193B">NY · NJ · CT</span></div>
       </div>
 
       <div class="card">
@@ -247,25 +247,40 @@ body.lock{overflow:hidden}
           <label>Phone<input type="tel" id="phone" autocomplete="tel"></label>
         </div>
         <div class="ac">
-          <label>Home address<input type="text" id="address" autocomplete="off" placeholder="Start typing your address" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="acl"></label>
+          <label>Home address<input type="text" id="address" autocomplete="off" placeholder="Start typing your address (NY, NJ or CT)" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="acl"></label>
           <ul class="acl" id="acl" role="listbox" hidden></ul>
         </div>
         <label>Apt / unit <span class="soft small">(optional)</span><input type="text" id="apt" placeholder="Apt 4B"></label>
         <label>Neighborhood
           <select id="area">
             <option value="">Pick one</option>
+            <optgroup label="New York City">
             <option>Manhattan · Downtown</option>
             <option>Manhattan · Midtown</option>
             <option>Manhattan · Uptown</option>
             <option>Brooklyn</option>
             <option>Queens</option>
             <option>Bronx</option>
+            <option>Staten Island</option>
+            </optgroup>
+            <optgroup label="New York State">
+            <option>Westchester / Hudson Valley</option>
+            <option>Long Island</option>
+            </optgroup>
+            <optgroup label="New Jersey">
             <option>Jersey City / Hoboken</option>
-            <option>Westchester</option>
+            <option>North Jersey</option>
+            <option>Central / South Jersey</option>
+            </optgroup>
+            <optgroup label="Connecticut">
+            <option>Fairfield County, CT</option>
+            <option>New Haven area, CT</option>
+            <option>Elsewhere in CT</option>
+            </optgroup>
             <option>Somewhere else</option>
           </select>
         </label>
-        <p class="soft small">I drive in from Connecticut. Your area decides which times I can offer you.</p>
+        <p class="soft small">I'm coming from Connecticut. Your area decides which times I can offer you.</p>
       </div>
 
       <div class="card">
@@ -406,12 +421,19 @@ const ORDER = ['s1','s2','s3','s4'];
 const NEAR = {
   'Manhattan · Downtown':['Manhattan · Midtown','Brooklyn','Jersey City / Hoboken'],
   'Manhattan · Midtown':['Manhattan · Downtown','Manhattan · Uptown','Queens','Jersey City / Hoboken'],
-  'Manhattan · Uptown':['Manhattan · Midtown','Bronx'],
-  'Brooklyn':['Manhattan · Downtown','Queens'],
-  'Queens':['Brooklyn','Manhattan · Midtown'],
-  'Bronx':['Manhattan · Uptown','Westchester'],
-  'Jersey City / Hoboken':['Manhattan · Downtown','Manhattan · Midtown'],
-  'Westchester':['Bronx'],
+  'Manhattan · Uptown':['Manhattan · Midtown','Bronx','North Jersey','Westchester / Hudson Valley'],
+  'Brooklyn':['Manhattan · Downtown','Queens','Staten Island'],
+  'Queens':['Brooklyn','Manhattan · Midtown','Long Island'],
+  'Bronx':['Manhattan · Uptown','Westchester / Hudson Valley'],
+  'Staten Island':['Brooklyn','Central / South Jersey','Jersey City / Hoboken'],
+  'Westchester / Hudson Valley':['Bronx','Manhattan · Uptown','Fairfield County, CT'],
+  'Long Island':['Queens'],
+  'Jersey City / Hoboken':['Manhattan · Downtown','Manhattan · Midtown','North Jersey','Staten Island'],
+  'North Jersey':['Jersey City / Hoboken','Manhattan · Uptown','Central / South Jersey'],
+  'Central / South Jersey':['North Jersey','Staten Island'],
+  'Fairfield County, CT':['Westchester / Hudson Valley','New Haven area, CT','Elsewhere in CT'],
+  'New Haven area, CT':['Fairfield County, CT','Elsewhere in CT'],
+  'Elsewhere in CT':['New Haven area, CT','Fairfield County, CT'],
 };
 const close = (a,b) => a===b || (NEAR[a]||[]).includes(b);
 
@@ -499,13 +521,20 @@ function check1(){
 const AC = { list:[], i:-1, t:null, pick:null, ctl:null };
 const acIn=$('#address'), acL=$('#acl');
 function areaFrom(p, lat){
-  const c=(p.county||'')+' '+(p.district||'')+' '+(p.city||'');
+  const st=(p.state||''), c=(p.county||'')+' '+(p.district||'')+' '+(p.city||'');
+  if (/Connecticut/i.test(st)) return /Fairfield/i.test(c) ? 'Fairfield County, CT' : /New Haven/i.test(c) ? 'New Haven area, CT' : 'Elsewhere in CT';
+  if (/New Jersey/i.test(st)){
+    if (/Hudson/i.test(c)) return 'Jersey City / Hoboken';
+    if (/Bergen|Essex|Passaic|Union|Morris|Sussex|Warren/i.test(c)) return 'North Jersey';
+    return 'Central / South Jersey';
+  }
   if (/Kings|Brooklyn/i.test(c)) return 'Brooklyn';
   if (/Queens/i.test(c)) return 'Queens';
   if (/Bronx/i.test(c)) return 'Bronx';
-  if (/Westchester/i.test(c)) return 'Westchester';
-  if (/Hudson County|Jersey City|Hoboken/i.test(c)) return 'Jersey City / Hoboken';
+  if (/Richmond|Staten Island/i.test(c)) return 'Staten Island';
+  if (/Nassau|Suffolk/i.test(c)) return 'Long Island';
   if (/New York County|Manhattan/i.test(c)) return lat < 40.738 ? 'Manhattan · Downtown' : lat < 40.768 ? 'Manhattan · Midtown' : 'Manhattan · Uptown';
+  if (/Westchester|Rockland|Putnam|Orange|Dutchess/i.test(c)) return 'Westchester / Hudson Valley';
   return 'Somewhere else';
 }
 function line1(p){ return [p.housenumber, p.street || p.name].filter(Boolean).join(' '); }
@@ -519,10 +548,10 @@ function acRender(){
 async function acSearch(q){
   if (AC.ctl) AC.ctl.abort(); AC.ctl = new AbortController();
   try {
-    const u='https://photon.komoot.io/api/?limit=6&lang=en&lat=40.73&lon=-73.95&bbox=-74.6,40.4,-73.4,41.4&q='+encodeURIComponent(q);
+    const u='https://photon.komoot.io/api/?limit=6&lang=en&lat=40.9&lon=-73.6&bbox=-75.6,39.4,-71.7,42.1&q='+encodeURIComponent(q);
     const r=await fetch(u,{signal:AC.ctl.signal}); if(!r.ok) return;
     const j=await r.json();
-    AC.list=(j.features||[]).filter(f=>f.properties && (f.properties.street||f.properties.name) && (f.properties.countrycode||'US')==='US');
+    AC.list=(j.features||[]).filter(f=>f.properties && (f.properties.street||f.properties.name) && (f.properties.countrycode||'US')==='US' && /New York|New Jersey|Connecticut/i.test(f.properties.state||''));
     AC.i=-1; acRender();
   } catch(e){ /* lookup unavailable: typing still works */ }
 }
