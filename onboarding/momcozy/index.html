@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Momcozy Mom Shoot</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+
+/* Layout: one phone-width column of steps, sticky progress dots on top, one bold display face for headlines only. */
+/* Single light look by choice: white page, white cards. */
+:root{
+  color-scheme:light;
+  --bg:#FFFFFF; --field:#F6F5FA; --card:#FFFFFF; --ink:#24193B; --soft:#6B6385; --line:#E2E0EE;
+  --pop:#FF5C8A; --pop-ink:#FFFFFF; --sun:#FFD54F; --mint:#3BC795; --sky:#DCE6FF; --blush:#FFE3EC;
+  --display:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r:22px;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:560px;margin:0 auto;display:grid;gap:16px}
+h1,h2{font-family:var(--display);font-weight:800;letter-spacing:-.3px;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(32px,8.5vw,44px)}
+h2{font-size:24px}
+p{margin:0}
+.soft{color:var(--soft)}
+.small{font-size:14px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--pop);outline-offset:2px}
+
+/* progress */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px 10px;display:flex;align-items:center;gap:10px}
+.dots{display:flex;gap:6px;flex:1}
+.dots span{height:8px;flex:1;border-radius:9px;background:var(--line);transition:background .3s}
+.dots span.on{background:var(--pop)}
+.bar b{font-size:13px;color:var(--soft);font-weight:600;white-space:nowrap}
+
+.card{background:var(--card);border-radius:var(--r);padding:22px;display:grid;gap:14px;border:1px solid var(--line);box-shadow:0 2px 10px rgba(36,25,59,.05)}
+.hero{background:var(--blush);border:0}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;background:var(--sun);color:#24193B;border-radius:99px;padding:5px 12px;width:max-content}
+.fam{width:100%;border-radius:16px;aspect-ratio:4/3;object-fit:cover;object-position:50% 40%;max-width:100%}
+.me{display:flex;gap:14px;align-items:center}
+.me .ph{width:78px;height:78px;border-radius:50%;flex:none;background:var(--pop);display:grid;place-items:center;font-family:var(--display);font-size:30px;color:var(--pop-ink);overflow:hidden;border:3px solid var(--sun)}
+.me .ph img{width:100%;height:100%;object-fit:cover}
+.me div{min-width:0}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fact{background:var(--sky);border-radius:16px;padding:12px;display:grid;gap:2px}
+.fact i{font-style:normal;font-size:24px;line-height:1}
+.fact b{font-size:15px}
+.fact span{font-size:13px;color:var(--soft)}
+.when{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--blush);border-radius:99px;padding:6px 12px;font-weight:600;font-size:14px}
+
+/* pay */
+.pay{display:grid;gap:8px}
+.payrow{display:flex;justify-content:space-between;gap:10px;font-variant-numeric:tabular-nums}
+.payrow.total{border-top:2px dashed var(--line);padding-top:8px;font-weight:700;font-size:18px}
+.payrow em{font-style:normal;color:var(--soft)}
+
+/* fields */
+label{display:grid;gap:6px;font-weight:600;font-size:15px}
+input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{width:100%;border:2px solid var(--line);background:var(--field);border-radius:14px;padding:12px 14px;min-width:0}
+input:focus,select:focus,textarea:focus{border-color:var(--pop);outline:none}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.toggle{display:flex;gap:12px;align-items:center;background:var(--bg);border:2px solid var(--line);border-radius:16px;padding:12px 14px;cursor:pointer;font-weight:600}
+.toggle input{width:22px;height:22px;accent-color:var(--pop);flex:none}
+.toggle.on{border-color:var(--pop);background:var(--blush)}
+.toggle small{display:block;font-weight:400;color:var(--soft);font-size:13px}
+.ac{position:relative}
+.acl{position:absolute;left:0;right:0;top:100%;margin:6px 0 0;padding:6px;list-style:none;background:#fff;border:2px solid var(--pop);border-radius:14px;box-shadow:0 10px 30px rgba(36,25,59,.15);z-index:4;max-height:280px;overflow:auto}
+.acl li{padding:10px 12px;border-radius:10px;cursor:pointer;display:grid;gap:1px}
+.acl li b{font-weight:700;font-size:15px}
+.acl li span{font-size:13px;color:var(--soft)}
+.acl li[aria-selected=true],.acl li:hover{background:var(--blush)}
+.picked{font-size:13px;color:var(--mint);font-weight:700}
+.kid{display:grid;grid-template-columns:1fr 110px 36px;gap:8px;align-items:end}
+.kid button{height:48px;border:0;background:transparent;color:var(--soft);font-size:22px;cursor:pointer}
+.link{background:none;border:0;color:var(--pop);font-weight:700;padding:0;cursor:pointer;text-align:left;width:max-content}
+
+/* scripts */
+.script{border:2px solid var(--line);border-radius:18px;padding:14px;display:grid;gap:10px;background:var(--bg);transition:border-color .2s,background .2s}
+.script.yes{border-color:var(--mint)}
+.script.no{opacity:.62}
+.shead{display:flex;gap:12px;align-items:flex-start}
+.snum{flex:none;width:38px;height:38px;border-radius:12px;background:var(--sun);color:#24193B;display:grid;place-items:center;font-weight:800;font-size:17px}
+.shead div{min-width:0;display:grid;gap:2px}
+.shead b{font-size:16px;line-height:1.25}
+.needs{display:flex;flex-wrap:wrap;gap:6px}
+.needs span{font-size:12px;font-weight:700;border-radius:99px;padding:3px 9px;background:var(--sky)}
+.needs span.dad{background:var(--blush)}
+details{border-top:1px solid var(--line);padding-top:8px}
+summary{cursor:pointer;font-weight:700;color:var(--pop);font-size:14px;list-style:none}
+summary::-webkit-details-marker{display:none}
+ol.shots{margin:8px 0 0;padding-left:20px;display:grid;gap:6px;font-size:14px}
+ol.shots q{font-style:italic;color:var(--soft)}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.yn button{border:2px solid var(--line);background:var(--card);border-radius:12px;padding:10px;font-weight:700;cursor:pointer}
+.yn button[aria-pressed=true].y{background:var(--mint);border-color:var(--mint);color:#0D2A1F}
+.yn button[aria-pressed=true].n{background:var(--line);border-color:var(--line)}
+.tally{font-weight:700}
+.yn.one{grid-template-columns:1fr}
+.readfull{border:0;background:none;color:var(--pop);font-weight:700;padding:0;cursor:pointer;text-align:left;width:max-content}
+.shead[data-read]{cursor:pointer}
+.sheet{position:fixed;inset:0;z-index:20;background:rgba(36,25,59,.45);display:flex;align-items:flex-end;justify-content:center}
+.sheet[hidden]{display:none}
+.panel{background:#fff;width:100%;max-width:640px;max-height:92vh;border-radius:24px 24px 0 0;display:grid;grid-template-rows:auto 1fr auto;padding-bottom:env(safe-area-inset-bottom,0px)}
+.ptop{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:18px max(18px,env(safe-area-inset-left,0px)) 12px;border-bottom:1px solid var(--line)}
+.ptop h3{margin:0;font-size:20px;font-weight:800;line-height:1.25;text-wrap:balance}
+.ptop button{flex:none;border:0;background:var(--field);width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer}
+.pbody{overflow:auto;padding:14px 18px;display:grid;gap:12px;align-content:start;font-size:15px}
+.pbody .meta{font-weight:700;color:var(--soft);font-size:14px}
+.pbody .must{background:var(--blush);border-radius:12px;padding:10px 12px;font-size:14px}
+.fs{border-left:3px solid var(--sun);padding-left:12px;display:grid;gap:6px}
+.fs h4{margin:0;font-size:15px;font-weight:800}
+.fs h4 span{font-weight:600;color:var(--soft);font-size:13px}
+.ost{background:var(--sky);border-radius:10px;padding:6px 10px;font-size:14px;font-weight:600}
+.line{font-size:15px}
+.pbody a{color:var(--pop);font-weight:700}
+.pfoot{padding:12px 18px;border-top:1px solid var(--line)}
+body.lock{overflow:hidden}
+@media (min-width:700px){.sheet{align-items:center}.panel{border-radius:24px;max-height:86vh}}
+
+
+/* release */
+.legal{max-height:240px;overflow:auto;border:2px solid var(--line);border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.55;background:var(--bg);display:grid;gap:8px}
+.legal p{margin:0}
+.sig{border:2px dashed var(--soft);border-radius:16px;background:#FFFFFF;position:relative;touch-action:none;height:160px}
+.sig canvas{width:100%;height:100%;display:block;border-radius:14px}
+.sig span{position:absolute;left:14px;bottom:10px;color:#9A93AE;font-size:13px;pointer-events:none}
+.sigtools{display:flex;justify-content:space-between;align-items:center}
+
+/* slots */
+.slots{display:grid;gap:10px}
+.slot{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:2px solid var(--line);border-radius:18px;padding:14px;background:var(--bg);cursor:pointer;text-align:left;width:100%}
+.slot .t{font-weight:800;font-size:18px;line-height:1.2}
+.slot .s{font-size:13px;color:var(--soft)}
+.slot .ic{font-size:26px}
+.slot .st{font-size:12px;font-weight:700;border-radius:99px;padding:4px 10px;background:var(--sky);white-space:nowrap}
+.slot[aria-pressed=true]{border-color:var(--pop);background:var(--blush)}
+.slot[aria-pressed=true] .st{background:var(--pop);color:var(--pop-ink)}
+.slot:disabled{cursor:not-allowed;opacity:.5}
+.slot:disabled .st{background:var(--line)}
+.call{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--soft);padding:0 6px}
+.call::before,.call::after{content:"";flex:1;border-top:2px dotted var(--line)}
+.left{display:flex;gap:8px;align-items:center;font-weight:700}
+.left b{font-weight:800;font-size:26px;color:var(--pop)}
+
+/* nav */
+.nav{display:flex;gap:10px}
+.btn{flex:1;border:0;border-radius:16px;padding:16px;font-weight:700;font-size:17px;cursor:pointer;background:var(--pop);color:var(--pop-ink)}
+.btn.tk{display:block;text-align:center;text-decoration:none;background:var(--ink);color:#fff}
+.btn.ghost{flex:0 0 auto;background:var(--card);color:var(--ink);border:2px solid var(--line)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.err{color:var(--pop);font-weight:600;font-size:14px}
+.done{text-align:center;justify-items:center}
+.done .big{font-size:64px;line-height:1}
+.sum{display:grid;gap:6px;text-align:left;width:100%;background:var(--bg);border-radius:16px;padding:14px;font-size:15px}
+.sum div{display:flex;justify-content:space-between;gap:12px}
+.sum div span:last-child{font-weight:700;text-align:right}
+.note{background:var(--sky);border-radius:14px;padding:12px 14px;font-size:14px}
+@media (max-width:420px){.facts{grid-template-columns:1fr}.row2{grid-template-columns:1fr}.kid{grid-template-columns:1fr 84px 32px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="bar" aria-label="Progress"><div class="dots" id="dots"></div><b id="steplabel"></b></div>
+
+  <!-- STEP 0 · hello -->
+  <section class="step" data-step="0">
+    <div class="wrap">
+      <div class="card hero">
+        <span class="tag">Momcozy × NYC moms</span>
+        <h1>Film a Momcozy video at home</h1>
+        <p class="soft">Two hours. Your home. Your baby. Paid.</p>
+        <div class="when"><span class="chip" style="background:var(--sun);color:#24193B">Wed, Oct 21</span><span class="chip" style="background:var(--sun);color:#24193B">8 AM – 6 PM slots</span><span class="chip" style="background:var(--sun);color:#24193B">New York</span></div>
+      </div>
+
+      <div class="card">
+        <img class="fam" src="atdhe.jpg" alt="Atdhe with his wife and two sons">
+        <div><h2>Hi, I'm Atdhe</h2><p class="soft">Dad of two. Making Momcozy videos for 3 years.</p></div>
+        <p>It's just me and a phone. No crew. No lights. No gear in your living room.</p>
+        <div class="facts">
+          <div class="fact"><i>☀️</i><b>Natural light</b><span>Nothing to set up</span></div>
+          <div class="fact"><i>📱</i><b>Shot on a phone</b><span>By me, start to finish</span></div>
+          <div class="fact"><i>⚡</i><b>1–2 takes</b><span>We move fast</span></div>
+          <div class="fact"><i>💬</i><b>I feed you lines</b><span>Nothing to memorize</span></div>
+          <div class="fact"><i>👶</i><b>Baby comes first</b><span>Fussy? We adapt</span></div>
+          <div class="fact"><i>🎁</i><b>I bring products</b><span>You own nothing needed</span></div>
+        </div>
+      </div>
+
+
+      <div class="card">
+        <h2>See the videos</h2>
+        <p>This is the kind of content we make. Real moms, real homes.</p>
+        <a class="btn tk" href="https://www.tiktok.com/@momcozyofficial?lang=en" target="_blank" rel="noopener">Watch Momcozy on TikTok ↗</a>
+      </div>
+      <div class="card">
+        <h2>Your pay</h2>
+        <p class="soft small">$100 an hour per person. 2-hour minimum. Run over? You get paid for every extra hour.</p>
+        <div class="pay">
+          <div class="payrow"><span>Mom</span><span>$200</span></div>
+          <div class="payrow"><span>Your baby</span><span>$200</span></div>
+          <div class="payrow"><span>Dad <em>(optional)</em></span><span>+$200</span></div>
+          <div class="payrow"><span>Big brothers &amp; sisters</span><span>Welcome 💛</span></div>
+        </div>
+        <p class="soft small">We have budget for one baby. Siblings are welcome to join for fun.</p>
+      </div>
+
+      <div class="card">
+        <h2>How it goes</h2>
+        <div class="pay small">
+          <div class="payrow"><span>1. Fill this out</span><em>5 min</em></div>
+          <div class="payrow"><span>2. I arrive with the products</span><em>0:00</em></div>
+          <div class="payrow"><span>3. Quick walk-through of your home</span><em>0:10</em></div>
+          <div class="payrow"><span>4. We film the scripts you picked</span><em>1:40</em></div>
+          <div class="payrow"><span>5. I'm out the door</span><em>2:00</em></div>
+        </div>
+      </div>
+
+      <div class="nav"><button class="btn" data-next>Let's do it →</button></div>
+    </div>
+  </section>
+
+  <!-- STEP 1 · you -->
+  <section class="step" data-step="1" hidden>
+    <div class="wrap">
+      <div class="card">
+        <h2>About you</h2>
+        <label>Your name<input type="text" id="name" autocomplete="name"></label>
+        <div class="row2">
+          <label>Email<input type="email" id="email" autocomplete="email"></label>
+          <label>Phone<input type="tel" id="phone" autocomplete="tel"></label>
+        </div>
+        <div class="ac">
+          <label>Home address<input type="text" id="address" autocomplete="off" placeholder="Start typing your address" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="acl"></label>
+          <ul class="acl" id="acl" role="listbox" hidden></ul>
+        </div>
+        <label>Apt / unit <span class="soft small">(optional)</span><input type="text" id="apt" placeholder="Apt 4B"></label>
+        <label>Neighborhood
+          <select id="area">
+            <option value="">Pick one</option>
+            <option>Manhattan · Downtown</option>
+            <option>Manhattan · Midtown</option>
+            <option>Manhattan · Uptown</option>
+            <option>Brooklyn</option>
+            <option>Queens</option>
+            <option>Bronx</option>
+            <option>Jersey City / Hoboken</option>
+            <option>Westchester</option>
+            <option>Somewhere else</option>
+          </select>
+        </label>
+        <p class="soft small">I drive in from Connecticut. Your area decides which times I can offer you.</p>
+      </div>
+
+      <div class="card">
+        <h2>Who's in it</h2>
+        <div class="row2">
+          <label>Baby's first name<input type="text" id="baby"></label>
+          <label>Baby's age (months)<input type="number" id="babyage" min="0" max="36" inputmode="numeric"></label>
+        </div>
+        <label class="toggle" id="dadT"><input type="checkbox" id="dad"><span>Dad joins too <small>+$200 · needed for 2 scripts</small></span></label>
+        <label id="dadNameL" hidden>Dad's name<input type="text" id="dadname"></label>
+        <div id="kids" class="wrap" style="gap:10px"></div>
+        <button class="link" id="addkid" type="button">+ Add a sibling</button>
+      </div>
+
+      <div class="card">
+        <h2>Your home</h2>
+        <label class="toggle" id="stairsT"><input type="checkbox" id="stairs"><span>We have stairs <small>Great for the "sprint to the crib" video</small></span></label>
+        <label class="toggle" id="petT"><input type="checkbox" id="pet"><span>We have a cat or dog <small>A cameo is a bonus, never required</small></span></label>
+        <label>Anything I should know?<textarea id="notes" rows="2" placeholder="Parking, nap times, doorman…"></textarea></label>
+      </div>
+
+      <div class="card pay" aria-live="polite">
+        <div class="payrow"><span>Mom</span><span>$200</span></div>
+        <div class="payrow"><span>Baby</span><span>$200</span></div>
+        <div class="payrow" id="dadPay" hidden><span>Dad</span><span>$200</span></div>
+        <div class="payrow total"><span>You earn at least</span><span id="total">$400</span></div>
+        <p class="soft small">That's for 2 hours. If we go longer, it's $100 more per hour for each paid person.</p>
+      </div>
+
+      <p class="err" id="err1" hidden></p>
+      <div class="nav"><button class="btn ghost" data-back>←</button><button class="btn" data-next>Next: the scripts →</button></div>
+    </div>
+  </section>
+
+  <!-- STEP 2 · scripts -->
+  <section class="step" data-step="2" hidden>
+    <div class="wrap">
+      <div class="card">
+        <h2>The scripts</h2>
+        <p>Tap each script to read it, then tap <b>I'm comfortable with this</b>. All scripts are part of the shoot.</p>
+        <p class="soft small">I read you every line on the day. If the baby isn't in the mood, we adjust on the spot.</p>
+        <p class="tally" id="tally">0 picked</p>
+      </div>
+      <div id="scripts" class="wrap" style="gap:12px"></div>
+      <div class="card">
+        <h2>Good to know</h2>
+        <p class="small">• No unboxing. Products look like you've had them a while.</p>
+        <p class="small">• Every product is used the right way, on your baby, gently.</p>
+        <p class="small">• If baby resists the nose aspirator, we stop. We never film that.</p>
+      </div>
+      <p class="err" id="err2" hidden></p>
+      <div class="nav"><button class="btn ghost" data-back>←</button><button class="btn" data-next>Next: sign →</button></div>
+    </div>
+  </section>
+
+  <!-- STEP 3 · release -->
+  <section class="step" data-step="3" hidden>
+    <div class="wrap">
+      <div class="card">
+        <h2>The release</h2>
+        <p>This lets Happy Productions use the video. It covers you and your kids.</p>
+        <div class="legal" id="legal" tabindex="0" aria-label="Appearance release text"></div>
+      </div>
+
+      <div class="card">
+        <h2>Social media</h2>
+        <p>The videos will post on Momcozy's social channels and ads (TikTok, Instagram, Facebook, YouTube and more).</p>
+        <label class="toggle" id="socialT"><input type="checkbox" id="social"><span>Yes, my family can appear on social media</span></label>
+      </div>
+
+      <div class="card">
+        <h2>Sign here</h2>
+        <label>Full legal name<input type="text" id="signname" autocomplete="name"></label>
+        <p class="soft small" id="kidsline">You sign as parent or guardian for your kids.</p>
+        <div class="sig" id="sigbox"><canvas id="sig"></canvas><span id="sighint">Sign with your finger or mouse</span></div>
+        <div class="sigtools"><span class="soft small" id="sigdate"></span><button class="link" id="sigclear" type="button">Clear</button></div>
+        <label class="toggle" id="agreeT"><input type="checkbox" id="agree"><span>I've read the release and agree, for me and my children</span></label>
+      </div>
+      <p class="err" id="err3" hidden></p>
+      <div class="nav"><button class="btn ghost" data-back>←</button><button class="btn" data-next>Next: pick a time →</button></div>
+    </div>
+  </section>
+
+  <!-- STEP 4 · slot -->
+  <section class="step" data-step="4" hidden>
+    <div class="wrap">
+      <div class="card">
+        <h2>Pick your 2 hours</h2>
+        <p class="soft">Wednesday, October 21. Times shown for <b id="myarea"></b>.</p>
+        <div class="left"><b id="leftn">4</b><span id="leftt">slots left</span></div>
+        <div class="slots" id="slots"></div>
+        <p class="soft small">Greyed out? Booked, or too far from the mom before or after you.</p>
+      </div>
+      <p class="err" id="err4" hidden></p>
+      <div class="nav"><button class="btn ghost" data-back>←</button><button class="btn" id="send">Book my slot ✓</button></div>
+    </div>
+  </section>
+
+  <!-- STEP 5 · done -->
+  <section class="step" data-step="5" hidden>
+    <div class="wrap">
+      <div class="card done">
+        <div class="big">🎉</div>
+        <h2 id="donetitle">You're in!</h2>
+        <p class="soft" id="donesub">I'll text you to confirm.</p>
+        <div class="sum" id="sum"></div>
+      </div>
+      <div class="card">
+        <h2>Before I arrive</h2>
+        <p class="small">• Open curtains. Natural light is our only light.</p>
+        <p class="small">• Clear the nursery and couch area a little.</p>
+        <p class="small">• Have two outfits ready for you. One cozy, one polished.</p>
+        <p class="small">• Baby fed and happy is the whole plan.</p>
+      </div>
+      <p class="note" id="preview" hidden>Preview mode. On the live page this booking goes straight to Atdhe.</p>
+    </div>
+  </section>
+</div>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="shtitle">
+  <div class="panel">
+    <div class="ptop"><h3 id="shtitle"></h3><button type="button" id="shclose" aria-label="Close">×</button></div>
+    <div class="pbody" id="shbody"></div>
+    <div class="pfoot yn" id="shfoot"></div>
+  </div>
+</div>
+
+<script>
+const WEBHOOK = 'https://hooks.airtable.com/workflows/v1/genericWebhook/appreW2VAnC7Uj2Lj/wfl8DPIxeZbxDsi8k/wtrdWl31ZEv3X3ZKc';
+const DAY = 'Wed, Oct 21';
+const SLOTS = [
+  { id:'s1', t:'8:00 – 10:00 AM', s:'Morning light', ic:'🌅' },
+  { id:'s2', t:'11:00 AM – 1:00 PM', s:'Bright midday', ic:'☀️' },
+  { id:'s3', t:'1:15 – 3:15 PM', s:'Afternoon', ic:'🌤️' },
+  { id:'s4', t:'4:00 – 6:00 PM', s:'Golden hour, wraps at dusk', ic:'🌇' },
+];
+const ORDER = ['s1','s2','s3','s4'];
+const NEAR = {
+  'Manhattan · Downtown':['Manhattan · Midtown','Brooklyn','Jersey City / Hoboken'],
+  'Manhattan · Midtown':['Manhattan · Downtown','Manhattan · Uptown','Queens','Jersey City / Hoboken'],
+  'Manhattan · Uptown':['Manhattan · Midtown','Bronx'],
+  'Brooklyn':['Manhattan · Downtown','Queens'],
+  'Queens':['Brooklyn','Manhattan · Midtown'],
+  'Bronx':['Manhattan · Uptown','Westchester'],
+  'Jersey City / Hoboken':['Manhattan · Downtown','Manhattan · Midtown'],
+  'Westchester':['Bronx'],
+};
+const close = (a,b) => a===b || (NEAR[a]||[]).includes(b);
+
+const SCRIPTS = [
+  { id:'bn02-bf', title:'Black Friday: things I\'m glad I have as a mom', sum:'Stuffy nose, gentle nose aspirator, cozy nursery. Under 30 seconds.', needs:['Nose aspirator','Nursery'],
+    shots:['You sit in the nursery with your baby.','Baby is stuffy. You give the camera a "help me" look and grab the aspirator.','You gently use it. Close-ups of the soft tip and suction setting.','Its lights and lullabies play. You rinse the parts after.','You put it back and smile at the camera like you\'re sharing a tip.'] },
+  { id:'wn02-bf', title:'Black Friday: our nighttime routine', sum:'Late-night wake-up. Dad comes in and turns on the white noise.', needs:['White noise machine','Evening scene'], dad:1,
+    shots:['You\'re reading in bed. Baby cries. You head to the nursery.','You rock baby. Dad walks in to help.','Dad turns on the white noise machine and picks a sound.','You keep soothing. Dad stays close. Quick, handheld shots.','The machine plays on the nursery shelf.'] },
+  { id:'perfect-real', title:'Perfect mom vs. real mom', sum:'Funny side-by-side. The life we imagined, then the real one.', needs:['2 outfits','Kitchen','Couch'],
+    shots:['"What I imagined": you wake up and do skincare.','You pick up baby and soothe them.','A calm breakfast.','Pilates in a cute workout set.','Reading on the couch.','"Reality…": you wake up to crying, messy hair, no skincare.','Making breakfast. Baby cries. You walk out of frame.','Pilates in sweats. Baby cries. You walk out.','Reading. Baby cries. You walk out.','Vacuuming. Baby cries. You lean the vacuum on the wall and go.'] },
+  { id:'ugc-mom', title:'Mom\'s day with the baby monitor', sum:'Working, checking baby on the app, coming home, clearing a stuffy nose.', needs:['Baby monitor','Nose aspirator','Desk','Front door'],
+    shots:['You work at a desk. Your phone pings.','You open the monitor app. Baby is on screen.','Time passes.','You walk in the front door.','In loungewear, you notice baby is stuffy.','You gently use the aspirator. Three angles.','You settle baby into the crib.','You read a magazine on the sofa, monitor beside you.','Close-up: baby sleeping on the monitor.'] },
+  { id:'ugc-dad', title:'Dad\'s day in charge', sum:'Dad talks to camera, cooks, feeds baby, uses the monitor and aspirator.', needs:['Baby monitor','Nose aspirator','Bottle'], dad:1,
+    shots:['Dad to camera: <q>My wife is out today, so I\'m in charge of the baby. Come along and see how it goes!</q>','Dad cooks while baby sleeps on the monitor.','Dad gives baby a bottle.','Dad gently uses the aspirator. 2–3 angles.','Dad gets baby to nap and lays them in the crib.','Dad fixes something and checks baby on the app.','You come home. Dad: <q>Hey honey! How was the get-together?</q> You: <q>It was great! Was the baby good today?</q>','You pick up baby. Dad plays along. Happy family moment.'] },
+  { id:'life-1', title:'Fall and winter, made easier (selfie style)', sum:'You talk to your phone camera, walking room to room, showing 4 helpers.', needs:['Talking to camera','4 products','2 outfits'],
+    shots:['Selfie: <q>In fall and winter, babies can get fevers, stuffy noses that wreck sleep, and fussiness when it gets cold.</q>','Walking the living room: <q>These things used to worry me all the time.</q>','Into the bedroom: <q>But now I\'ve found ways to make it easier!</q>','You show the monitor with baby on screen: <q>I can check on my baby from anywhere in the house.</q>','New outfit. You gently use the aspirator: <q>When my baby gets stuffy, I gently clear it out.</q>','You show the temperature patch under baby\'s arm, then the app: <q>No more taking her temperature over and over.</q>','The white noise machine by the crib: <q>At bedtime I turn on white noise to help my little one drift off.</q>','To camera: <q>These little helpers make caring for my baby easier, and I love them.</q>'] },
+  { id:'life-2', title:'An experienced mom\'s routine (no talking)', sum:'Just real, calm care of your baby. No lines at all.', needs:['No talking','Products in use'],
+    shots:['Your normal fall and winter care routine.','Products used naturally on baby.','Calm, practiced, real.'] },
+  { id:'tips', title:'Tip: what I do when my baby is stuffy', sum:'A short, helpful tip. The aspirator is part of it, not the star.', needs:['Nose aspirator','A few lines'],
+    shots:['You share what you do when baby gets stuffy.','The aspirator comes in naturally, used gently.','Quick, soft, helpful.'] },
+  { id:'bm08', title:'The sprint to the crib (stop-motion)', sum:'Dramatic, funny photo-by-photo action. You "race" to the crib. Baby is fine.', needs:['Baby monitor','Stairs help','Big expressions'],
+    shots:['You hold the monitor. Baby is asleep. Big sigh of relief.','You look again. Baby is climbing the crib rail on screen. The red safety alert pops up.','Shock! You set the monitor down (and the cat off your lap, if you have one).','You run, leaning into the corner like a motorcycle racer.','Up the stairs so fast your slippers fly off.','An action-hero sprint down the hall.','At the crib: baby is lying safe, smiling. Sigh of relief.','We shoot it as still photos, so baby stays safe in the crib the whole time.'] },
+  { id:'purifier', title:'Air purifier filter test (vlog)', sum:'Show a new filter, then a used one. Baby nearby. Calm, real, curious.', needs:['Air purifier','A few lines'],
+    shots:['<q>A lot of people wonder what an air purifier filter looks like after a while.</q>','<q>I\'ve had my Momcozy purifier for a while, so today I\'m doing a little test.</q>','You put in a brand-new filter and turn it on.','[Later] You pull out the used filter: <q>Yep, it\'s picked up a lot of dust.</q>','<q>At night it\'s in the bedroom while my baby sleeps. During the day it\'s in the living room.</q>','<q>It\'s really quiet. And it gives me a little peace of mind.</q>','I bring a filter that\'s already been used for a month, so you see the real difference.'] },
+];
+
+const RELEASE = [
+`<b>APPEARANCE RELEASE</b>`,
+`This Appearance Release (this "Release") is being signed by me to allow Happy Productions LLC ("Producer") to include me in the captured video materials (the "Project"). For good and valuable consideration, the receipt and sufficiency of which is hereby acknowledged, I agree as follows:`,
+`<b>Consent.</b> (a) I consent to the recording, use and reuse by Producer, and any of its licensees (including, without limitation, any television network and/or entities distributing the Project in any manner), designees, and assigns and each of their respective parents, subsidiary entities, affiliates, and the respective directors, officers, employees, agents, contractors, partners, shareholders, representatives and attorneys of each of the foregoing (collectively, the "Released Parties") in any and all media, whether now known or hereafter devised, worldwide, in perpetuity, of my voice, actions, likeness (actual or simulated), name, sobriquet, picture, photograph, silhouette, appearance, and other reproductions of my physical likeness (as the same may appear in any still camera photograph and/or motion picture film or tape) and biographical information (collectively "Likeness") in and in connection with the production and exhibition of the Project and any and all allied, ancillary and subsidiary rights therein.`,
+`(b) The rights herein granted include, without limitation, all television rights, theatrical rights, home video rights, interactive cable rights, internet site rights, so-called "wireless" and mobile device rights (e.g., iPod, cellular phone, ringtones, mp3 player), digital distribution rights (e.g. streaming and download), computer-assisted media rights, and rights relating to any other devices or methods now existing or hereafter devised, with respect to the use of my Likeness in and in connection with the Project and any and all allied, ancillary and subsidiary rights therein. I agree that Producer may use all or any part of my Likeness, and may alter or modify it, regardless of whether or not I am recognizable. I further agree that Producer may use my Likeness in connection with any marketing, promotion, publicity, advertisement, commercial tie-ins and/or merchandising for the Project and any and all allied, ancillary and subsidiary rights therein. Producer will be the sole and exclusive owner of all rights (including, without limitation, copyrights) in and to all film, photographs, tape and/or recordings made of my Likeness hereunder and all of the results and proceeds of my appearance and/or participation in the Project. I understand that Producer is recording my Likeness in reliance on this consent. I acknowledge that Producer has no obligation to use my Likeness.`,
+`<b>Release, Agreement Not to Sue and Indemnity.</b> To the maximum extent permitted by law, I agree that I will never sue the Released Parties or anyone because I do not like the manner in which Producer took or used the Project or for any cause of action based on any of the Released Claims (as defined below). To the maximum extent permitted by law, I, for myself and on behalf of my heirs, executors, agents, successors or assigns, hereby release, hold harmless, and forever discharge the Released Parties from any and all claims, actions, damages, losses, liabilities, costs, expenses, injuries or causes of action whatsoever that in any way are caused by, arise out of or result from this Agreement, my appearance in the Project, or in the advertisements, the creation of the Project, or the broadcast or other exhibition of the Project on any legal theory whatsoever (including, but not limited to, personal injury, rights of privacy and publicity, defamation, or false light), regardless of whether caused by the negligence or willful misconduct of the Released Parties (collectively, the "Released Claims"). I will defend, indemnify and hold the Released Parties harmless from any and all such claims, actions, damages, losses, liabilities, costs, expenses, injuries or causes of action, as well as all those that in any way are caused by, arise out of or result from any breach or alleged breach by me of any of the representations or warranties made by me in this Agreement.`,
+`To the maximum extent permitted by law, I waive any and all rights I may have under Section 1542 of the Civil Code of California, and every like provision in any foreign jurisdiction. Section 1542 provides as follows: A GENERAL RELEASE DOES NOT EXTEND TO CLAIMS WHICH THE CREDITOR DOES NOT KNOW OR SUSPECT TO EXIST IN HIS OR HER FAVOR AT THE TIME OF EXECUTING THE RELEASE, WHICH IF KNOWN BY HIM OR HER MUST HAVE MATERIALLY AFFECTED HIS OR HER SETTLEMENT WITH THE DEBTOR.`,
+`<b>Non-Union.</b> I understand and acknowledge that my appearance on the Project does not fall under the jurisdiction of any union or guild, including any SAG/AFTRA contract, whether or not I may be a member of either such guild. My appearance on the Project is as a non-performer only and is not employment, and does not entitle me to any wages, salary or other compensation under any collective bargaining agreement or otherwise.`,
+`<b>Publicity.</b> I acknowledge that all publicity in connection with the Project is under the sole control of Producer and its licensees. Except as otherwise authorized in advance in writing by Producer, I will not myself, or authorize others to, use or disclose to any party any Confidential Information or trade secrets obtained or learned as a result of my participation in the Project. For the purposes of this Release, "Confidential Information" includes, without limitation, the events which take place as part of the Project, the outcome or contents of any part of the Project, information regarding the Project's concept, format or ideas, identities of participants, and any other confidential and/or proprietary information relating to the Project and/or of Producer or its assignees or licensees.`,
+`<b>Confidentiality.</b> As a material inducement to Producer with respect to my participation in the Project, I agree that I will not, directly or indirectly, verbally or otherwise, publish, reveal, disseminate, disclose, or cause to be published, revealed, disseminated or disclosed ("Disclosure") any Confidential Information to any person, firm or entity whatsoever ("Third Parties"). Third Parties will include, without limitation, individuals I come into contact with (including spouses, significant others, roommates, friends, relatives and acquaintances), as well as participants and potential participants in the Project, newspapers, periodicals, magazines, publications, television stations, radio stations, publishers, and any other enterprise involved in the print or electronic media, including individuals working directly or indirectly for or on behalf of any of said entities. I acknowledge Producer's substantial and valuable property rights and other proprietary interests in Producer's exclusive possession, ownership and use of the Confidential Information. I further agree that any Disclosure by me to any Third Party of any Confidential Information will constitute a serious and material breach of the terms hereof and will constitute, among other things, a breach of trust and confidence, a misappropriation of Producer's exclusive property rights, and may constitute fraud and deceit. The covenants made by me herein will extend to all of my employees, agents and independent contractors (if any), who will be bound by the terms of this Agreement as if they directly entered into this Agreement with Producer. I will only disclose Confidential Information to my employees, agents, and independent contractors on a "need-to-know basis" and I will notify such individual(s) of the confidentiality obligations set forth herein.`,
+`5.1. Exclusions to Confidentiality. You shall not be liable for disclosure or use of Confidential Information if: information entered the public domain without breach of this confidentiality section; is disclosed with the written approval of Producer; or is disclosed to parent or guardian, business representatives or by operation of law.`,
+`6. Producer Remedies. In addition to any and all other remedies available to Producer, I acknowledge and agree that any breach or threatened breach of this Release due to my unauthorized Disclosure or threatened Disclosure by me to Third Parties of any Confidential Information will cause irreparable harm to Producer and will entitle Producer to obtain (without posting any bond), an ex parte restraining order, preliminary injunction and permanent injunction preventing the Disclosure, or any further Disclosure, of any Confidential Information.`,
+`7. No Injunctive Relief. I agree that my remedies for any breach of this Release by Producer or others will be limited to monetary damages and in no event will I be entitled to rescind this Release or to seek any injunctive or other equitable relief.`,
+`8. Law and Forum. This Release and any dispute or controversy relating to the existence, validity, meaning, interpretation, or alleged breach of this Release will in all respects be interpreted, enforced and governed by the laws of the State of California and the exclusive forum for any such dispute will be the state and/or federal courts located in Los Angeles County, California.`,
+`9. Miscellaneous. I agree that the invalidity or unenforceability of any part of this Release will in no way affect the validity or enforceability of any of the remainder of this Release. This Release constitutes the entire agreement and understanding between me and Producer concerning the subject matter hereof, and supersedes and replaces all prior negotiations, proposed agreements and agreements, written and oral, relating thereto. In the event that any provision hereof will be invalid or unenforceable due to any law, said provision will be modified to the minimum extent necessary to effect compliance with such law, and in any event such invalidity or unenforceability will have no effect upon the remaining terms and condition hereof. This Release and the rights hereunder may be freely assigned by Producer. This Release is personal to me and may not be assigned by me, and any assignment will be null and void ab initio. I represent and warrant that all information I am providing to Producer on this Release is valid, true and accurate, and that I have provided (or will concurrently provide) to Producer a legible photocopy of my valid driver's license, passport or other acceptable government-issued photo identification for Producer's verification and record-keeping purposes.`,
+`<b>Parent / guardian.</b> I am the parent or legal guardian of each minor child named in this booking. I sign this Release on their behalf and agree to all of its terms for them.`
+];
+
+/* ---------- state ---------- */
+const $ = s => document.querySelector(s);
+const S = { step:0, picks:{}, kids:[], slot:null, taken:{}, signed:false };
+const STEPS = ['Hello','You','Scripts','Sign','Time','Done'];
+const steps = [...document.querySelectorAll('.step')];
+const store = { get(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } }, set(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} } };
+
+function dots(){
+  $('#dots').innerHTML = STEPS.slice(0,5).map((_,i)=>`<span class="${i<=Math.min(S.step,4)?'on':''}"></span>`).join('');
+  $('#steplabel').textContent = S.step===5 ? 'Booked' : `${S.step+1} of 5 · ${STEPS[S.step]}`;
+}
+function go(n){
+  S.step = n; steps.forEach(s => s.hidden = +s.dataset.step !== n);
+  dots(); window.scrollTo({ top:0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  if (n===3) sizeSig();
+  if (n===4) renderSlots();
+}
+function err(n,msg){ const e=$('#err'+n); e.textContent=msg||''; e.hidden=!msg; }
+
+/* ---------- step 1 ---------- */
+function money(){ const dad=$('#dad').checked; $('#dadPay').hidden=!dad; $('#total').textContent='$'+(400+(dad?200:0)); $('#dadNameL').hidden=!dad; }
+function tog(id){ const i=$('#'+id), t=$('#'+id+'T'); const f=()=>t.classList.toggle('on',i.checked); i.addEventListener('change',f); f(); }
+['dad','stairs','pet','social','agree'].forEach(tog);
+$('#dad').addEventListener('change',()=>{ money(); renderScripts(); });
+function renderKids(){
+  $('#kids').innerHTML = S.kids.map((k,i)=>`<div class="kid"><label>Sibling's name<input type="text" data-k="${i}" data-f="name" value="${esc(k.name)}"></label><label>Age<input type="number" min="0" max="17" inputmode="numeric" data-k="${i}" data-f="age" value="${esc(k.age)}"></label><button type="button" aria-label="Remove sibling" data-rm="${i}">×</button></div>`).join('');
+}
+$('#addkid').onclick = ()=>{ S.kids.push({name:'',age:''}); renderKids(); };
+$('#kids').addEventListener('input',e=>{ const t=e.target; if(t.dataset.k!=null) S.kids[+t.dataset.k][t.dataset.f]=t.value; });
+$('#kids').addEventListener('click',e=>{ const r=e.target.dataset.rm; if(r!=null){ S.kids.splice(+r,1); renderKids(); } });
+function esc(s){ return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function check1(){
+  const need=[['name','your name'],['email','your email'],['phone','your phone'],['address','your address'],['area','your neighborhood'],['baby',"your baby's name"]];
+  for (const [id,l] of need) if(!$('#'+id).value.trim()) return `Add ${l}.`;
+  if(!/^\S+@\S+\.\S+$/.test($('#email').value.trim())) return 'Check your email.';
+  return '';
+}
+
+
+/* ---------- address lookup (Photon / OpenStreetMap, no key) ---------- */
+const AC = { list:[], i:-1, t:null, pick:null, ctl:null };
+const acIn=$('#address'), acL=$('#acl');
+function areaFrom(p, lat){
+  const c=(p.county||'')+' '+(p.district||'')+' '+(p.city||'');
+  if (/Kings|Brooklyn/i.test(c)) return 'Brooklyn';
+  if (/Queens/i.test(c)) return 'Queens';
+  if (/Bronx/i.test(c)) return 'Bronx';
+  if (/Westchester/i.test(c)) return 'Westchester';
+  if (/Hudson County|Jersey City|Hoboken/i.test(c)) return 'Jersey City / Hoboken';
+  if (/New York County|Manhattan/i.test(c)) return lat < 40.738 ? 'Manhattan · Downtown' : lat < 40.768 ? 'Manhattan · Midtown' : 'Manhattan · Uptown';
+  return 'Somewhere else';
+}
+function line1(p){ return [p.housenumber, p.street || p.name].filter(Boolean).join(' '); }
+function line2(p){ return [p.district || p.locality || p.city, p.state, p.postcode].filter(Boolean).join(', '); }
+function acClose(){ acL.hidden=true; acIn.setAttribute('aria-expanded','false'); AC.i=-1; }
+function acRender(){
+  if(!AC.list.length){ acClose(); return; }
+  acL.innerHTML = AC.list.map((f,i)=>`<li role="option" id="ac${i}" data-i="${i}" aria-selected="${i===AC.i}"><b>${esc(line1(f.properties))}</b><span>${esc(line2(f.properties))}</span></li>`).join('');
+  acL.hidden=false; acIn.setAttribute('aria-expanded','true');
+}
+async function acSearch(q){
+  if (AC.ctl) AC.ctl.abort(); AC.ctl = new AbortController();
+  try {
+    const u='https://photon.komoot.io/api/?limit=6&lang=en&lat=40.73&lon=-73.95&bbox=-74.6,40.4,-73.4,41.4&q='+encodeURIComponent(q);
+    const r=await fetch(u,{signal:AC.ctl.signal}); if(!r.ok) return;
+    const j=await r.json();
+    AC.list=(j.features||[]).filter(f=>f.properties && (f.properties.street||f.properties.name) && (f.properties.countrycode||'US')==='US');
+    AC.i=-1; acRender();
+  } catch(e){ /* lookup unavailable: typing still works */ }
+}
+function acChoose(i){
+  const f=AC.list[i]; if(!f) return; const p=f.properties, [lon,lat]=f.geometry.coordinates;
+  acIn.value = line1(p)+', '+line2(p);
+  AC.pick={lat,lon}; const a=areaFrom(p,lat); $('#area').value=a; acClose();
+  $('#apt').focus();
+}
+acIn.addEventListener('input',()=>{ AC.pick=null; clearTimeout(AC.t); const q=acIn.value.trim(); if(q.length<4){ AC.list=[]; acClose(); return; } AC.t=setTimeout(()=>acSearch(q),250); });
+acIn.addEventListener('keydown',e=>{
+  if(acL.hidden) return;
+  if(e.key==='ArrowDown'){ e.preventDefault(); AC.i=Math.min(AC.i+1,AC.list.length-1); acRender(); }
+  else if(e.key==='ArrowUp'){ e.preventDefault(); AC.i=Math.max(AC.i-1,0); acRender(); }
+  else if(e.key==='Enter' && AC.i>=0){ e.preventDefault(); acChoose(AC.i); }
+  else if(e.key==='Escape'){ acClose(); }
+});
+acL.addEventListener('mousedown',e=>{ const li=e.target.closest('li'); if(li){ e.preventDefault(); acChoose(+li.dataset.i); } });
+acIn.addEventListener('blur',()=>setTimeout(acClose,150));
+
+/* ---------- step 2 ---------- */
+function renderScripts(){
+  const dad=$('#dad').checked;
+  $('#scripts').innerHTML = SCRIPTS.map((s,i)=>{
+    const p=S.picks[s.id];
+    const needs=(s.dad?['<span class="dad">Needs dad</span>']:[]).concat(s.needs.map(n=>`<span>${n}</span>`)).join('');
+    return `<article class="script ${p==='y'?'yes':p==='n'?'no':''}">
+      <div class="shead" data-read="${s.id}" role="button" tabindex="0"><span class="snum">${i+1}</span><div><b>${s.title}</b><span class="soft small">${s.sum}</span></div></div>
+      <div class="needs">${needs}</div>
+      <button type="button" class="readfull" data-read="${s.id}">Read the full script →</button>
+      ${s.dad && !dad ? `<p class="soft small">Needs dad. Since he isn't joining, this one's not part of your shoot.</p>` :
+      `<div class="yn one"><button type="button" class="y" data-id="${s.id}" data-v="${p==='y'?'':'y'}" aria-pressed="${p==='y'}">${p==='y'?'✓ Accepted':"I'm comfortable with this"}</button></div>`}
+    </article>`;
+  }).join('');
+  if(!dad) SCRIPTS.filter(s=>s.dad).forEach(s=>{ if(S.picks[s.id]==='y') delete S.picks[s.id]; });
+  const need=SCRIPTS.filter(s=>!s.dad||dad), n=need.filter(s=>S.picks[s.id]==='y').length;
+  $('#tally').textContent = `${n} of ${need.length} accepted`;
+}
+$('#scripts').addEventListener('click',e=>{ const b=e.target.closest('[data-v]'); if(!b) return; if(b.dataset.v) S.picks[b.dataset.id]=b.dataset.v; else delete S.picks[b.dataset.id]; const y=scrollY; renderScripts(); scrollTo(0,y); });
+
+/* ---------- full scripts, word for word from the brief ---------- */
+const sh=(n,t,x)=>`<div class="fs"><h4>${n}${t?` <span>${t}</span>`:''}</h4>${x}</div>`;
+const ost=t=>`<p class="ost">On-screen text: “${t}”</p>`;
+const say=(w,t)=>`<p class="line"><b>${w}:</b> “${t}”</p>`;
+const FULL = {
+'bn02-bf': `<p class="meta">Concept: Things I’m Glad I Have as a Mom · Under 30 seconds</p>
+${sh('Shot 1: The Hook','0–2 sec','<p>Mom casually sits in the nursery with her baby.</p>'+ost('Things I’m glad I have as a mom 💗'))}
+${sh('Shot 2: A Little Parenting Moment','2–4 sec','<p>Mom notices her baby has a stuffy nose and gives the camera a relatable, slightly helpless look. She reaches for the BN02 nasal aspirator from her baby care essentials.</p>'+ost('Because little noses need a little extra care.'))}
+${sh('Shot 3: The Everyday Helper','4–8 sec','<p>Mom gently uses the BN02 on her baby, following the product instructions. Capture natural close-ups of the soft silicone tip and Mom adjusting the suction level.</p>'+ost('Adjustable suction. Soft silicone tips.'))}
+${sh('Shot 4: The Little Details','8–11 sec','<p>Show the aspirator operating during use, including its soothing lights and lullabies. Then capture Mom cleaning the removable parts after use.</p>'+ost('Quiet, soothing, and easy to clean.'))}
+${sh('Shot 5: Black Friday Promotion','11–15 sec','<p>Mom puts the BN02 back with her baby care essentials and looks at the camera as if sharing a helpful recommendation. Cut to a quick product shot with the Black Friday offer.</p>'+ost('A little helper worth adding to your baby care routine. 💗')+ost('Shop BN02 this Black Friday! 🛒'))}`,
+'wn02-bf': `<p class="meta">Concept: A Little Help with Our Nighttime Routine · TikTok-style · 15–20 seconds · A typical American family home in fall or winter</p>
+${sh('Shot 1: The Nighttime Wake-Up','0–3 sec','<p>It’s late at night. Mom is relaxing in bed when she hears her baby crying. She looks tired, puts down her book, and heads to the nursery.</p>'+ost('When your baby wakes up right as you’re about to relax 😅'))}
+${sh('Shot 2: Teamwork at Night','3–6 sec','<p>Mom picks up the baby and gently rocks them. Dad walks into the nursery and joins her, naturally helping with the nighttime routine.</p>')}
+${sh('Shot 3: Bring in WN02','6–9 sec','<p>Dad turns on the WN02 white noise machine and selects a sound. Show a quick close-up of the actual operation, then a wider shot of the machine playing in the nursery.</p>'+ost('One of our nighttime essentials 🤍'))}
+${sh('Shot 4: Keep the Routine Going','9–14 sec','<p>Mom continues soothing the baby while Dad stays nearby. The WN02 plays in the background as they take care of their little one together. Casual handheld footage and quick cuts keep the scene natural.</p>')}
+${sh('Shot 5: Black Friday Offer','14–18 sec','<p>Show the WN02 operating on the nursery shelf in its real setting. Keep the shot simple and natural, then overlay the Black Friday promotion.</p>'+ost('A little extra comfort for your baby’s sleep space.')+ost('Shop WN02 this Black Friday 🛒'))}`,
+'perfect-real': `<p class="meta">Theme: Perfect Mom vs. Real Mom</p>
+${sh('Shot 1','','<p>Title: <i>What I Imagined Life with a Baby Would Be Like</i> (blurred background)</p>')}
+${sh('Shot 2','','<p>Mom wakes up and does her skincare routine. The image turns clear within 2 seconds.</p>')}
+${sh('Shot 3','','<p>Mom checks on her baby, picks them up, and soothes them for a little while.</p>')}
+${sh('Shot 4','','<p>Mom prepares breakfast and enjoys a peaceful meal.</p>')}
+${sh('Shot 5','','<p>Mom does Pilates in a stylish, form-fitting workout outfit.</p>')}
+${sh('Shot 6','','<p>Mom sits on the couch and enjoys reading a book.</p>')}
+${sh('Title card','','<p><i>Reality…</i> (black background)</p>')}
+${sh('Shot 7','','<p>Mom wakes up to her baby crying, looking sleepy and disheveled. She skips her skincare routine.</p>')}
+${sh('Shot 8','','<p>Mom is preparing breakfast when she hears her baby crying and immediately leaves the frame.</p>')}
+${sh('Shot 9','','<p>Mom is doing Pilates in casual clothes when she hears her baby crying and immediately leaves the frame.</p>')}
+${sh('Shot 10','','<p>Mom is sitting on the couch reading a book when she hears her baby crying. She gets up and walks away.</p>')}
+${sh('Shot 11','','<p>Mom is vacuuming when she hears her baby crying. She parks the vacuum against the wall and walks away to check on her baby.</p>')}`,
+'ugc-mom': `<p class="meta">Theme: Helping Mom Enjoy a More Reassuring Parenting Experience with the BM04 baby monitor and BN02 nasal aspirator</p>
+<p class="must">Must-haves: products used correctly · real use on the baby, clearly shown · whenever the monitor is shown, the baby is on its screen</p>
+${sh('Shot 1','','<p>Mom is working in her home office when a notification appears on her phone. She picks up her phone to check it.</p>')}
+${sh('Shot 2','','<p>Mom opens the baby monitor app and checks on her baby. Hold 3–4 seconds, with the baby clearly visible on the screen.</p>')}
+${sh('Shot 3','','<p>Transition shot showing that some time has passed.</p>')}
+${sh('Shot 4','','<p>Mom opens the front door and returns home.</p>')}
+${sh('Shot 5','','<p>After changing into comfortable loungewear, Mom notices that her baby’s nose is congested.</p>')}
+${sh('Shot 6','','<p>Mom uses the BN02 nasal aspirator to gently clear the baby’s nose. Three different angles, 3 seconds each. Used correctly, actual use clearly visible.</p>')}
+${sh('Shot 7','','<p>After soothing her baby, Mom gently places the baby in the crib.</p>')}
+${sh('Shot 8','','<p>Mom sits on the sofa reading a magazine, with the BM04 monitor nearby and its screen visible.</p>')}
+${sh('Shot 9','','<p>Close-up of the BM04 monitor screen, clearly showing the baby sleeping peacefully.</p>')}`,
+'ugc-dad': `<p class="meta">Theme: Helping Dad Enjoy a More Confident Parenting Experience with the BM04 baby monitor and BN02 nasal aspirator</p>
+<p class="must">Must-haves: products used correctly · real use on the baby, clearly shown · whenever the monitor is shown, the baby is on its screen</p>
+${sh('Shot 1','','<p>Dad speaks directly to the camera.</p>'+say('Dad','My wife is out today, so I’m in charge of taking care of the baby. Come along with me and see how it goes!'))}
+${sh('Shot 2','','<p>Dad prepares a meal in the kitchen while the baby sleeps nearby. The BM04 monitor is beside him, with the baby clearly visible on the screen.</p>')}
+${sh('Shot 3','','<p>Dad feeds the baby with a bottle.</p>')}
+${sh('Shot 4','','<p>Dad uses the BN02 nasal aspirator to gently clear the baby’s nose. 2–3 different angles, 3 seconds each. Used correctly, actual use clearly visible.</p>')}
+${sh('Shot 5','','<p>In the afternoon, Dad soothes the baby to sleep and gently places the baby in the crib.</p>')}
+${sh('Shot 6','','<p>While fixing a household appliance, Dad opens the baby monitor app on his phone to check on the baby. The baby is clearly visible on the screen.</p>')}
+${sh('Shot 7','','<p>Mom returns home. Dad greets her.</p>'+say('Dad','Hey, honey! How was the get-together?')+say('Mom','It was great! Was the baby good today?'))}
+${sh('Shot 8','','<p>Mom picks up the baby while Dad playfully interacts with them. A relaxed, happy family moment, Mom and Dad enjoying time together with their baby.</p>')}`,
+'life-1': `<p class="meta">Theme: A Mom’s Challenges During the Fall-to-Winter Transition · First-person, selfie style</p>
+${sh('Shot 1','','<p>The video opens with Mom filming herself in selfie mode.</p>'+say('Mom','During fall and winter, babies can experience issues like fever, nasal congestion that disrupts their sleep, and restlessness when temperatures suddenly drop.'))}
+${sh('Shot 2','','<p>Mom walks around the living room.</p>'+say('Mom','These were the kinds of things that used to worry me all the time.'))}
+${sh('Shot 3','','<p>Mom walks into the bedroom.</p>'+say('Mom','But now, I’ve found ways to make things easier!'))}
+${sh('Shot 4','','<p>Mom picks up the BM04 baby monitor. Insert: Mom checks on her baby through the monitor, baby clearly visible on the screen.</p>'+say('Mom','I can check on my baby from anywhere in the house. Look! I can clearly see what my little one is up to, whether they’re playing or sleeping.'))}
+${sh('Shot 5','','<p>Mom picks up the BN02 nasal aspirator. Change to a different outfit. Insert: Mom gently uses the nasal aspirator on her baby.</p>'+say('Mom','When my baby has more nasal mucus, I gently use this to help clear it out. Afterward, my baby’s little nose feels much clearer.'))}
+${sh('Shot 6','','<p>Mom gently lifts the baby’s clothing to show the temperature patch under the arm, then opens the app to show the temperature readings.</p>'+say('Mom','I used to take my baby’s temperature over and over with a traditional thermometer. Now, I can check the temperature readings in the app whenever I need to. It saves me from repeated manual checks, and I can keep an eye on temperature trends over time.'))}
+${sh('Shot 7','','<p>Mom picks up the WN02 white noise machine. Insert: the machine beside the crib, 3 seconds.</p>'+say('Mom','You may have already noticed this little helper. It helps create a soothing sleep environment for my baby. At bedtime, I turn on the white noise to help my little one drift off to sleep.'))}
+${sh('Shot 8','','<p>Mom keeps talking directly to the camera.</p>'+say('Mom','This is what parenting looks like for me as a first-time mom. These little helpers make caring for my baby easier, and I genuinely love having them as part of our daily routine.'))}`,
+'life-2': `<p class="meta">Theme: An Experienced Mom’s Fall and Winter Baby Care Routine</p>
+<p>Starting with the change from fall to winter, the video follows an experienced mom through her baby’s daily care routine. No dialogue. The focus is real, practical caregiving and the natural use of baby care products.</p>
+<p class="must">Must-haves: no dialogue at all · show the real care routine, with products used correctly on the baby · care feels natural, like an experienced mom’s habits</p>
+<p><a href="https://www.tiktok.com/@mckenziewidel/video/7666267048967736590" target="_blank" rel="noopener">Watch the reference video ↗</a></p>`,
+'tips': `<p class="meta">Theme: What I Do When My Baby Gets Stuffy?</p>
+<p class="must">Must-haves: use the BN02 nasal aspirator correctly, following its instructions · bring the aspirator in naturally as part of the routine · keep the product mention short and low-key, no sales pitch</p>
+<p>You share your real routine for a stuffy baby. I’ll talk it through with you on the day and feed you the lines.</p>`,
+'bm08': `<p class="meta">Baby Monitor (BM08) creative video · Stop-motion style</p>
+<p>Shot as still photos with dynamic motion blur, strong visual tension and powerful impact. The movements are exaggerated and expressive for a dramatic effect.</p>
+${sh('The story','','<p>The mom is holding the baby monitor. At first glance, she sees that her baby is peacefully sleeping, and she lets out a sigh of relief. Then she looks at the monitor again and suddenly notices that the baby is trying to climb over the crib railing.</p><p class="must">Key point: show the safety alert function in the red highlighted area. This is set up in the mobile app.</p><p>Her expression instantly changes to shock and panic. She quickly puts down the monitor, gently places the cat that was sitting on her lap onto the floor, and starts running. At the corner, she leans into the turn like a motorcycle racer taking a sharp curve, rushing forward at full speed. She runs up the stairs so fast that even her slippers fly off. In the hallway leading to the bedroom, she makes an exaggerated, dramatic sprint like an action movie hero. She reaches the crib, only to find that the baby is still safely lying inside, smiling at her. The mom finally relaxes and lets out another sigh of relief.</p>')}
+<p class="soft small">No cat? No problem. No stairs? We'll use a hallway. Baby stays safely in the crib the whole time.</p>
+<p><a href="https://www.tiktok.com/@katymundy/video/7598235122604838175" target="_blank" rel="noopener">Watch the reference video ↗</a></p>`,
+'purifier': `<p class="meta">Momcozy CozyBreath Baby Air Purifier · Daily parenting vlog</p>
+${sh('1','',say('You','A lot of people are curious about what an air purifier filter actually looks like after using it for a while, and whether it really makes a difference.'))}
+${sh('2','',say('You','I’ve had my Momcozy air purifier for a while, so today, I’m going to do a little test.'))}
+${sh('3','',say('You','Here’s a brand-new filter. I’m going to open it up and put it in.'))}
+${sh('4','',say('You','Now, let’s turn it on.'))}
+${sh('5','','<p>[1 month later]</p>')}
+${sh('6','',say('You','Okay, eight hours later, let’s see what the filter looks like now.'))}
+${sh('7','',say('You','Yep, it’s picked up quite a bit of dust and other particles. You can really see the difference.'))}
+${sh('8','',say('You','I usually move it around different areas of the house. At night, when my baby is sleeping, I keep it in the bedroom.'))}
+${sh('9','',say('You','During the day, when we’re playing together, I move it to the living room.'))}
+${sh('10','',say('You','It runs really quietly, so it doesn’t disturb us.'))}
+${sh('11','',say('You','I’ve always worried about the air quality around my baby, but having an air purifier running gives me a little more peace of mind.'))}
+<p class="must">Notes: no unboxing, it should feel like you’ve used it a while and like it · baby is on camera, using or benefiting from it · the video flows naturally to the end</p>
+<p class="soft small">I bring a filter that’s been used for a month, so you see the real difference.</p>
+<p><a href="https://momcozy.com/products/momcozy-baby-air-purifier" target="_blank" rel="noopener">See the air purifier ↗</a></p>`
+};
+
+let openId=null;
+function openScript(id){
+  const s=SCRIPTS.find(x=>x.id===id); if(!s) return; openId=id;
+  $('#shtitle').textContent=s.title; $('#shbody').innerHTML=FULL[id]||''; $('#shbody').scrollTop=0;
+  const blocked = s.dad && !$('#dad').checked, p=S.picks[id];
+  $('#shfoot').innerHTML = blocked ? '<p class="soft small">This one needs dad. Turn on "Dad joins too" to pick it.</p>' :
+    `<button type="button" class="y" data-pick="y" aria-pressed="${p==='y'}">${p==='y'?'✓ Accepted':"I'm comfortable with this"}</button>`;
+  $('#shfoot').classList.add('one');
+  $('#sheet').hidden=false; document.body.classList.add('lock'); $('#shclose').focus();
+}
+function closeScript(){ $('#sheet').hidden=true; document.body.classList.remove('lock'); const t=document.querySelector(`[data-read="${openId}"]`); if(t) t.focus(); }
+$('#shclose').onclick=closeScript;
+$('#sheet').addEventListener('click',e=>{ if(e.target.id==='sheet') closeScript(); });
+addEventListener('keydown',e=>{ if(e.key==='Escape' && !$('#sheet').hidden) closeScript(); });
+$('#shfoot').addEventListener('click',e=>{ const b=e.target.closest('[data-pick]'); if(!b) return; S.picks[openId]=b.dataset.pick; const y=scrollY; renderScripts(); scrollTo(0,y); closeScript(); });
+$('#scripts').addEventListener('click',e=>{ const r=e.target.closest('[data-read]'); if(r) openScript(r.dataset.read); });
+$('#scripts').addEventListener('keydown',e=>{ const r=e.target.closest('.shead[data-read]'); if(r && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); openScript(r.dataset.read); } });
+
+/* ---------- step 3 ---------- */
+$('#legal').innerHTML = RELEASE.map(p=>`<p>${p}</p>`).join('');
+const today = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+$('#sigdate').textContent = 'Date: '+today;
+const cv=$('#sig'), cx=cv.getContext('2d'); let drawing=false, last=null;
+function sizeSig(){ const r=cv.getBoundingClientRect(); if(!r.width) return; const d=Math.min(devicePixelRatio||1,2); if(cv.width===Math.round(r.width*d)) return; cv.width=Math.round(r.width*d); cv.height=Math.round(r.height*d); cx.scale(d,d); cx.lineWidth=2.6; cx.lineCap='round'; cx.lineJoin='round'; cx.strokeStyle='#1B1230'; S.signed=false; $('#sighint').hidden=false; }
+function pt(e){ const r=cv.getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top}; }
+cv.addEventListener('pointerdown',e=>{ drawing=true; last=pt(e); cv.setPointerCapture(e.pointerId); });
+cv.addEventListener('pointermove',e=>{ if(!drawing) return; const p=pt(e); cx.beginPath(); cx.moveTo(last.x,last.y); cx.lineTo(p.x,p.y); cx.stroke(); last=p; S.signed=true; $('#sighint').hidden=true; });
+['pointerup','pointercancel','pointerleave'].forEach(t=>cv.addEventListener(t,()=>drawing=false));
+$('#sigclear').onclick=()=>{ cx.clearRect(0,0,cv.width,cv.height); S.signed=false; $('#sighint').hidden=false; };
+addEventListener('resize',()=>{ if(S.step===3 && !S.signed) sizeSig(); });
+function sigData(){ const o=document.createElement('canvas'); o.width=480; o.height=Math.round(480*cv.height/cv.width); const c=o.getContext('2d'); c.fillStyle='#fff'; c.fillRect(0,0,o.width,o.height); c.drawImage(cv,0,0,o.width,o.height); return o.toDataURL('image/jpeg',.6); }
+function kidsList(){ const ks=[`${$('#baby').value.trim()} (${$('#babyage').value||'?'} mo)`].concat(S.kids.filter(k=>k.name.trim()).map(k=>`${k.name.trim()} (${k.age||'?'} yrs)`)); return ks; }
+
+/* ---------- step 4 ---------- */
+async function loadTaken(){
+  try { const r = await fetch('slots.json?t='+Date.now(), {cache:'no-store'}); if(r.ok){ const j=await r.json(); S.taken = j.taken||{}; } } catch(e){}
+  const mine = store.get('mc-booking'); if (mine && mine.slot && mine.slot!=='waitlist') S.taken[mine.slot] = S.taken[mine.slot] || mine.area;
+}
+function slotOpen(id, area){
+  if (S.taken[id]) return false;
+  if (area==='Somewhere else') return false;
+  const i=ORDER.indexOf(id);
+  for (const j of [i-1,i+1]){ const nb=ORDER[j]; if(nb && S.taken[nb] && !close(S.taken[nb],area)) return false; }
+  return true;
+}
+function renderSlots(){
+  const area=$('#area').value; $('#myarea').textContent=area;
+  let open=0;
+  $('#slots').innerHTML = SLOTS.map(s=>{
+    if (s.call) return `<div class="call">${s.call}</div>`;
+    const ok=slotOpen(s.id,area); if(ok) open++;
+    if(!ok && S.slot===s.id) S.slot=null;
+    const st = S.taken[s.id] ? 'Booked' : ok ? (S.slot===s.id?'Yours':'Open') : 'Too far';
+    return `<button type="button" class="slot" data-slot="${s.id}" ${ok?'':'disabled'} aria-pressed="${S.slot===s.id}"><span class="ic">${s.ic}</span><span><span class="t">${s.t}</span><br><span class="s">${s.s}</span></span><span class="st">${st}</span></button>`;
+  }).join('') + `<button type="button" class="slot" data-slot="waitlist" aria-pressed="${S.slot==='waitlist'}"><span class="ic">📝</span><span><span class="t">None of these work</span><br><span class="s">Put me on the list for the next shoot day</span></span><span class="st">${S.slot==='waitlist'?'Yours':'List'}</span></button>`;
+  $('#leftn').textContent=open; $('#leftt').textContent= open===1?'slot left for your area':'slots left for your area';
+  $('#send').textContent = S.slot==='waitlist' ? 'Join the list ✓' : 'Book my slot ✓';
+}
+$('#slots').addEventListener('click',e=>{ const b=e.target.closest('[data-slot]'); if(!b||b.disabled) return; S.slot=b.dataset.slot; renderSlots(); err(4); });
+
+/* ---------- nav ---------- */
+document.addEventListener('click',e=>{
+  if (e.target.closest('[data-back]')) return go(S.step-1);
+  if (!e.target.closest('[data-next]')) return;
+  if (S.step===1){ const m=check1(); err(1,m); if(m) return; renderScripts(); }
+  if (S.step===2){ const dad=$('#dad').checked; const left=SCRIPTS.filter(s=>(!s.dad||dad) && S.picks[s.id]!=='y'); if(left.length){ err(2, left.length===1 ? '1 script still needs your OK.' : `${left.length} scripts still need your OK.`); return; } err(2); }
+  if (S.step===3){
+    const m = !$('#social').checked ? 'Tick the social media box to continue.' : !$('#signname').value.trim() ? 'Type your full name.' : !S.signed ? 'Sign in the box.' : !$('#agree').checked ? 'Tick the box to agree.' : '';
+    err(3,m); if(m) return;
+  }
+  go(S.step+1);
+});
+$('#signname').addEventListener('focus',()=>{ if(!$('#signname').value) $('#signname').value=$('#name').value; });
+
+/* ---------- send ---------- */
+let sending=false;
+$('#send').onclick = async ()=>{
+  if (sending) return;
+  if (!S.slot){ err(4,'Pick a time.'); return; }
+  await loadTaken();
+  if (S.slot!=='waitlist' && !slotOpen(S.slot,$('#area').value)){ renderSlots(); err(4,'Someone just took that time. Pick another.'); return; }
+  sending=true; $('#send').disabled=true; $('#send').textContent='Sending…';
+  const dad=$('#dad').checked, slot=SLOTS.find(s=>s.id===S.slot);
+  const yes=SCRIPTS.filter(s=>S.picks[s.id]==='y').map(s=>s.title), no=SCRIPTS.filter(s=>S.picks[s.id]!=='y').map(s=>s.title);
+  const kids=kidsList();
+  const who=['Mom: '+$('#name').value.trim(), dad?'Dad: '+($('#dadname').value.trim()||'yes'):null, 'Baby: '+kids[0]].concat(kids.slice(1).map(k=>'Sibling: '+k)).filter(Boolean).join('\n');
+  const home=[$('#stairs').checked?'Has stairs':'No stairs', $('#pet').checked?'Has a cat or dog':'No pets'].join(' · ');
+  const data = {
+    source:'momcozy-nyc-page', submitted_at:new Date().toISOString(),
+    mom:$('#name').value.trim(), email:$('#email').value.trim(), phone:$('#phone').value.trim(),
+    address:[$('#address').value.trim(), $('#apt').value.trim()].filter(Boolean).join(', ') + (AC.pick?`\nMap: https://maps.google.com/?q=${AC.pick.lat},${AC.pick.lon}`:''), area:$('#area').value,
+    slot: slot ? `${DAY} · ${slot.t}` : 'Waitlist (next shoot day)', slot_id:S.slot,
+    who, dad: dad?'true':'false', kids: kids.join('\n'), pay: String(400+(dad?200:0)),
+    scripts_ok: yes.join('\n'), scripts_not_ok: no.join('\n'), home, notes:$('#notes').value.trim(),
+    social_ok:'true', release_signed:'true', signed_name:$('#signname').value.trim(),
+    guardian_for: kids.join(', '), signed_at: new Date().toString(), signature: sigData()
+  };
+  let preview=!WEBHOOK;
+  if (WEBHOOK){ try { await fetch(WEBHOOK,{method:'POST',mode:'no-cors',body:new URLSearchParams(data)}); } catch(e){ preview=true; } }
+  store.set('mc-booking',{slot:S.slot,area:data.area,label:data.slot});
+  $('#preview').hidden=!preview;
+  $('#donetitle').textContent = S.slot==='waitlist' ? "You're on the list!" : "You're in!";
+  $('#donesub').textContent = S.slot==='waitlist' ? "I'll reach out when the next day is set." : "I'll text you to confirm the day before.";
+  $('#sum').innerHTML = [['When',data.slot],['Where',data.address.split('\n')[0]],['Scripts',yes.length+' accepted'],['You earn at least','$'+data.pay]].map(([a,b])=>`<div><span>${a}</span><span>${esc(b)}</span></div>`).join('');
+  go(5);
+};
+
+/* ---------- boot ---------- */
+dots(); money(); renderKids(); loadTaken();
+const prior = store.get('mc-booking');
+if (prior && prior.label){ $('#donetitle').textContent="You're already booked"; $('#donesub').textContent=prior.label; $('#sum').innerHTML=''; }
+</script>
+
+</body>
+</html>
