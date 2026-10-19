@@ -3,30 +3,26 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
 <style>
 /* Layout: one phone-width column of steps, sticky progress dots on top, one bold display face for headlines only. */
+/* Single light look by choice: white page, white cards. */
 :root{
-  --bg:#F2F3FA; --card:#FFFFFF; --ink:#24193B; --soft:#6B6385; --line:#E2E0EE;
+  color-scheme:light;
+  --bg:#FFFFFF; --field:#F6F5FA; --card:#FFFFFF; --ink:#24193B; --soft:#6B6385; --line:#E2E0EE;
   --pop:#FF5C8A; --pop-ink:#FFFFFF; --sun:#FFD54F; --mint:#3BC795; --sky:#DCE6FF; --blush:#FFE3EC;
-  --display:"Bagel Fat One", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --display:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
   --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
   --r:22px;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#15111F; --card:#211B31; --ink:#F4F0FF; --soft:#B3AACB; --line:#3A3150;
-  --pop:#FF6F98; --pop-ink:#1A1024; --sun:#FFD54F; --mint:#4FD6A5; --sky:#2B3352; --blush:#3D2236; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#15111F; --card:#211B31; --ink:#F4F0FF; --soft:#B3AACB; --line:#3A3150;
-  --pop:#FF6F98; --pop-ink:#1A1024; --sun:#FFD54F; --mint:#4FD6A5; --sky:#2B3352; --blush:#3D2236; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
 .wrap{max-width:560px;margin:0 auto;display:grid;gap:16px}
-h1,h2{font-family:var(--display);font-weight:400;letter-spacing:.2px;text-wrap:balance;margin:0;line-height:1.05}
-h1{font-size:clamp(38px,10vw,54px)}
-h2{font-size:30px}
+h1,h2{font-family:var(--display);font-weight:800;letter-spacing:-.3px;text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(32px,8.5vw,44px)}
+h2{font-size:24px}
 p{margin:0}
 .soft{color:var(--soft)}
 .small{font-size:14px}
@@ -40,10 +36,10 @@ button,input,select,textarea{font:inherit;color:inherit}
 .dots span.on{background:var(--pop)}
 .bar b{font-size:13px;color:var(--soft);font-weight:600;white-space:nowrap}
 
-.card{background:var(--card);border-radius:var(--r);padding:22px;display:grid;gap:14px;border:1px solid var(--line)}
-.hero{background:var(--ink);color:var(--bg);border:0;overflow:hidden;position:relative}
-.hero .soft{color:color-mix(in srgb,var(--bg) 70%,transparent)}
+.card{background:var(--card);border-radius:var(--r);padding:22px;display:grid;gap:14px;border:1px solid var(--line);box-shadow:0 2px 10px rgba(36,25,59,.05)}
+.hero{background:var(--blush);border:0}
 .tag{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;background:var(--sun);color:#24193B;border-radius:99px;padding:5px 12px;width:max-content}
+.fam{width:100%;border-radius:16px;aspect-ratio:4/3;object-fit:cover;object-position:50% 40%;max-width:100%}
 .me{display:flex;gap:14px;align-items:center}
 .me .ph{width:78px;height:78px;border-radius:50%;flex:none;background:var(--pop);display:grid;place-items:center;font-family:var(--display);font-size:30px;color:var(--pop-ink);overflow:hidden;border:3px solid var(--sun)}
 .me .ph img{width:100%;height:100%;object-fit:cover}
@@ -64,7 +60,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 /* fields */
 label{display:grid;gap:6px;font-weight:600;font-size:15px}
-input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{width:100%;border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:12px 14px;min-width:0}
+input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{width:100%;border:2px solid var(--line);background:var(--field);border-radius:14px;padding:12px 14px;min-width:0}
 input:focus,select:focus,textarea:focus{border-color:var(--pop);outline:none}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .toggle{display:flex;gap:12px;align-items:center;background:var(--bg);border:2px solid var(--line);border-radius:16px;padding:12px 14px;cursor:pointer;font-weight:600}
@@ -80,7 +76,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--pop);outline:none}
 .script.yes{border-color:var(--mint)}
 .script.no{opacity:.62}
 .shead{display:flex;gap:12px;align-items:flex-start}
-.snum{flex:none;width:38px;height:38px;border-radius:12px;background:var(--sun);color:#24193B;display:grid;place-items:center;font-family:var(--display);font-size:18px}
+.snum{flex:none;width:38px;height:38px;border-radius:12px;background:var(--sun);color:#24193B;display:grid;place-items:center;font-weight:800;font-size:17px}
 .shead div{min-width:0;display:grid;gap:2px}
 .shead b{font-size:16px;line-height:1.25}
 .needs{display:flex;flex-wrap:wrap;gap:6px}
@@ -108,7 +104,7 @@ ol.shots q{font-style:italic;color:var(--soft)}
 /* slots */
 .slots{display:grid;gap:10px}
 .slot{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:2px solid var(--line);border-radius:18px;padding:14px;background:var(--bg);cursor:pointer;text-align:left;width:100%}
-.slot .t{font-family:var(--display);font-size:20px;line-height:1.1}
+.slot .t{font-weight:800;font-size:18px;line-height:1.2}
 .slot .s{font-size:13px;color:var(--soft)}
 .slot .ic{font-size:26px}
 .slot .st{font-size:12px;font-weight:700;border-radius:99px;padding:4px 10px;background:var(--sky);white-space:nowrap}
@@ -119,11 +115,12 @@ ol.shots q{font-style:italic;color:var(--soft)}
 .call{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--soft);padding:0 6px}
 .call::before,.call::after{content:"";flex:1;border-top:2px dotted var(--line)}
 .left{display:flex;gap:8px;align-items:center;font-weight:700}
-.left b{font-family:var(--display);font-weight:400;font-size:26px;color:var(--pop)}
+.left b{font-weight:800;font-size:26px;color:var(--pop)}
 
 /* nav */
 .nav{display:flex;gap:10px}
 .btn{flex:1;border:0;border-radius:16px;padding:16px;font-weight:700;font-size:17px;cursor:pointer;background:var(--pop);color:var(--pop-ink)}
+.btn.tk{display:block;text-align:center;text-decoration:none;background:var(--ink);color:#fff}
 .btn.ghost{flex:0 0 auto;background:var(--card);color:var(--ink);border:2px solid var(--line)}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 .err{color:var(--pop);font-weight:600;font-size:14px}
@@ -151,10 +148,8 @@ ol.shots q{font-style:italic;color:var(--soft)}
       </div>
 
       <div class="card">
-        <div class="me">
-          <div class="ph" id="ph">A<img src="atdhe.jpg" alt="Atdhe" onerror="this.remove()"></div>
-          <div><h2>Hi, I'm Atdhe</h2><p class="soft">Dad of two. Making Momcozy videos for 3 years.</p></div>
-        </div>
+        <img class="fam" src="atdhe.jpg" alt="Atdhe with his wife and two sons">
+        <div><h2>Hi, I'm Atdhe</h2><p class="soft">Dad of two. Making Momcozy videos for 3 years.</p></div>
         <p>It's just me and a phone. No crew. No lights. No gear in your living room.</p>
         <div class="facts">
           <div class="fact"><i>☀️</i><b>Natural light</b><span>Nothing to set up</span></div>
@@ -166,6 +161,12 @@ ol.shots q{font-style:italic;color:var(--soft)}
         </div>
       </div>
 
+
+      <div class="card">
+        <h2>See the videos</h2>
+        <p>This is the kind of content we make. Real moms, real homes.</p>
+        <a class="btn tk" href="https://www.tiktok.com/@momcozyofficial?lang=en" target="_blank" rel="noopener">Watch Momcozy on TikTok ↗</a>
+      </div>
       <div class="card">
         <h2>Your pay</h2>
         <p class="soft small">$100 an hour. 2-hour minimum.</p>
