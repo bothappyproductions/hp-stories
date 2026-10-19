@@ -152,6 +152,7 @@ body.lock{overflow:hidden}
 .slot[aria-pressed=true] .st{background:var(--pop);color:var(--pop-ink)}
 .slot:disabled{cursor:not-allowed;opacity:.5}
 .slot:disabled .st{background:var(--line)}
+.dayh{margin:6px 0 0;font-size:16px;font-weight:800}
 .call{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--soft);padding:0 6px}
 .call::before,.call::after{content:"";flex:1;border-top:2px dotted var(--line)}
 .left{display:flex;gap:8px;align-items:center;font-weight:700}
@@ -186,7 +187,7 @@ body.lock{overflow:hidden}
         <span class="tag">Momcozy × NY · NJ · CT moms</span>
         <h1>Film a Momcozy video at home</h1>
         <p class="soft">Two hours. Your home. Your baby. Paid.</p>
-        <div class="when"><span class="chip" style="background:var(--sun);color:#24193B">Wed, Oct 21</span><span class="chip" style="background:var(--sun);color:#24193B">8 AM – 6 PM slots</span><span class="chip" style="background:var(--sun);color:#24193B">NY · NJ · CT</span></div>
+        <div class="when"><span class="chip" style="background:var(--sun);color:#24193B">Wed, Oct 21</span><span class="chip" style="background:var(--sun);color:#24193B">Thu, Oct 22</span><span class="chip" style="background:var(--sun);color:#24193B">NY · NJ · CT</span></div>
       </div>
 
       <div class="card">
@@ -369,7 +370,7 @@ body.lock{overflow:hidden}
     <div class="wrap">
       <div class="card">
         <h2>Pick your 2 hours</h2>
-        <p class="soft">Wednesday, October 21. Times shown for <b id="myarea"></b>.</p>
+        <p class="soft">Wednesday or Thursday. Times shown for <b id="myarea"></b>.</p>
         <div class="left"><b id="leftn">4</b><span id="leftt">slots left</span></div>
         <div class="slots" id="slots"></div>
         <p class="soft small">Greyed out? Booked, or too far from the mom before or after you.</p>
@@ -410,14 +411,17 @@ body.lock{overflow:hidden}
 
 <script>
 const WEBHOOK = 'https://hooks.airtable.com/workflows/v1/genericWebhook/appreW2VAnC7Uj2Lj/wfl8DPIxeZbxDsi8k/wtrdWl31ZEv3X3ZKc';
-const DAY = 'Wed, Oct 21';
-const SLOTS = [
-  { id:'s1', t:'8:00 – 10:00 AM', s:'Morning light', ic:'🌅' },
-  { id:'s2', t:'11:00 AM – 1:00 PM', s:'Bright midday', ic:'☀️' },
-  { id:'s3', t:'1:15 – 3:15 PM', s:'Afternoon', ic:'🌤️' },
-  { id:'s4', t:'4:00 – 6:00 PM', s:'Golden hour, wraps at dusk', ic:'🌇' },
+const DAYS = [
+  { day:'Wed, Oct 21', name:'Wednesday, Oct 21', slots:[
+    { id:'s1', t:'8:00 – 10:00 AM', s:'Morning light', ic:'🌅' },
+    { id:'s2', t:'11:00 AM – 1:00 PM', s:'Bright midday', ic:'☀️' },
+    { id:'s3', t:'1:15 – 3:15 PM', s:'Afternoon', ic:'🌤️' },
+    { id:'s4', t:'4:00 – 6:00 PM', s:'Golden hour, wraps at dusk', ic:'🌇' } ]},
+  { day:'Thu, Oct 22', name:'Thursday, Oct 22', slots:[
+    { id:'t1', t:'1:00 – 3:00 PM', s:'Afternoon', ic:'🌤️' },
+    { id:'t2', t:'3:30 – 5:30 PM', s:'Golden hour', ic:'🌇' } ]},
 ];
-const ORDER = ['s1','s2','s3','s4'];
+const SLOTS = DAYS.flatMap(d=>d.slots.map(s=>({...s, day:d.day})));
 const NEAR = {
   'Manhattan · Downtown':['Manhattan · Midtown','Brooklyn','Jersey City / Hoboken'],
   'Manhattan · Midtown':['Manhattan · Downtown','Manhattan · Uptown','Queens','Jersey City / Hoboken'],
@@ -722,20 +726,19 @@ async function loadTaken(){
 function slotOpen(id, area){
   if (S.taken[id]) return false;
   if (area==='Somewhere else') return false;
-  const i=ORDER.indexOf(id);
-  for (const j of [i-1,i+1]){ const nb=ORDER[j]; if(nb && S.taken[nb] && !close(S.taken[nb],area)) return false; }
+  const order=(DAYS.find(d=>d.slots.some(s=>s.id===id))||{slots:[]}).slots.map(s=>s.id), i=order.indexOf(id);
+  for (const j of [i-1,i+1]){ const nb=order[j]; if(nb && S.taken[nb] && !close(S.taken[nb],area)) return false; }
   return true;
 }
 function renderSlots(){
   const area=$('#area').value; $('#myarea').textContent=area;
   let open=0;
-  $('#slots').innerHTML = SLOTS.map(s=>{
-    if (s.call) return `<div class="call">${s.call}</div>`;
+  $('#slots').innerHTML = DAYS.map(d=>`<h3 class="dayh">${d.name}</h3>`+d.slots.map(s=>{
     const ok=slotOpen(s.id,area); if(ok) open++;
     if(!ok && S.slot===s.id) S.slot=null;
     const st = S.taken[s.id] ? 'Booked' : ok ? (S.slot===s.id?'Yours':'Open') : 'Too far';
     return `<button type="button" class="slot" data-slot="${s.id}" ${ok?'':'disabled'} aria-pressed="${S.slot===s.id}"><span class="ic">${s.ic}</span><span><span class="t">${s.t}</span><br><span class="s">${s.s}</span></span><span class="st">${st}</span></button>`;
-  }).join('') + `<button type="button" class="slot" data-slot="waitlist" aria-pressed="${S.slot==='waitlist'}"><span class="ic">📝</span><span><span class="t">None of these work</span><br><span class="s">Put me on the list for the next shoot day</span></span><span class="st">${S.slot==='waitlist'?'Yours':'List'}</span></button>`;
+  }).join('')).join('') + `<h3 class="dayh">Can't make either day?</h3><button type="button" class="slot" data-slot="waitlist" aria-pressed="${S.slot==='waitlist'}"><span class="ic">📝</span><span><span class="t">None of these work</span><br><span class="s">Put me on the list for the next shoot day</span></span><span class="st">${S.slot==='waitlist'?'Yours':'List'}</span></button>`;
   $('#leftn').textContent=open; $('#leftt').textContent= open===1?'slot left for your area':'slots left for your area';
   $('#send').textContent = S.slot==='waitlist' ? 'Join the list ✓' : 'Book my slot ✓';
 }
@@ -772,7 +775,7 @@ $('#send').onclick = async ()=>{
     source:'momcozy-nyc-page', submitted_at:new Date().toISOString(),
     mom:$('#name').value.trim(), email:$('#email').value.trim(), phone:$('#phone').value.trim(),
     address:[$('#address').value.trim(), $('#apt').value.trim()].filter(Boolean).join(', ') + (AC.pick?`\nMap: https://maps.google.com/?q=${AC.pick.lat},${AC.pick.lon}`:''), area:$('#area').value,
-    slot: slot ? `${DAY} · ${slot.t}` : 'Waitlist (next shoot day)', slot_id:S.slot,
+    slot: slot ? `${slot.day} · ${slot.t}` : 'Waitlist (next shoot day)', slot_id:S.slot,
     who, dad: dad?'true':'false', kids: kids.join('\n'), pay: String(400+(dad?200:0)),
     scripts_ok: yes.join('\n'), scripts_not_ok: no.join('\n'), home, notes:$('#notes').value.trim(),
     social_ok:'true', release_signed:'true', signed_name:$('#signname').value.trim(),
