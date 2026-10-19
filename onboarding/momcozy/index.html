@@ -67,6 +67,13 @@ input:focus,select:focus,textarea:focus{border-color:var(--pop);outline:none}
 .toggle input{width:22px;height:22px;accent-color:var(--pop);flex:none}
 .toggle.on{border-color:var(--pop);background:var(--blush)}
 .toggle small{display:block;font-weight:400;color:var(--soft);font-size:13px}
+.ac{position:relative}
+.acl{position:absolute;left:0;right:0;top:100%;margin:6px 0 0;padding:6px;list-style:none;background:#fff;border:2px solid var(--pop);border-radius:14px;box-shadow:0 10px 30px rgba(36,25,59,.15);z-index:4;max-height:280px;overflow:auto}
+.acl li{padding:10px 12px;border-radius:10px;cursor:pointer;display:grid;gap:1px}
+.acl li b{font-weight:700;font-size:15px}
+.acl li span{font-size:13px;color:var(--soft)}
+.acl li[aria-selected=true],.acl li:hover{background:var(--blush)}
+.picked{font-size:13px;color:var(--mint);font-weight:700}
 .kid{display:grid;grid-template-columns:1fr 110px 36px;gap:8px;align-items:end}
 .kid button{height:48px;border:0;background:transparent;color:var(--soft);font-size:22px;cursor:pointer}
 .link{background:none;border:0;color:var(--pop);font-weight:700;padding:0;cursor:pointer;text-align:left;width:max-content}
@@ -204,7 +211,11 @@ ol.shots q{font-style:italic;color:var(--soft)}
           <label>Email<input type="email" id="email" autocomplete="email"></label>
           <label>Phone<input type="tel" id="phone" autocomplete="tel"></label>
         </div>
-        <label>Home address<textarea id="address" rows="2" autocomplete="street-address" placeholder="Street, apt, city, ZIP"></textarea></label>
+        <div class="ac">
+          <label>Home address<input type="text" id="address" autocomplete="off" placeholder="Start typing your address" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="acl"></label>
+          <ul class="acl" id="acl" role="listbox" hidden></ul>
+        </div>
+        <label>Apt / unit <span class="soft small">(optional)</span><input type="text" id="apt" placeholder="Apt 4B"></label>
         <label>Neighborhood
           <select id="area">
             <option value="">Pick one</option>
@@ -442,6 +453,55 @@ function check1(){
   return '';
 }
 
+
+/* ---------- address lookup (Photon / OpenStreetMap, no key) ---------- */
+const AC = { list:[], i:-1, t:null, pick:null, ctl:null };
+const acIn=$('#address'), acL=$('#acl');
+function areaFrom(p, lat){
+  const c=(p.county||'')+' '+(p.district||'')+' '+(p.city||'');
+  if (/Kings|Brooklyn/i.test(c)) return 'Brooklyn';
+  if (/Queens/i.test(c)) return 'Queens';
+  if (/Bronx/i.test(c)) return 'Bronx';
+  if (/Westchester/i.test(c)) return 'Westchester';
+  if (/Hudson County|Jersey City|Hoboken/i.test(c)) return 'Jersey City / Hoboken';
+  if (/New York County|Manhattan/i.test(c)) return lat < 40.738 ? 'Manhattan · Downtown' : lat < 40.768 ? 'Manhattan · Midtown' : 'Manhattan · Uptown';
+  return 'Somewhere else';
+}
+function line1(p){ return [p.housenumber, p.street || p.name].filter(Boolean).join(' '); }
+function line2(p){ return [p.district || p.locality || p.city, p.state, p.postcode].filter(Boolean).join(', '); }
+function acClose(){ acL.hidden=true; acIn.setAttribute('aria-expanded','false'); AC.i=-1; }
+function acRender(){
+  if(!AC.list.length){ acClose(); return; }
+  acL.innerHTML = AC.list.map((f,i)=>`<li role="option" id="ac${i}" data-i="${i}" aria-selected="${i===AC.i}"><b>${esc(line1(f.properties))}</b><span>${esc(line2(f.properties))}</span></li>`).join('');
+  acL.hidden=false; acIn.setAttribute('aria-expanded','true');
+}
+async function acSearch(q){
+  if (AC.ctl) AC.ctl.abort(); AC.ctl = new AbortController();
+  try {
+    const u='https://photon.komoot.io/api/?limit=6&lang=en&lat=40.73&lon=-73.95&bbox=-74.6,40.4,-73.4,41.4&q='+encodeURIComponent(q);
+    const r=await fetch(u,{signal:AC.ctl.signal}); if(!r.ok) return;
+    const j=await r.json();
+    AC.list=(j.features||[]).filter(f=>f.properties && (f.properties.street||f.properties.name) && (f.properties.countrycode||'US')==='US');
+    AC.i=-1; acRender();
+  } catch(e){ /* lookup unavailable: typing still works */ }
+}
+function acChoose(i){
+  const f=AC.list[i]; if(!f) return; const p=f.properties, [lon,lat]=f.geometry.coordinates;
+  acIn.value = line1(p)+', '+line2(p);
+  AC.pick={lat,lon}; const a=areaFrom(p,lat); $('#area').value=a; acClose();
+  $('#apt').focus();
+}
+acIn.addEventListener('input',()=>{ AC.pick=null; clearTimeout(AC.t); const q=acIn.value.trim(); if(q.length<4){ AC.list=[]; acClose(); return; } AC.t=setTimeout(()=>acSearch(q),250); });
+acIn.addEventListener('keydown',e=>{
+  if(acL.hidden) return;
+  if(e.key==='ArrowDown'){ e.preventDefault(); AC.i=Math.min(AC.i+1,AC.list.length-1); acRender(); }
+  else if(e.key==='ArrowUp'){ e.preventDefault(); AC.i=Math.max(AC.i-1,0); acRender(); }
+  else if(e.key==='Enter' && AC.i>=0){ e.preventDefault(); acChoose(AC.i); }
+  else if(e.key==='Escape'){ acClose(); }
+});
+acL.addEventListener('mousedown',e=>{ const li=e.target.closest('li'); if(li){ e.preventDefault(); acChoose(+li.dataset.i); } });
+acIn.addEventListener('blur',()=>setTimeout(acClose,150));
+
 /* ---------- step 2 ---------- */
 function renderScripts(){
   const dad=$('#dad').checked;
@@ -534,7 +594,7 @@ $('#send').onclick = async ()=>{
   const data = {
     source:'momcozy-nyc-page', submitted_at:new Date().toISOString(),
     mom:$('#name').value.trim(), email:$('#email').value.trim(), phone:$('#phone').value.trim(),
-    address:$('#address').value.trim(), area:$('#area').value,
+    address:[$('#address').value.trim(), $('#apt').value.trim()].filter(Boolean).join(', ') + (AC.pick?`\nMap: https://maps.google.com/?q=${AC.pick.lat},${AC.pick.lon}`:''), area:$('#area').value,
     slot: slot ? `${DAY} · ${slot.t}` : 'Waitlist (next shoot day)', slot_id:S.slot,
     who, dad: dad?'true':'false', kids: kids.join('\n'), pay: String(400+(dad?200:0)),
     scripts_ok: yes.join('\n'), scripts_not_ok: no.join('\n'), home, notes:$('#notes').value.trim(),
