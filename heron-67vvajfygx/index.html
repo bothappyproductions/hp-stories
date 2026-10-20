@@ -327,13 +327,63 @@ body.pm main>section{min-height:100vh;min-height:100dvh;display:flex;align-items
 body.pm main>section>.wrap{width:100%}
 body.pm main>section.hero>.wrap{padding-block:64px}
 html.pm{scroll-padding-top:0}
+
+/* pricing */
+.pay{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:40px}
+@media (max-width:760px){.pay{grid-template-columns:1fr}}
+.pay div{background:#fff;border:1px solid var(--ln);border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh)}
+.pay b{display:block;font-family:var(--fd);font-weight:700;font-size:1.9rem;line-height:1.15;color:var(--td)}
+.pay span{font-size:.92rem;color:var(--i2)}
+h3.psub{font-size:1.3rem;margin:0 0 14px}
+.pcmp{overflow-x:auto;border:1px solid var(--ln);border-radius:var(--r);background:#fff;margin-bottom:44px}
+.pcmp table{width:100%;border-collapse:collapse;min-width:640px;font-size:.94rem}
+.pcmp th,.pcmp td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--ln);vertical-align:top}
+.pcmp th{font-family:var(--fm);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;font-weight:500;background:var(--nd);color:#C9CCE0}
+.pcmp td:first-child{font-weight:700}
+.pcmp tr:last-child td{border-bottom:0;background:var(--tp);color:var(--td);font-weight:600}
+.tiers{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) minmax(0,.9fr);gap:16px;align-items:start;margin-bottom:44px}
+@media (max-width:1060px){.tiers{grid-template-columns:1fr}}
+.tier:not(.main) .tot{border-top-color:var(--ls)}
+.tier:not(.main) .tot s{color:var(--ft)}
+.tier:not(.main) .tot b{color:var(--td)}
+.tier{border-radius:14px;padding:clamp(20px,3vw,30px);display:flex;flex-direction:column;gap:14px;border:1px solid var(--ln);background:#fff;box-shadow:var(--sh)}
+.tier.main{background:var(--nd);color:#EEF0F8;border-color:var(--nd);box-shadow:0 24px 50px -28px rgba(29,33,64,.7)}
+.tier.main h3{color:#fff}
+.tier .pbadge{align-self:flex-start;font-family:var(--fm);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:5px 12px;background:var(--pn);color:var(--i2)}
+.tier.main .pbadge{background:var(--tl);color:var(--nd)}
+.tier h3{font-size:1.45rem}
+.tier .tprice{font-family:var(--fd);font-weight:700;font-size:clamp(2.3rem,5vw,3rem);line-height:1}
+.tier .tprice small{font-family:var(--fb);font-size:1rem;font-weight:500;margin-left:6px;color:var(--i2)}
+.tier.main .tprice small,.tier.main .lead{color:#C9CCE0}
+.tier .lead{color:var(--i2);font-size:.96rem}
+.stack-l{list-style:none;margin:0;padding:0}
+.stack-l li{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:10px 0;border-top:1px solid var(--ln);font-size:.95rem}
+.tier.main .stack-l li{border-top-color:rgba(255,255,255,.14)}
+.stack-l li::before{content:"✓";font-weight:800;color:var(--td)}
+.tier.main .stack-l li::before{color:var(--tl)}
+.stack-l li.no{color:var(--ft)}
+.stack-l li.no::before{content:"–";color:var(--ft)}
+.stack-l em{font-style:normal;font-family:var(--fm);font-size:.78rem;white-space:nowrap;color:var(--ft)}
+.tier.main .stack-l em{color:#C9CCE0}
+.tot{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px;border-top:2px solid rgba(255,255,255,.3);padding-top:14px}
+.tot s{color:#C9CCE0;font-family:var(--fm);font-size:.9rem}
+.tot b{font-family:var(--fd);font-size:1.3rem;color:var(--tl)}
+.tier .note{font-size:.88rem;background:rgba(255,255,255,.08);border-radius:8px;padding:10px 12px}
+.tier:not(.main) .note{background:var(--gp);color:var(--gk)}
+.addons{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.addons article{background:#fff;border:1px solid var(--ln);border-radius:var(--r);padding:10px 10px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--sh)}
+.addons img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:7px}
+.addons h4{font-size:1.02rem;line-height:1.25;padding:0 4px}
+.addons p{font-size:.9rem;color:var(--i2);padding:0 4px}
+.addons .fee{font-family:var(--fm);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gk);padding:0 4px}
+.addons-note{font-size:.92rem;color:var(--i2);margin-bottom:14px}
 </style>
 </head>
 <body>
 <header class="bar"><div class="wrap">
  <div class="lockup"><span class="chip-logo"><img src="img/heron-logo.png" alt="Heron Guided Healthcare"></span><span class="x">×</span><span class="chip-logo hp"><img src="img/hp-logo.svg" alt="Happy Productions"></span></div>
  <nav class="rail" aria-label="Sections">
-  <a href="#heard">Goals</a><a href="#library">Library</a><a href="#awareness">Awareness</a><a href="#heroes">Heron Heroes</a><a href="#founder">Chris’s story</a><a href="#social">Social</a><a href="#email">Email</a><a href="#partners">Care teams</a><a href="#journey">Journey</a><a href="#timeline">Timeline</a>
+  <a href="#heard">Goals</a><a href="#library">Library</a><a href="#awareness">Awareness</a><a href="#heroes">Heron Heroes</a><a href="#founder">Chris’s story</a><a href="#social">Social</a><a href="#email">Email</a><a href="#partners">Care teams</a><a href="#journey">Journey</a><a href="#timeline">Timeline</a><a href="#pricing">Pricing</a>
  </nav>
  <button class="pm-btn" id="pmBtn" type="button" aria-label="Start presenting"><svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg>Present</button>
 </div></header>
@@ -546,6 +596,85 @@ html.pm{scroll-padding-top:0}
   <div><span class="where">Uganda · Watsi</span><h4>Patient stories from rural hospitals</h4><p>Eight-day field production across five locations: patient stories and provider interviews.</p><span class="stat">Closest match to Heron Heroes</span></div>
   <div><span class="where">Nebraska · MHA Nebraska</span><h4>A mental health nonprofit’s first library</h4><p>A 25-year-old nonprofit with no library: two days, about 40 interviews, a year of content.</p><span class="stat">≈$8,000 in matched gifts attributed</span></div>
   <div><span class="where">Somalia &amp; Kenya · Baitulmaal</span><h4>Lives changed, told by the people who lived them</h4><p>Former sponsored children, now teachers, health workers and entrepreneurs, each shown with a childhood photo.</p><span class="stat">Structure of a Heron Hero story</span></div>
+ </div>
+</div></section>
+<section class="band tint" id="pricing"><div class="wrap">
+ <div class="sec-head"><p class="eyebrow">Investment</p><h2>One year of video, <span class="hl">built to pay for itself</span></h2><p class="intro">When your 501(c)(3) determination arrives, every grant application, donor ask and care-team conversation will need proof. This plan has it on camera and ready, then keeps it coming all year, so the two of you can stay with your clients.</p></div>
+ <div class="pay">
+  <div><b class="num">$2,500</b><span>a month: what the full plan works out to</span></div>
+  <div><b class="num">4</b><span>on-site production days in Bucks County</span></div>
+  <div><b>Unlimited</b><span>edits for twelve months, from every shoot and your existing footage</span></div>
+ </div>
+
+ <h3 class="psub">What a steady supply of video usually costs</h3>
+ <div class="pcmp"><table><thead><tr><th>Option</th><th>Cost</th><th>What you get</th></tr></thead><tbody>
+  <tr><td>Today: Chris and Finn, between clients</td><td>Your time</td><td>Good content, no time to distribute it</td></tr>
+  <tr><td>A video agency, per project</td><td>$5,000–$15,000 a video</td><td>One video at a time, no plan behind it</td></tr>
+  <tr><td>A part-time video hire</td><td>About $35,000 a year</td><td>One person, no strategist, no audience</td></tr>
+  <tr><td>A full-time in-house producer</td><td>$80,000+ a year</td><td>One person’s hours, plus gear and benefits</td></tr>
+  <tr><td>Heron Story Studio: Full Year</td><td>$30,000 a year</td><td>A full team, a strategist, unlimited content and 500,000+ guaranteed views</td></tr>
+ </tbody></table></div>
+
+ <div class="tiers">
+  <article class="tier">
+   <span class="pbadge">Most coverage</span>
+   <h3>Heron Story Studio: Every Month</h3>
+   <div class="tprice num">$60,000<small>per year</small></div>
+   <p class="lead">A production every month for twelve months, so every Heron Hero, workshop and the spring caregiver conference is filmed as it happens.</p>
+   <ul class="stack-l">
+    <li><span>Twelve in-person production days, one a month. Crew and travel included</span><em>$45,000</em></li>
+    <li><span>Unlimited editing for 12 months, including footage you already have</span><em>$11,940</em></li>
+    <li><span>1,000,000+ guaranteed organic views on the Are You Happy network</span><em>$20,000</em></li>
+    <li><span>Strategy sessions every two weeks with a nonprofit marketing strategist, with goals and tracking</span><em>Included</em></li>
+    <li><span>Email marketing management: a weekly newsletter, written, built and sent for you</span><em>$9,000</em></li>
+    <li><span>Social media management: we run your Facebook and LinkedIn channels</span><em>$9,000</em></li>
+    <li><span>A monthly strategy session with a nonprofit marketing strategist, with goals and tracking</span><em>Included</em></li>
+    <li><span>Consent-first filming: written consent, and every subject reviews their cut before release</span><em>Included</em></li>
+    <li><span>You own every frame of raw footage</span><em>Included</em></li>
+   </ul>
+   <div class="tot"><s>Total value $94,940+</s><b>Your investment: $60,000</b></div>
+   <p class="note">Fresh footage every month for the grant applications that follow your 501(c)(3).</p>
+  </article>
+  <article class="tier main">
+   <span class="pbadge">Recommended · The full plan</span>
+   <h3>Heron Story Studio: Full Year</h3>
+   <div class="tprice num">$30,000<small>per year</small></div>
+   <p class="lead">Everything on this page, for twelve months: the founder film, Heron Heroes, Heron Explains and the full library behind your website, social and email.</p>
+   <ul class="stack-l">
+    <li><span>Four in-person production days in Bucks County. Crew and travel included</span><em>$15,000</em></li>
+    <li><span>Unlimited editing for 12 months, including footage you already have</span><em>$11,940</em></li>
+    <li><span>500,000+ guaranteed organic views on the Are You Happy network</span><em>$10,000</em></li>
+    <li><span>A monthly strategy session with a nonprofit marketing strategist, with goals and tracking</span><em>Included</em></li>
+    <li><span>Consent-first filming: written consent, and every subject reviews their cut before release</span><em>Included</em></li>
+    <li><span>You own every frame of raw footage</span><em>Included</em></li>
+   </ul>
+   <div class="tot"><s>Total value $36,940+</s><b>Your investment: $30,000</b></div>
+   <p class="note">Start in November and Born to Advocate is ready for GivingTuesday on 1 December.</p>
+  </article>
+  <article class="tier">
+   <span class="pbadge">Lower cost to start</span>
+   <h3>Virtual Studio</h3>
+   <div class="tprice num">$995<small>per month</small></div>
+   <p class="lead">Month to month, cancel anytime. You film; we direct and edit.</p>
+   <ul class="stack-l">
+    <li><span>One virtual production a month: we direct you over video call</span><em></em></li>
+    <li><span>Unlimited editing from that footage and footage you already have</span><em></em></li>
+    <li class="no"><span>No in-person crew or production days</span><em></em></li>
+    <li class="no"><span>No monthly strategy session</span><em></em></li>
+    <li class="no"><span>No guaranteed views on the Are You Happy network</span><em></em></li>
+   </ul>
+   <p class="note">Add an in-person production day any time for $3,750.</p>
+  </article>
+ </div>
+
+ <h3 class="psub">Hand us more of the work</h3>
+ <p class="addons-note">For the things you asked about on our call. $750 a month each, on any plan. Email and social media management come included in Every Month.</p>
+ <div class="addons">
+  <article><img src="img/email.jpg" alt="Email preview from the Heron campaign concept"><span class="fee">$750 / month</span><h4>Email marketing</h4><p>Mailchimp sign-up flows that grow your opt-in list, nurture sequences and event emails, written and sent for you.</p></article>
+  <article><img src="img/after_li.jpg" alt="Heron LinkedIn page concept"><span class="fee">$750 / month</span><h4>Social media management</h4><p>A posting calendar for Facebook and LinkedIn, short clips cut from every film, and a plan for when a boosted post is worth it.</p></article>
+  <article><img src="img/t_explains.jpg" alt="Heron Explains thumbnail concept"><span class="fee">$750 / month</span><h4>Podcast and YouTube series</h4><p>Heron Explains produced as a podcast and YouTube microlearning series, each episode cut into clips for social.</p></article>
+  <article><img src="img/t_case.jpg" alt="Thumbnail concept for a Heron case story"><span class="fee">$750 / month</span><h4>Impact dashboard and reporting</h4><p>Analytics and monthly reports on what each film moved, plus an impact dashboard your developer can embed, ready for grant applications.</p></article>
+  <article><img src="img/t_caregiver.jpg" alt="Caregiver film thumbnail concept"><span class="fee">$750 / month</span><h4>Caregiver conference promotion</h4><p>The email and social campaign that fills your spring conference, sponsor reels and looping display videos for the day.</p></article>
  </div>
 </div></section>
 </main>
