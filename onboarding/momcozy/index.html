@@ -762,7 +762,9 @@ function kidsList(){ const ks=[`${$('#baby').value.trim()} (${$('#babyage').valu
 
 /* ---------- step 4 ---------- */
 async function loadTaken(){
-  try { const r = await fetch('slots.json?t='+Date.now(), {cache:'no-store'}); if(r.ok){ const j=await r.json(); S.taken = j.taken||{}; } } catch(e){}
+  let live=false;
+  try { const r = await fetch('/api/momcozy/slots?t='+Date.now(), {cache:'no-store'}); if(r.ok){ const j=await r.json(); if(j.taken){ S.taken=j.taken; live=true; } } } catch(e){}
+  if (!live) { try { const r = await fetch('slots.json?t='+Date.now(), {cache:'no-store'}); if(r.ok){ const j=await r.json(); S.taken = j.taken||{}; } } catch(e){} }
   const mine = store.get('mc-booking'); if (mine && mine.slot && mine.slot!=='waitlist') S.taken[mine.slot] = S.taken[mine.slot] || mine.area;
 }
 function slotOpen(id, area){
@@ -823,9 +825,19 @@ $('#send').onclick = async ()=>{
     payment: payLine(), social_ok:'true', release_signed:'true', release_version: RELEASE_VERSION, signed_name:$('#signname').value.trim(),
     guardian_for: kids.join(', '), signed_at: new Date().toString(), signature: sigData()
   };
-  let preview=false;
+  let preview=false, saved=false;
+  try {
+    const r = await fetch('/api/momcozy/book',{method:'POST',body:new URLSearchParams(data)});
+    if (r.status===409){
+      const j = await r.json().catch(()=>({})); if (j.taken) S.taken=j.taken;
+      sending=false; $('#send').disabled=false; S.slot=null; renderSlots();
+      err(4,'Someone just took that time. Pick another.'); return;
+    }
+    saved = r.ok;
+  } catch(e){}
+  if (saved) data.source = 'momcozy-page-saved'; // row already in Airtable: the automation only sends the email
   const sent = await Promise.allSettled(WEBHOOKS.map(u=>fetch(u,{method:'POST',mode:'no-cors',body:new URLSearchParams(data)})));
-  if (!sent.some(r=>r.status==='fulfilled')) preview=true;
+  if (!saved && !sent.some(r=>r.status==='fulfilled')) preview=true;
   store.set('mc-booking',{slot:S.slot,area:data.area,label:data.slot});
   $('#preview').hidden=!preview;
   $('#donetitle').textContent = S.slot==='waitlist' ? "You're on the list!" : "You're in!";
