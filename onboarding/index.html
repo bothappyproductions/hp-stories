@@ -212,6 +212,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--ink);background:var(-
 .sv-bar .sv-rec{margin-left:auto;display:flex;align-items:center;gap:6px;color:#ff6b6b;font-weight:700;font-variant-numeric:tabular-nums}
 .sv-rec::before{content:"";width:8px;height:8px;border-radius:50%;background:#ff4d4d;animation:svBlink 1.1s steps(1) infinite}
 @keyframes svBlink{50%{opacity:.15}}
+@keyframes vBlink{0%{opacity:1}50%{opacity:.15}}
 .sv-tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px}
 .sv-tile{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:#2a2a33;outline:3px solid transparent;transition:outline-color .3s}
 .sv-tile img{width:100%;height:100%;object-fit:cover;display:block}
@@ -271,9 +272,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--ink);background:var(-
 
 /* in-person: shoot */
 .sv-cam{position:relative;width:100%;max-width:600px;aspect-ratio:16/10;border-radius:16px;overflow:hidden;border:var(--edge);background:#000;box-shadow:0 26px 44px -26px rgba(31,31,31,.7)}
-.sv-cam img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
-.sp.on .sv-cam img{animation:svShots 12s linear infinite}
-.sp.on .sv-cam img:nth-child(2){animation-delay:4s}.sp.on .sv-cam img:nth-child(3){animation-delay:8s}
+.sv-cam video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 @keyframes svShots{0%{opacity:0;transform:scale(1.02)}6%{opacity:1}33%{opacity:1}39%{opacity:0;transform:scale(1.12)}100%{opacity:0}}
 .sv-vf{position:absolute;inset:14px;pointer-events:none;--c:rgba(255,255,255,.9)}
 .sv-vf::before,.sv-vf::after{content:"";position:absolute;width:26px;height:26px;border:2px solid var(--c)}
@@ -464,7 +463,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--ink);background:var(-
 .choice.vr .ch-list span,.choice.vr .ch-kicker{color:var(--muted)}
 .ch-badge{position:absolute;top:16px;right:16px;z-index:2;background:var(--ink);color:#fff;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:600;letter-spacing:.02em}
 .ch-photo{position:relative;display:block}
-.ch-photo img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;object-position:50% 30%;border:var(--edge);border-radius:18px}
+.ch-photo img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;object-position:60% 45%;border:var(--edge);border-radius:18px}
 .ch-photo .stamp{position:absolute;left:12px;bottom:12px;background:var(--ink);color:#fff;border-radius:999px;padding:4px 11px;font-size:11px;font-weight:600;letter-spacing:.05em}
 .ch-photo .stamp::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#ff5a4e;margin-right:7px;vertical-align:1px;animation:vBlink 1.2s steps(1) infinite}
 .ch-ill{display:grid;place-items:center;background:var(--lav-soft);border:1px solid rgba(31,31,31,.25);border-radius:16px;padding:18px}
@@ -809,11 +808,11 @@ input:focus,textarea:focus{outline:none;border-color:var(--ink);background:var(-
             </div>
             <figure class="team-card">
               <div class="humans" id="humans">
-                <img src="media/bts-kiva-studio.jpg" alt="Happy Productions crew filming an interview in a studio">
-                <img src="media/bts-nyc-producer.jpg" alt="A Happy Productions producer on set in New York with two partners, holding a cinema camera">
-                <img src="media/bts-home-interview.jpg" alt="An interview being filmed in a living room">
-                <img src="media/bts-loft-crew.jpg" alt="Crew setting up lights in a loft">
-                <img src="media/bts-border-office.jpg" alt="Filming in a field office">
+                <img src="media/bts/bts-lit-interview.jpg" alt="A Happy Productions crew lighting and filming an interview in an office">
+                <img src="media/bts/bts-operator.jpg" alt="A Happy Productions camera operator with a cinema camera rig">
+                <img src="media/bts/bts-monitor.jpg" alt="An interview framed on a cinema camera monitor">
+                <img src="media/bts/bts-cine-rig.jpg" alt="A cinema camera rig set up for an interview in a New York office">
+                <img src="media/bts/bts-stage-set.jpg" alt="Crew preparing a lit studio set for a panel">
               </div>
               <figcaption class="team-cap"><b>Made by real people.</b><span>Producers and editors who've spent their careers helping nonprofits grow through video.</span></figcaption>
             </figure>
@@ -842,7 +841,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--ink);background:var(-
         <div class="choose">
           <button type="button" class="choice ip" data-prod="ip" data-w="ch-ip" aria-pressed="false">
             <span class="ch-badge">✦ Premium &middot; Most impact</span>
-            <span class="ch-photo"><img src="media/bts-nyc-producer.jpg" alt="A Happy Productions producer filming on location in New York"><span class="stamp">ON LOCATION</span></span>
+            <span class="ch-photo"><img src="media/bts/bts-cine-rig.jpg" alt="A Happy Productions cinema camera set up for an interview on location in New York"><span class="stamp">ON LOCATION</span></span>
             <span class="ch-body">
               <span class="ch-kicker">In-person production</span>
               <span class="ch-title">Your Nonprofit Video Expert comes to you.</span>
@@ -1506,14 +1505,14 @@ function wallHide(now) {
 /* ===== step 3: spotlight walkthrough ===== */
 const SV = {
   kick: m => `<div class="sv-kick"><div class="sv-win"><div class="sv-bar"><i></i><i></i><i></i><b>Kickoff call</b><span class="sv-rec">00:12:48</span></div>
-    <div class="sv-tiles"><div class="sv-tile spkA"><img src="media/bts-nyc-producer.jpg" alt=""><span class="lbl">Your producer</span></div><div class="sv-tile you spkB"><span class="sv-av">You</span><span class="lbl">Your team</span></div></div></div>
+    <div class="sv-tiles"><div class="sv-tile spkA"><img src="media/bts/bts-operator.jpg" alt="" style="object-position:50% 32%"><span class="lbl">Your producer</span></div><div class="sv-tile you spkB"><span class="sv-av">You</span><span class="lbl">Your team</span></div></div></div>
     <div class="sv-card"><h4>Agenda</h4><ul class="sv-ticks">${m === 'ip' ? '<li>Pick your shoot day</li><li>Pick the location</li><li>Your stories and goals</li>' : '<li>Your programs</li><li>Your stories</li><li>Your goals</li>'}</ul>${m === 'ip' ? '<div class="sv-cal">Shoot day <span>Booked</span></div>' : ''}</div></div>`,
   session: () => `<div class="sv-sess"><div class="sv-win"><div class="sv-bar"><i></i><i></i><i></i><b>Video session</b><span class="sv-rec">REC 00:41:07</span></div>
-    <div class="sv-main"><img src="media/bts-home-interview.jpg" alt=""><span class="sv-grid3"></span><div class="sv-pip"><img src="media/bts-nyc-producer.jpg" alt=""></div><div class="sv-bubble sv-pop">"Perfect. One more, and look at me, not the camera."</div></div></div>
+    <div class="sv-main"><img src="media/bts/bts-monitor.jpg" alt=""><span class="sv-grid3"></span><div class="sv-pip"><img src="media/bts/bts-operator.jpg" alt="" style="object-position:50% 30%"></div><div class="sv-bubble sv-pop">"Perfect. One more, and look at me, not the camera."</div></div></div>
     <div class="sv-card"><h4>Shot list</h4><ul class="sv-ticks"><li>Interview</li><li>Program footage</li><li>Story moment</li><li>Call to action</li></ul></div></div>`,
   plan: () => `<div class="sv-card sv-sheet"><div class="hd"><b>CALL SHEET</b><span>Shoot day</span></div><dl style="margin:0">
     <div class="sv-row"><dt>Call time</dt><dd>8:30 AM</dd></div><div class="sv-row"><dt>Location</dt><dd>Your program site</dd></div><div class="sv-row"><dt>Interviews</dt><dd>Director · Volunteer · Family</dd></div><div class="sv-row"><dt>Shot list</dt><dd>Programs, people, moments</dd></div><div class="sv-row"><dt>Crew</dt><dd>Your Nonprofit Video Expert</dd></div></dl><span class="sv-stamp">READY</span></div>`,
-  shoot: () => `<div class="sv-cam"><img src="media/bts-loft-crew.jpg" alt=""><img src="media/bts-kiva-studio.jpg" alt=""><img src="media/bts-border-office.jpg" alt=""><span class="sv-vf"></span>
+  shoot: () => `<div class="sv-cam"><video data-src="media/bts/bts-lit-set.mp4" poster="media/bts/bts-lit-set-poster.jpg" muted playsinline loop preload="none"></video><span class="sv-vf"></span>
     <div class="sv-hud"><span class="r">REC</span><span>4K · 24fps · 01:12:09</span></div><div class="sv-kit"><span>Cinema cameras</span><span>Lights</span><span>Pro audio</span></div><div class="sv-say sv-pop">You run your day.<br>We capture it.</div></div>`,
   queue: () => `<div class="sv-q">
     <div class="sv-v" data-v="1"><span class="th"><img src="media/mha-poster.jpg" alt=""></span><span><b>Video 1</b><small>Your first story</small><span class="sv-bar2"><i></i></span></span><span class="sv-st">In edit</span></div>
