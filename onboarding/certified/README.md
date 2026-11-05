@@ -12,9 +12,12 @@ Send it to every videographer a client has approved. Personalize the link:
 - add `test` to click through on the live site without sending anything
 
 ## Flow
-Welcome (voice guided or self-guided) → About you → Get paid → Pay terms → Get certified (optional) → Happy Pledge (9 promises) → Sign → Your kit (tee size + shipping) → All set.
+Claire's voice guide starts on its own (browsers need one tap first, so the Start button plays the welcome). Muting her is the self-guided option; she can be turned back on anytime.
+
+Welcome → About you → Get paid → Pay terms → Get certified (optional) → Happy Pledge (9 promises) → Sign → Your kit (tee size + shipping) → All set.
 
 ## Where the data goes
+- **Payment method:** direct deposit (US bank or a bank outside the US), PayPal, Payoneer or Wise. The payments form has no method question, so PayPal/Payoneer/Wise show up as "PayPal (not a bank account)" in the Routing Number column and "PayPal: their@email" in the Account Number column; Account type reads Checking only because that question is required.
 - **Payment details + the four "I will only be paid if…" confirmations** post to the existing Google Form "How to get paid for Happy Productions" (`formResponse`, same entry IDs), so they land in the same responses sheet as before. Bank fields are never written to the browser's storage.
 - **Contact, pledge, signature, tee size and shipping address** post to `CREW_HOOK` (Airtable webhook, "Happy Certified Crew" table in the Happy Collective – Videographers base). `CREW_HOOK` is empty until that automation is switched on.
 - Nothing is sent anywhere except on `onboarding.happyproductions.video` (previews and `?test` show a "Preview" banner).

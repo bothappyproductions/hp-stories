@@ -104,7 +104,12 @@ button,input,select{font:inherit;color:inherit}
 .mode b{font-family:var(--f-display);font-size:20px;line-height:1.1}
 .mode span{font-size:13px;color:var(--muted)}
 .mode .tag{align-self:flex-start;font-size:11px;font-weight:600;background:var(--sun);border:1.5px solid var(--ink);border-radius:999px;padding:1px 9px;color:var(--ink)}
-.started{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.started{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:center}
+.btn-lg{padding:16px 30px;font-size:17px}
+.btn-lg svg{width:20px;height:20px}
+.snd-note{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--muted);max-width:34ch}
+.snd-note svg{flex:none;width:18px;height:18px;margin-top:1px;color:var(--violet)}
+.snd-note b{color:var(--ink)}
 .roadmap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:6px}
 .road{border:1.5px solid var(--hair);border-radius:16px;padding:14px 16px;background:var(--card);display:flex;gap:12px;align-items:flex-start}
 .road .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--card);display:grid;place-items:center;font-weight:700;font-size:13px}
@@ -126,6 +131,12 @@ button,input,select{font:inherit;color:inherit}
 .field .err{font-size:12px;color:var(--bad);font-weight:500}
 .field .ok{font-size:12px;color:var(--good);font-weight:600}
 .mono{font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.methods{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.method{display:flex;flex-direction:column;gap:2px;text-align:left;border:var(--edge);border-radius:16px;background:var(--card);padding:12px 14px;cursor:pointer;transition:transform .15s ease}
+.method:hover{transform:translateY(-1px)}
+.method b{font-family:var(--f-display);font-size:19px;line-height:1.15}
+.method span{font-size:12px;color:var(--muted)}
+.method[aria-checked="true"]{background:var(--lav);box-shadow:inset 0 0 0 2px var(--ink)}
 .seg{display:inline-grid;grid-auto-flow:column;gap:4px;padding:4px;border:var(--edge);border-radius:999px;background:var(--paper);align-self:flex-start;max-width:100%}
 .seg button{border:0;background:transparent;border-radius:999px;padding:8px 16px;font-size:14px;font-weight:600;cursor:pointer;color:var(--muted);white-space:nowrap}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--card)}
@@ -262,6 +273,7 @@ button,input,select{font:inherit;color:inherit}
 .ib:hover{border-color:var(--ink)}
 .ib svg{width:20px;height:20px}
 .ib.main{background:var(--sun);border:var(--edge);width:46px;height:46px}
+.ib.snd{width:auto;display:inline-flex;align-items:center;gap:6px;padding:0 14px 0 12px;border-radius:999px;border:var(--edge);font-size:13px;font-weight:600;margin-left:4px}
 .voice-pill{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:inline-flex;gap:8px;align-items:center;background:var(--card);border:var(--edge);border-radius:999px;padding:9px 16px;font-weight:600;font-size:13px;cursor:pointer;box-shadow:0 4px 0 var(--ink)}
 .voice-pill svg{width:16px;height:16px}
 .tb-right{display:flex;align-items:center;gap:10px}
@@ -295,6 +307,7 @@ button,input,select{font:inherit;color:inherit}
 }
 @media (max-width:640px){
   .modes,.terms,.grid,.roadmap{grid-template-columns:minmax(0,1fr)}
+  .methods{grid-template-columns:repeat(2,minmax(0,1fr))}
   .grid3{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .grid3 .g-city{grid-column:1/-1}
   .panel{padding:18px}
@@ -309,6 +322,8 @@ button,input,select{font:inherit;color:inherit}
   .ib{width:36px;height:36px}
   .ib.main{width:42px;height:42px}
   .ib.hide-sm{display:none}
+  .dock-name span{display:none}
+  .ib.snd{padding:0 10px}
   .cert{grid-template-columns:minmax(0,1fr);justify-items:start}
   .seal{width:96px;height:96px}
   .seal img{width:62px}
@@ -336,7 +351,7 @@ button,input,select{font:inherit;color:inherit}
 
   <main class="stage">
     <div class="topbar">
-      <div class="topbar-row"><img src="img/hp-wordmark.png" alt="Happy Productions"><span class="tb-right"><button class="voice-top" id="voice-top" type="button" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 8v4h3l4 3.5v-11l-4 3.5zM13.5 7.5a3.5 3.5 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Voice</button><span class="count" id="count"></span></span></div>
+      <div class="topbar-row"><img src="img/hp-wordmark.png" alt="Happy Productions"><span class="tb-right"><button class="voice-top" id="voice-top" type="button" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 8v4h3l4 3.5v-11l-4 3.5zM13.5 7.5a3.5 3.5 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Unmute</button><span class="count" id="count"></span></span></div>
       <div class="bar"><i id="bar"></i></div>
     </div>
     <div class="preview" id="preview" hidden><span>Preview: nothing you type here is sent anywhere.</span></div>
@@ -348,22 +363,9 @@ button,input,select{font:inherit;color:inherit}
           <span class="pill"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="hi-pill">Client approved</span></span>
           <h1><span id="hi-name">You're in.</span> Welcome to the <em>Happy Productions</em> network.</h1>
           <p>Our client picked you for their shoot, and we're glad you're here. In about five minutes you'll be set up to get paid, and you can get Happy Certified for an extra $100 a day.</p>
-          <div class="modes" id="modes">
-            <button class="mode voice" id="m-voice" type="button">
-              <span class="tag">Recommended</span>
-              <span class="m-ic"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 8v4h3l4 3.5v-11l-4 3.5zM13.5 7.5a3.5 3.5 0 0 1 0 5M15.5 5.5a6.4 6.4 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-              <b>Guide me</b>
-              <span>Claire talks you through each step. Sound on.</span>
-            </button>
-            <button class="mode" id="m-self" type="button">
-              <span class="m-ic"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 4.5h5.5a2 2 0 0 1 2 2V16a1.6 1.6 0 0 0-1.6-1.6H3zM17 4.5h-5.5a2 2 0 0 0-2 2V16a1.6 1.6 0 0 1 1.6-1.6H17z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
-              <b>Self-guided</b>
-              <span>Same steps, no sound. Go at your own pace.</span>
-            </button>
-          </div>
-          <div class="started" id="started" hidden>
-            <button class="btn btn-sun" id="go-start" type="button">Let's start <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10m-4-4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-            <button class="btn btn-ghost" id="go-self" type="button">Switch to self-guided</button>
+          <div class="started">
+            <button class="btn btn-sun btn-lg" id="go-start" type="button">Start</button>
+            <span class="snd-note"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 8v4h3l4 3.5v-11l-4 3.5zM13.5 7.5a3.5 3.5 0 0 1 0 5M15.5 5.5a6.4 6.4 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Claire guides you with sound. Prefer to read on your own? Tap <b>Mute</b> anytime.</span></span>
           </div>
         </div>
         <div class="photo">
@@ -404,17 +406,19 @@ button,input,select{font:inherit;color:inherit}
       <div class="head">
         <span class="eyebrow">Step 1 · Get paid</span>
         <h2>Let's get you paid.</h2>
-        <p>The name on your account, your address, and where the money goes. This replaces our old payment form.</p>
+        <p>Direct deposit, PayPal, Payoneer or Wise. Pick how you want to be paid, then add your address. This replaces our old payment form.</p>
       </div>
       <div class="sent" id="pay-sent" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Your payment details were sent to our payments team. To change them, fill this in again and we'll send the update.</span></div>
       <form class="panel" id="f-pay" novalidate autocomplete="on">
         <div class="field"><label for="payee">Name on the payment account</label><input id="payee" data-k="payee" autocomplete="name" required><span class="help">Your full name for a personal account, or your business name for a business account.</span></div>
 
         <div class="field">
-          <label id="bank-l">Where is your bank?</label>
-          <div class="seg" role="group" aria-labelledby="bank-l">
-            <button type="button" id="bank-us" aria-pressed="true">In the US</button>
-            <button type="button" id="bank-intl" aria-pressed="false">Outside the US</button>
+          <label id="method-l">How do you want to get paid?</label>
+          <div class="methods" role="radiogroup" aria-labelledby="method-l">
+            <button type="button" class="method" data-m="bank" role="radio" aria-checked="true"><b>Direct deposit</b><span>Straight to your bank account</span></button>
+            <button type="button" class="method" data-m="paypal" role="radio" aria-checked="false"><b>PayPal</b><span>To your PayPal email</span></button>
+            <button type="button" class="method" data-m="payoneer" role="radio" aria-checked="false"><b>Payoneer</b><span>To your Payoneer account</span></button>
+            <button type="button" class="method" data-m="wise" role="radio" aria-checked="false"><b>Wise</b><span>To your Wise account</span></button>
           </div>
         </div>
 
@@ -424,14 +428,22 @@ button,input,select{font:inherit;color:inherit}
         </div>
         <div class="grid3">
           <div class="field g-city"><label for="city">City</label><input id="city" data-k="city" autocomplete="address-level2" required></div>
-          <div class="field"><label for="state" id="state-l">State</label><input id="state" data-k="state" autocomplete="address-level1" required></div>
-          <div class="field"><label for="zip" id="zip-l">ZIP code</label><input id="zip" data-k="zip" autocomplete="postal-code" required></div>
+          <div class="field"><label for="state" id="state-l">State / region</label><input id="state" data-k="state" autocomplete="address-level1" required></div>
+          <div class="field"><label for="zip" id="zip-l">ZIP / postal code</label><input id="zip" data-k="zip" autocomplete="postal-code" required></div>
         </div>
-        <div class="grid" id="country-row" hidden>
-          <div class="field"><label for="country">Country</label><input id="country" data-k="country" autocomplete="country-name"></div>
+        <div class="grid" id="country-row">
+          <div class="field"><label for="country">Country</label><input id="country" data-k="country" autocomplete="country-name" required></div>
         </div>
 
+        <div id="bank-sec" style="display:flex;flex-direction:column;gap:16px">
         <h3>Your bank</h3>
+        <div class="field">
+          <label id="bank-l">Where is your bank?</label>
+          <div class="seg" role="group" aria-labelledby="bank-l">
+            <button type="button" id="bank-us" aria-pressed="true">In the US</button>
+            <button type="button" id="bank-intl" aria-pressed="false">Outside the US</button>
+          </div>
+        </div>
         <div class="grid" id="us-bank">
           <div class="field"><label for="routing">Routing number</label><input id="routing" class="mono" inputmode="numeric" maxlength="9" autocomplete="off"><span class="help">9 digits, usually bottom-left on a check.</span></div>
           <div class="field"><label>Account type</label><div class="chips" role="group" aria-label="Account type"><button type="button" class="chip acct" data-v="Checking" aria-pressed="false">Checking</button><button type="button" class="chip acct" data-v="Savings" aria-pressed="false">Savings</button></div></div>
@@ -444,8 +456,18 @@ button,input,select{font:inherit;color:inherit}
           <div class="field"><label for="iban">IBAN or account number</label><input id="iban" class="mono" autocomplete="off"></div>
           <div class="field"><label>Account type</label><div class="chips" role="group" aria-label="Account type"><button type="button" class="chip acct" data-v="Checking" aria-pressed="false">Checking</button><button type="button" class="chip acct" data-v="Savings" aria-pressed="false">Savings</button></div></div>
         </div>
+        </div>
 
-        <div class="lock"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="9" width="12" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span><b>Private.</b> Your bank details go once, over a secure connection, to the Happy Productions payments team. They are never saved on this device.</span></div>
+        <div id="wallet-sec" style="display:flex;flex-direction:column;gap:16px" hidden>
+          <h3 id="wallet-h">Your PayPal account</h3>
+          <div class="grid">
+            <div class="field"><label for="w-email" id="w-email-l">PayPal email</label><input id="w-email" type="email" inputmode="email" autocomplete="off"><span class="help" id="w-help">The email your PayPal account uses.</span></div>
+            <div class="field"><label for="w-email2">Re-enter that email</label><input id="w-email2" type="email" inputmode="email" autocomplete="off"></div>
+            <div class="field" id="w-cur-f" hidden><label for="w-cur">Currency you want to receive</label><input id="w-cur" class="mono" maxlength="3" placeholder="e.g. EUR" list="currencies" autocomplete="off"></div>
+          </div>
+        </div>
+
+        <div class="lock"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="9" width="12" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span><b>Private.</b> Your payment details go once, over a secure connection, to the Happy Productions payments team. They are never saved on this device.</span></div>
         <div class="actions"><button class="btn btn-sun" type="submit">Continue</button></div>
       </form>
     </section>
@@ -632,11 +654,11 @@ button,input,select{font:inherit;color:inherit}
     <div class="dock-ctrl">
       <button class="ib hide-sm" id="b-replay" type="button" aria-label="Replay"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10a5.5 5.5 0 1 0 1.8-4.1M4.5 3.5v3h3" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="ib main" id="b-play" type="button" aria-label="Pause"><svg viewBox="0 0 20 20" id="ic-play" aria-hidden="true"><path d="M6.5 4.5v11M13.5 4.5v11" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></button>
-      <button class="ib" id="b-off" type="button" aria-label="Turn the voice guide off"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 5.5l9 9M14.5 5.5l-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <button class="ib snd" id="b-mute" type="button" aria-label="Mute Claire and continue self-guided"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 8v4h3l4 3.5v-11l-4 3.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M13.5 8l4 4M17.5 8l-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>Mute</span></button>
     </div>
   </div>
 </div>
-<button class="voice-pill" id="voice-pill" type="button" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 8v4h3l4 3.5v-11l-4 3.5zM13.5 7.5a3.5 3.5 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Turn on voice guide</button>
+<button class="voice-pill" id="voice-pill" type="button" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 8v4h3l4 3.5v-11l-4 3.5zM13.5 7.5a3.5 3.5 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Muted · Turn Claire back on</button>
 <canvas id="confetti" hidden></canvas>
 
 <script>
@@ -648,7 +670,7 @@ const PAY_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSdtD9Y4kOdv1nbk97oVsD
 const E = { payee:'entry.1803113723', street:'entry.322547838', city:'entry.1043043232', state:'entry.1358649751', zip:'entry.1824390213', routing:'entry.410253424', account:'entry.16897122', type:'entry.1212714734', currency:'entry.1969578186', swift:'entry.1054492359', iban:'entry.1284054236', terms:'entry.101532079' };
 // Airtable webhook for the "Happy Certified Crew" table (contact, pledge, kit). Empty until that automation is switched on.
 const CREW_HOOK = '';
-const CUES = {"welcome":{"dur":17.04,"words":[["Hi,",0.0,0.4],["and",0.56,0.747],["welcome",0.8,1.2],["to",1.28,1.36],["the",1.4,1.44],["Happy",1.52,1.76],["Productions",1.84,2.4],["network!",2.48,3.36],["Our",3.44,3.52],["client",3.6,3.84],["picked",3.92,4.16],["you",4.24,4.48],["for",4.56,4.64],["their",4.72,4.8],["shoot,",4.88,5.24],["and",5.28,5.36],["we're",5.44,5.68],["so",5.76,6.0],["glad",6.04,6.24],["you're",6.28,6.4],["here.",6.48,7.2],["This",7.28,7.36],["takes",7.44,7.6],["about",7.76,7.92],["five",8.04,8.16],["minutes.",8.24,9.04],["First,",9.24,9.52],["we'll",9.56,9.68],["set",9.76,9.84],["up",9.92,10.0],["how",10.08,10.16],["you",10.24,10.32],["get",10.4,10.48],["paid.",10.84,11.333],["Then",11.467,11.6],["you",11.68,11.76],["can",11.8,11.84],["get",11.92,12.08],["Happy",12.24,12.4],["Certified,",12.48,13.16],["for",13.2,13.28],["an",13.36,13.44],["extra",13.6,13.76],["hundred",13.84,14.08],["dollars",14.16,14.4],["a",14.44,14.48],["day",14.56,14.88],["and",14.92,14.96],["a",15.2,15.307],["free",15.413,15.52],["Happy",15.64,15.76],["Productions",15.84,16.32],["t-shirt.",16.4,17.04]]},"you":{"dur":4.24,"words":[["First,",0.0,0.64],["the",0.68,0.72],["basics.",0.8,1.56],["Tell",1.76,1.84],["us",1.92,2.0],["your",2.08,2.16],["name,",2.24,2.64],["and",2.72,2.96],["the",3.0,3.04],["best",3.12,3.28],["way",3.36,3.44],["to",3.48,3.52],["reach",3.64,3.76],["you.",3.84,4.24]]},"pay":{"dur":8.96,"words":[["Now",0.0,0.24],["let's",0.4,0.64],["make",0.72,0.8],["sure",0.88,1.04],["you",1.12,1.2],["get",1.32,1.44],["paid.",1.68,2.12],["Enter",2.32,2.56],["the",2.6,2.64],["name",2.72,2.88],["on",2.92,2.96],["your",3.04,3.12],["bank",3.24,3.36],["account,",3.56,3.92],["your",4.0,4.08],["mailing",4.16,4.48],["address,",4.72,5.04],["and",5.16,5.28],["your",5.32,5.36],["bank",5.44,5.68],["details.",5.76,6.64],["This",6.72,6.8],["goes",6.88,7.12],["privately",7.24,7.68],["to",7.72,7.76],["our",7.84,7.92],["payments",8.0,8.32],["team.",8.4,8.96]]},"promise":{"dur":14.48,"words":[["Here's",0.0,0.28],["our",0.32,0.48],["deal.",0.64,0.88],["We",1.2,1.36],["pay",1.44,1.6],["for",1.68,1.76],["footage",1.84,2.16],["we",2.24,2.32],["can",2.4,2.48],["use.",2.56,3.16],["That",3.36,3.52],["means",3.64,3.76],["your",3.84,3.92],["interviews",4.0,4.4],["can",4.48,4.56],["be",4.64,4.72],["heard,",4.92,5.36],["your",5.44,5.52],["interviews",5.6,6.0],["can",6.08,6.16],["be",6.24,6.36],["seen,",6.48,7.2],["you",7.28,7.36],["ask",7.52,7.68],["every",7.84,8.08],["required",8.32,8.56],["question,",8.64,9.36],["and",9.56,9.76],["you",9.92,10.0],["get",10.04,10.08],["a",10.16,10.24],["signed",10.32,10.56],["release",10.64,10.96],["from",11.12,11.28],["everyone",11.36,11.68],["you",11.76,11.84],["interview.",11.92,12.8],["Tap",12.96,13.12],["each",13.24,13.36],["one",13.44,13.6],["to",13.64,13.68],["confirm.",13.76,14.48]]},"offer":{"dur":11.04,"words":[["Now",0.0,0.24],["for",0.32,0.4],["the",0.44,0.48],["fun",0.64,0.8],["part.",0.88,1.28],["Get",1.52,1.6],["Happy",1.68,1.92],["Certified,",2.0,2.6],["and",2.64,2.72],["you",2.8,2.88],["earn",2.96,3.12],["an",3.2,3.28],["extra",3.44,3.6],["hundred",3.76,4.08],["dollars",4.16,4.56],["for",4.64,4.72],["every",4.88,5.12],["shoot",5.2,5.44],["day,",5.52,6.0],["plus",6.08,6.4],["a",6.48,6.56],["free",6.64,6.8],["Happy",6.88,7.12],["Productions",7.2,7.6],["t-shirt.",7.68,8.24],["It",8.56,8.64],["takes",8.76,8.88],["about",9.0,9.12],["two",9.28,9.44],["minutes.",9.52,10.0],["Are",10.24,10.32],["you",10.4,10.48],["in?",10.56,11.04]]},"p1":{"dur":6.88,"words":[["Respect",0.0,0.64],["everyone",0.88,1.36],["on",1.44,1.52],["set.",1.6,2.16],["The",2.32,2.4],["client,",2.48,3.12],["their",3.2,3.36],["staff,",3.44,4.0],["the",4.08,4.16],["people",4.28,4.4],["we",4.48,4.56],["interview,",4.64,5.28],["and",5.4,5.52],["everyone",5.6,6.08],["you",6.16,6.24],["meet.",6.4,6.88]]},"p2":{"dur":9.28,"words":[["Protect",0.0,0.4],["their",0.48,0.56],["privacy.",0.64,1.36],["People",1.84,2.08],["trust",2.16,2.48],["us",2.56,2.72],["with",2.8,2.88],["their",2.96,3.04],["stories.",3.12,3.76],["Their",4.08,4.24],["footage,",4.32,4.96],["their",5.04,5.12],["names,",5.2,5.92],["and",6.0,6.08],["what",6.16,6.24],["they",6.36,6.48],["share",6.56,6.64],["with",6.72,6.88],["you",6.96,7.12],["stay",7.36,7.68],["with",7.76,7.92],["Happy",8.04,8.16],["Productions.",8.24,9.28]]},"p3":{"dur":8.32,"words":[["Represent",0.0,0.56],["Happy",0.64,0.88],["Productions.",0.96,1.92],["On",2.16,2.32],["every",2.4,2.56],["Happy",2.64,2.96],["shoot,",3.04,3.52],["introduce",3.6,4.0],["yourself",4.08,4.4],["as",4.48,4.56],["a",4.6,4.64],["member",4.72,4.96],["of",5.04,5.12],["the",5.2,5.24],["Happy",5.28,5.52],["Productions",5.6,6.08],["network,",6.16,6.72],["and",6.84,6.96],["wear",7.04,7.2],["your",7.28,7.36],["Happy",7.52,7.68],["tee.",7.76,8.32]]},"p4":{"dur":5.28,"words":[["Smile,",0.0,0.8],["and",0.88,1.04],["stay",1.12,1.36],["positive.",1.52,2.24],["Your",2.56,2.72],["energy",2.8,3.2],["sets",3.28,3.52],["the",3.6,3.68],["tone",3.76,4.0],["for",4.08,4.16],["the",4.24,4.32],["whole",4.4,4.64],["day.",4.72,5.28]]},"p5":{"dur":5.04,"words":[["Arrive",0.0,0.48],["early.",0.64,1.32],["Be",1.52,1.68],["on",1.76,1.84],["site",1.92,2.16],["before",2.36,2.56],["call",2.72,2.88],["time,",2.96,3.44],["so",3.52,3.6],["the",3.64,3.68],["day",3.76,3.84],["starts",3.92,4.24],["calm.",4.32,5.04]]},"p6":{"dur":16.16,"words":[["Handshake",0.0,0.512],["before",0.56,1.053],["gear.",1.12,1.6],["When",1.68,2.32],["you",2.36,2.4],["arrive,",2.48,3.12],["find",3.2,3.44],["the",3.48,3.52],["client",3.6,3.92],["first.",4.08,4.88],["Shake",4.92,5.12],["their",5.2,5.28],["hand",5.44,5.6],["and",5.68,5.76],["introduce",5.84,6.24],["yourself",6.32,6.72],["before",6.96,7.2],["you",7.28,7.36],["set",7.44,7.52],["up",7.6,7.84],["any",7.96,8.08],["equipment.",8.36,9.12],["Something",9.32,9.52],["like:",9.64,10.16],["Hi",10.24,10.32],["Maria,",10.4,11.04],["I'm",11.12,11.28],["Miranda",11.4,11.76],["from",11.84,11.92],["Happy",12.0,12.16],["Productions.",12.24,13.12],["How",13.2,13.28],["are",13.36,13.52],["you?",13.64,14.08],["I'm",14.12,14.24],["looking",14.32,14.56],["forward",14.64,14.88],["to",14.96,15.04],["a",15.12,15.2],["happy",15.28,15.52],["day!",15.6,16.16]]},"p7":{"dur":6.96,"words":[["The",0.0,0.08],["Happy",0.16,0.4],["pad",0.48,0.72],["goes",0.8,0.96],["down",1.04,1.2],["first.",1.36,1.92],["We'll",2.08,2.24],["send",2.32,2.4],["you",2.48,2.56],["a",2.6,2.64],["Happy",2.72,2.96],["Productions",3.08,3.44],["pad.",3.52,3.92],["Place",4.24,4.48],["it",4.56,4.64],["under",4.72,4.88],["your",4.92,4.96],["tripod",5.12,5.6],["on",5.68,5.76],["every",5.92,6.16],["shoot.",6.32,6.96]]},"p8":{"dur":6.8,"words":[["Upload",0.0,0.48],["the",0.56,0.64],["same",0.8,1.04],["day.",1.12,1.64],["Your",1.84,2.0],["footage",2.08,2.32],["goes",2.36,2.48],["up",2.56,2.72],["on",2.76,2.8],["the",2.88,2.96],["shoot",3.04,3.28],["day,",3.36,3.76],["and",3.88,4.0],["never",4.08,4.32],["later",4.4,4.64],["than",4.72,4.88],["twenty-four",4.96,5.44],["hours",5.64,5.84],["after",5.92,6.16],["wrap.",6.24,6.8]]},"p9":{"dur":16.08,"words":[["Earn",0.0,0.21],["a",0.24,0.32],["nine",0.4,0.78],["or",0.88,1.0],["a",1.04,1.12],["ten.",1.2,1.6],["After",1.68,2.56],["every",2.64,2.8],["shoot,",2.96,3.28],["we",3.36,3.44],["ask",3.52,3.68],["the",3.76,3.84],["client:",4.04,4.64],["on",4.68,4.72],["a",4.8,4.88],["scale",5.0,5.12],["of",5.2,5.28],["zero",5.36,5.52],["to",5.6,5.76],["ten,",5.84,6.32],["how",6.4,6.56],["likely",6.64,6.96],["are",7.04,7.12],["you",7.16,7.2],["to",7.28,7.36],["want",7.4,7.44],["to",7.52,7.6],["work",7.68,7.76],["with",7.84,7.92],["this",8.0,8.08],["videographer",8.2,8.72],["again?",8.88,9.6],["A",9.68,9.76],["nine",9.92,10.08],["or",10.12,10.16],["a",10.24,10.32],["ten",10.48,10.64],["earns",10.72,10.96],["your",11.04,11.12],["hundred",11.2,11.44],["dollar",11.52,11.68],["bonus",11.84,12.16],["for",12.24,12.32],["that",12.4,12.48],["shoot.",12.56,13.28],["Anything",13.48,13.68],["lower,",13.76,14.32],["and",14.44,14.56],["the",14.6,14.64],["bonus",14.72,15.04],["doesn't",15.12,15.36],["pay",15.44,15.52],["out.",15.64,16.08]]},"sign":{"dur":3.12,"words":[["Last",0.0,0.32],["step.",0.52,0.92],["Sign",1.12,1.36],["your",1.4,1.44],["name",1.52,1.76],["to",1.84,1.92],["make",2.0,2.16],["it",2.2,2.24],["official.",2.32,3.12]]},"kit":{"dur":5.92,"words":[["Congratulations!",0.0,1.28],["You're",1.36,1.6],["Happy",1.68,2.0],["Certified.",2.08,3.12],["Now",3.2,3.36],["tell",3.44,3.52],["us",3.56,3.6],["where",3.68,3.76],["to",3.8,3.84],["send",3.92,4.08],["your",4.16,4.24],["t-shirt",4.28,4.72],["and",4.8,4.88],["your",4.96,5.04],["Happy",5.16,5.28],["pad.",5.36,5.92]]},"done":{"dur":7.68,"words":[["That's",0.0,0.28],["it,",0.32,0.72],["you're",0.8,0.96],["all",1.04,1.2],["set!",1.28,2.0],["Welcome",2.08,2.48],["to",2.52,2.56],["the",2.64,2.72],["Happy",2.8,3.04],["Productions",3.12,3.6],["network.",3.68,4.4],["We",4.48,4.56],["can't",4.64,4.96],["wait",5.04,5.28],["to",5.36,5.44],["see",5.48,5.52],["what",5.6,5.68],["you",5.76,5.84],["make.",6.0,6.56],["Have",6.64,6.72],["a",6.8,6.88],["happy",6.96,7.04],["day!",7.12,7.68]]},"decline":{"dur":7.52,"words":[["No",0.0,0.24],["problem",0.32,0.64],["at",0.68,0.72],["all.",0.8,1.12],["You're",1.36,1.6],["set",1.68,1.76],["up",1.84,1.92],["to",2.0,2.04],["get",2.08,2.16],["paid.",2.24,2.72],["If",3.04,3.2],["you",3.24,3.28],["change",3.36,3.52],["your",3.6,3.68],["mind,",3.84,4.16],["come",4.24,4.32],["back",4.4,4.56],["to",4.6,4.64],["this",4.72,4.88],["link",5.0,5.12],["anytime",5.2,5.84],["and",5.92,6.0],["get",6.08,6.16],["Happy",6.32,6.56],["Certified.",6.64,7.52]]}};
+const CUES = {"welcome":{"dur":21.6,"words":[["Hi,",0.0,0.4],["and",0.56,0.76],["welcome",0.8,1.2],["to",1.24,1.28],["the",1.36,1.44],["Happy",1.52,1.76],["Productions",1.84,2.32],["network!",2.4,3.2],["Our",3.28,3.44],["client",3.6,3.76],["picked",3.92,4.08],["you",4.16,4.32],["for",4.4,4.48],["their",4.6,4.72],["shoot,",4.88,5.08],["and",5.12,5.2],["we're",5.28,5.6],["so",5.72,5.84],["glad",5.88,6.08],["you're",6.16,6.24],["here.",6.32,7.04],["I'm",7.08,7.28],["Claire,",7.36,7.72],["and",7.76,8.0],["I'll",8.08,8.16],["walk",8.24,8.32],["you",8.4,8.48],["through",8.56,8.64],["it.",8.72,9.067],["It",9.093,9.12],["takes",9.24,9.36],["about",9.52,9.68],["five",9.8,9.92],["minutes.",10.36,10.933],["First,",11.067,11.36],["we'll",11.413,11.52],["set",11.6,11.68],["up",11.76,11.84],["how",11.92,12.0],["you",12.04,12.08],["get",12.16,12.32],["paid.",12.68,13.08],["Then",13.12,13.36],["you",13.44,13.52],["can",13.6,13.68],["get",13.76,13.84],["Happy",13.92,14.08],["Certified,",14.16,14.827],["for",14.853,14.88],["an",14.96,15.12],["extra",15.32,15.52],["hundred",15.56,15.84],["dollars",15.92,16.16],["a",16.2,16.24],["day",16.32,16.64],["and",16.68,16.72],["a",16.96,17.067],["free",17.173,17.28],["Happy",17.4,17.52],["Productions",17.6,18.08],["t-shirt.",18.16,19.0],["If",19.04,19.12],["you'd",19.147,19.2],["rather",19.28,19.52],["read",19.6,19.68],["on",19.76,19.84],["your",19.92,20.0],["own,",20.2,20.44],["just",20.48,20.64],["tap",20.76,20.88],["mute.",21.04,21.6]]},"you":{"dur":4.24,"words":[["First,",0.0,0.64],["the",0.68,0.72],["basics.",0.8,1.56],["Tell",1.76,1.84],["us",1.92,2.0],["your",2.08,2.16],["name,",2.24,2.64],["and",2.72,2.96],["the",3.0,3.04],["best",3.12,3.28],["way",3.36,3.44],["to",3.48,3.52],["reach",3.64,3.76],["you.",3.84,4.24]]},"pay":{"dur":11.52,"words":[["Now",0.0,0.24],["let's",0.4,0.64],["make",0.72,0.8],["sure",0.88,1.04],["you",1.12,1.2],["get",1.32,1.44],["paid.",1.68,2.12],["Choose",2.32,2.56],["direct",2.72,2.88],["deposit,",3.16,3.52],["or",3.6,3.68],["PayPal,",3.84,4.4],["Payoneer,",4.48,5.12],["or",5.16,5.2],["Wise.",5.28,6.16],["Then",6.28,6.4],["add",6.56,6.72],["your",6.76,6.8],["mailing",6.88,7.12],["address",7.2,7.6],["and",7.68,7.84],["your",7.88,7.92],["account",8.0,8.24],["details.",8.32,9.2],["This",9.28,9.36],["goes",9.44,9.68],["privately",9.8,10.24],["to",10.28,10.32],["our",10.4,10.48],["payments",10.56,10.88],["team.",10.96,11.52]]},"promise":{"dur":14.48,"words":[["Here's",0.0,0.28],["our",0.32,0.48],["deal.",0.64,0.88],["We",1.2,1.36],["pay",1.44,1.6],["for",1.68,1.76],["footage",1.84,2.16],["we",2.24,2.32],["can",2.4,2.48],["use.",2.56,3.16],["That",3.36,3.52],["means",3.64,3.76],["your",3.84,3.92],["interviews",4.0,4.4],["can",4.48,4.56],["be",4.64,4.72],["heard,",4.92,5.36],["your",5.44,5.52],["interviews",5.6,6.0],["can",6.08,6.16],["be",6.24,6.36],["seen,",6.48,7.2],["you",7.28,7.36],["ask",7.52,7.68],["every",7.84,8.08],["required",8.32,8.56],["question,",8.64,9.36],["and",9.56,9.76],["you",9.92,10.0],["get",10.04,10.08],["a",10.16,10.24],["signed",10.32,10.56],["release",10.64,10.96],["from",11.12,11.28],["everyone",11.36,11.68],["you",11.76,11.84],["interview.",11.92,12.8],["Tap",12.96,13.12],["each",13.24,13.36],["one",13.44,13.6],["to",13.64,13.68],["confirm.",13.76,14.48]]},"offer":{"dur":11.04,"words":[["Now",0.0,0.24],["for",0.32,0.4],["the",0.44,0.48],["fun",0.64,0.8],["part.",0.88,1.28],["Get",1.52,1.6],["Happy",1.68,1.92],["Certified,",2.0,2.6],["and",2.64,2.72],["you",2.8,2.88],["earn",2.96,3.12],["an",3.2,3.28],["extra",3.44,3.6],["hundred",3.76,4.08],["dollars",4.16,4.56],["for",4.64,4.72],["every",4.88,5.12],["shoot",5.2,5.44],["day,",5.52,6.0],["plus",6.08,6.4],["a",6.48,6.56],["free",6.64,6.8],["Happy",6.88,7.12],["Productions",7.2,7.6],["t-shirt.",7.68,8.24],["It",8.56,8.64],["takes",8.76,8.88],["about",9.0,9.12],["two",9.28,9.44],["minutes.",9.52,10.0],["Are",10.24,10.32],["you",10.4,10.48],["in?",10.56,11.04]]},"p1":{"dur":6.88,"words":[["Respect",0.0,0.64],["everyone",0.88,1.36],["on",1.44,1.52],["set.",1.6,2.16],["The",2.32,2.4],["client,",2.48,3.12],["their",3.2,3.36],["staff,",3.44,4.0],["the",4.08,4.16],["people",4.28,4.4],["we",4.48,4.56],["interview,",4.64,5.28],["and",5.4,5.52],["everyone",5.6,6.08],["you",6.16,6.24],["meet.",6.4,6.88]]},"p2":{"dur":9.28,"words":[["Protect",0.0,0.4],["their",0.48,0.56],["privacy.",0.64,1.36],["People",1.84,2.08],["trust",2.16,2.48],["us",2.56,2.72],["with",2.8,2.88],["their",2.96,3.04],["stories.",3.12,3.76],["Their",4.08,4.24],["footage,",4.32,4.96],["their",5.04,5.12],["names,",5.2,5.92],["and",6.0,6.08],["what",6.16,6.24],["they",6.36,6.48],["share",6.56,6.64],["with",6.72,6.88],["you",6.96,7.12],["stay",7.36,7.68],["with",7.76,7.92],["Happy",8.04,8.16],["Productions.",8.24,9.28]]},"p3":{"dur":8.32,"words":[["Represent",0.0,0.56],["Happy",0.64,0.88],["Productions.",0.96,1.92],["On",2.16,2.32],["every",2.4,2.56],["Happy",2.64,2.96],["shoot,",3.04,3.52],["introduce",3.6,4.0],["yourself",4.08,4.4],["as",4.48,4.56],["a",4.6,4.64],["member",4.72,4.96],["of",5.04,5.12],["the",5.2,5.24],["Happy",5.28,5.52],["Productions",5.6,6.08],["network,",6.16,6.72],["and",6.84,6.96],["wear",7.04,7.2],["your",7.28,7.36],["Happy",7.52,7.68],["tee.",7.76,8.32]]},"p4":{"dur":5.28,"words":[["Smile,",0.0,0.8],["and",0.88,1.04],["stay",1.12,1.36],["positive.",1.52,2.24],["Your",2.56,2.72],["energy",2.8,3.2],["sets",3.28,3.52],["the",3.6,3.68],["tone",3.76,4.0],["for",4.08,4.16],["the",4.24,4.32],["whole",4.4,4.64],["day.",4.72,5.28]]},"p5":{"dur":5.04,"words":[["Arrive",0.0,0.48],["early.",0.64,1.32],["Be",1.52,1.68],["on",1.76,1.84],["site",1.92,2.16],["before",2.36,2.56],["call",2.72,2.88],["time,",2.96,3.44],["so",3.52,3.6],["the",3.64,3.68],["day",3.76,3.84],["starts",3.92,4.24],["calm.",4.32,5.04]]},"p6":{"dur":16.16,"words":[["Handshake",0.0,0.512],["before",0.56,1.053],["gear.",1.12,1.6],["When",1.68,2.32],["you",2.36,2.4],["arrive,",2.48,3.12],["find",3.2,3.44],["the",3.48,3.52],["client",3.6,3.92],["first.",4.08,4.88],["Shake",4.92,5.12],["their",5.2,5.28],["hand",5.44,5.6],["and",5.68,5.76],["introduce",5.84,6.24],["yourself",6.32,6.72],["before",6.96,7.2],["you",7.28,7.36],["set",7.44,7.52],["up",7.6,7.84],["any",7.96,8.08],["equipment.",8.36,9.12],["Something",9.32,9.52],["like:",9.64,10.16],["Hi",10.24,10.32],["Maria,",10.4,11.04],["I'm",11.12,11.28],["Miranda",11.4,11.76],["from",11.84,11.92],["Happy",12.0,12.16],["Productions.",12.24,13.12],["How",13.2,13.28],["are",13.36,13.52],["you?",13.64,14.08],["I'm",14.12,14.24],["looking",14.32,14.56],["forward",14.64,14.88],["to",14.96,15.04],["a",15.12,15.2],["happy",15.28,15.52],["day!",15.6,16.16]]},"p7":{"dur":6.96,"words":[["The",0.0,0.08],["Happy",0.16,0.4],["pad",0.48,0.72],["goes",0.8,0.96],["down",1.04,1.2],["first.",1.36,1.92],["We'll",2.08,2.24],["send",2.32,2.4],["you",2.48,2.56],["a",2.6,2.64],["Happy",2.72,2.96],["Productions",3.08,3.44],["pad.",3.52,3.92],["Place",4.24,4.48],["it",4.56,4.64],["under",4.72,4.88],["your",4.92,4.96],["tripod",5.12,5.6],["on",5.68,5.76],["every",5.92,6.16],["shoot.",6.32,6.96]]},"p8":{"dur":6.8,"words":[["Upload",0.0,0.48],["the",0.56,0.64],["same",0.8,1.04],["day.",1.12,1.64],["Your",1.84,2.0],["footage",2.08,2.32],["goes",2.36,2.48],["up",2.56,2.72],["on",2.76,2.8],["the",2.88,2.96],["shoot",3.04,3.28],["day,",3.36,3.76],["and",3.88,4.0],["never",4.08,4.32],["later",4.4,4.64],["than",4.72,4.88],["twenty-four",4.96,5.44],["hours",5.64,5.84],["after",5.92,6.16],["wrap.",6.24,6.8]]},"p9":{"dur":16.08,"words":[["Earn",0.0,0.21],["a",0.24,0.32],["nine",0.4,0.78],["or",0.88,1.0],["a",1.04,1.12],["ten.",1.2,1.6],["After",1.68,2.56],["every",2.64,2.8],["shoot,",2.96,3.28],["we",3.36,3.44],["ask",3.52,3.68],["the",3.76,3.84],["client:",4.04,4.64],["on",4.68,4.72],["a",4.8,4.88],["scale",5.0,5.12],["of",5.2,5.28],["zero",5.36,5.52],["to",5.6,5.76],["ten,",5.84,6.32],["how",6.4,6.56],["likely",6.64,6.96],["are",7.04,7.12],["you",7.16,7.2],["to",7.28,7.36],["want",7.4,7.44],["to",7.52,7.6],["work",7.68,7.76],["with",7.84,7.92],["this",8.0,8.08],["videographer",8.2,8.72],["again?",8.88,9.6],["A",9.68,9.76],["nine",9.92,10.08],["or",10.12,10.16],["a",10.24,10.32],["ten",10.48,10.64],["earns",10.72,10.96],["your",11.04,11.12],["hundred",11.2,11.44],["dollar",11.52,11.68],["bonus",11.84,12.16],["for",12.24,12.32],["that",12.4,12.48],["shoot.",12.56,13.28],["Anything",13.48,13.68],["lower,",13.76,14.32],["and",14.44,14.56],["the",14.6,14.64],["bonus",14.72,15.04],["doesn't",15.12,15.36],["pay",15.44,15.52],["out.",15.64,16.08]]},"sign":{"dur":3.12,"words":[["Last",0.0,0.32],["step.",0.52,0.92],["Sign",1.12,1.36],["your",1.4,1.44],["name",1.52,1.76],["to",1.84,1.92],["make",2.0,2.16],["it",2.2,2.24],["official.",2.32,3.12]]},"kit":{"dur":5.92,"words":[["Congratulations!",0.0,1.28],["You're",1.36,1.6],["Happy",1.68,2.0],["Certified.",2.08,3.12],["Now",3.2,3.36],["tell",3.44,3.52],["us",3.56,3.6],["where",3.68,3.76],["to",3.8,3.84],["send",3.92,4.08],["your",4.16,4.24],["t-shirt",4.28,4.72],["and",4.8,4.88],["your",4.96,5.04],["Happy",5.16,5.28],["pad.",5.36,5.92]]},"done":{"dur":7.68,"words":[["That's",0.0,0.28],["it,",0.32,0.72],["you're",0.8,0.96],["all",1.04,1.2],["set!",1.28,2.0],["Welcome",2.08,2.48],["to",2.52,2.56],["the",2.64,2.72],["Happy",2.8,3.04],["Productions",3.12,3.6],["network.",3.68,4.4],["We",4.48,4.56],["can't",4.64,4.96],["wait",5.04,5.28],["to",5.36,5.44],["see",5.48,5.52],["what",5.6,5.68],["you",5.76,5.84],["make.",6.0,6.56],["Have",6.64,6.72],["a",6.8,6.88],["happy",6.96,7.04],["day!",7.12,7.68]]},"decline":{"dur":7.52,"words":[["No",0.0,0.24],["problem",0.32,0.64],["at",0.68,0.72],["all.",0.8,1.12],["You're",1.36,1.6],["set",1.68,1.76],["up",1.84,1.92],["to",2.0,2.04],["get",2.08,2.16],["paid.",2.24,2.72],["If",3.04,3.2],["you",3.24,3.28],["change",3.36,3.52],["your",3.6,3.68],["mind,",3.84,4.16],["come",4.24,4.32],["back",4.4,4.56],["to",4.6,4.64],["this",4.72,4.88],["link",5.0,5.12],["anytime",5.2,5.84],["and",5.92,6.0],["get",6.08,6.16],["Happy",6.32,6.56],["Certified.",6.64,7.52]]}};
 const PLEDGES = [
   { k:'respect', t:'Respect everyone on set.', b:'The client, their staff, the people we interview, and everyone you meet. Everyone gets your respect.' },
   { k:'privacy', t:'Protect their privacy.', b:'People trust us with their stories. Their footage, their names, and what they share with you stay with Happy Productions.' },
@@ -665,7 +687,8 @@ const ORDER = ['welcome','you','pay','terms','offer','pledge','sign','kit','done
 const LABEL = { welcome:'Welcome', you:'About you', pay:'Get paid', terms:'Pay terms', offer:'Get certified', pledge:'Happy Pledge', sign:'Sign', kit:'Your kit', done:'All set' };
 const CERT_STEPS = ['pledge','sign','kit'];
 const KEY = 'hpCertified.v1';
-const SENSITIVE = ['routing','account','account2','iban','swift','currency'];
+const SENSITIVE = ['routing','account','account2','iban','swift','currency','w_email'];
+const WALLET = { paypal:'PayPal', payoneer:'Payoneer', wise:'Wise' };
 
 /* ---------- helpers ---------- */
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
@@ -677,7 +700,7 @@ const today = () => new Date().toLocaleDateString('en-US', { month:'long', day:'
 const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || null; } catch (e) { return null; } };
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const S = Object.assign({ step:'welcome', guided:null, voice:false, sid:rid(), f:{}, bank:'us', acct:'', terms:[], pi:0, sig:'', certAt:'', certified:false, declined:false, shirt:'', same:true, paySentAt:'', kitSent:false, seen:['welcome'] }, load() || {});
+const S = Object.assign({ step:'welcome', voice:true, method:'bank', sid:rid(), f:{}, bank:'us', acct:'', terms:[], pi:0, sig:'', certAt:'', certified:false, declined:false, shirt:'', same:true, paySentAt:'', kitSent:false, seen:['welcome'] }, load() || {});
 function save() {
   const f = {}; for (const k in S.f) if (!SENSITIVE.includes(k)) f[k] = S.f[k];
   try { localStorage.setItem(KEY, JSON.stringify(Object.assign({}, S, { f }))); } catch (e) {}
@@ -701,18 +724,30 @@ function showChunk(ci) {
   cap.innerHTML = chunks[ci].map(i => `<span class="w" data-i="${i}">${esc(c.words[i][0])}</span>`).join(' ');
   wordEls = [...cap.querySelectorAll('.w')]; cap.dataset.ci = ci;
 }
+let pendingKey = '', heardWelcome = false;
 function speak(key) {
-  if (!S.guided || !S.voice || !CUES || !CUES[key]) return;
+  if (!S.voice || !CUES || !CUES[key]) return;
   curKey = key; chunks = chunk(CUES[key].words); showChunk(0); prog.style.width = '0';
   au.src = 'vo/' + key + '.mp3'; au.currentTime = 0;
   const p = au.play(); setPlayIcon(true);
-  if (p && p.catch) p.catch(() => { setPlayIcon(false); dock.classList.remove('speaking'); });
+  if (p && p.then) p.then(() => { pendingKey = ''; if (key === 'welcome') { heardWelcome = true; setStartLbl(); } })
+    .catch(() => { setPlayIcon(false); dock.classList.remove('speaking'); blocked(key); });
+}
+// Browsers only play sound after a tap: hold the line and start it on the first tap anywhere.
+function blocked(key) {
+  pendingKey = key;
+  cap.innerHTML = '<span class="w said">Tap anywhere to hear Claire.</span>'; wordEls = []; cap.dataset.ci = '';
+  document.addEventListener('pointerdown', e => {
+    if (!S.voice || !pendingKey) return;
+    if (e.target.closest && e.target.closest('#b-mute, #go-start, #b-play')) return; // those buttons handle it
+    speak(pendingKey);
+  }, { once: true, capture: true });
 }
 function stopVoice() { try { au.pause(); } catch (e) {} dock.classList.remove('speaking'); setPlayIcon(false); }
 au.addEventListener('play', () => { dock.classList.add('speaking'); setPlayIcon(true); });
 au.addEventListener('pause', () => { dock.classList.remove('speaking'); setPlayIcon(false); });
 au.addEventListener('timeupdate', () => {
-  const c = CUES[curKey]; if (!c) return; const t = au.currentTime;
+  const c = CUES[curKey]; if (!c || pendingKey) return; const t = au.currentTime;
   prog.style.width = Math.min(100, t / c.dur * 100) + '%';
   let wi = 0; c.words.forEach((w, i) => { if (w[1] <= t + 0.05) wi = i; });
   const ci = chunks.findIndex(ch => ch.includes(wi));
@@ -728,16 +763,14 @@ function setPlayIcon(playing) {
   $('#ic-play').innerHTML = playing ? '<path d="M6.5 4.5v11M13.5 4.5v11" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>' : '<path d="M6 4.5v11l9-5.5z" fill="currentColor"/>';
   $('#b-play').setAttribute('aria-label', playing ? 'Pause' : 'Play');
 }
-$('#b-play').onclick = () => { if (!au.src || au.ended) { speak(lineFor()); return; } au.paused ? au.play().catch(() => {}) : au.pause(); };
+$('#b-play').onclick = () => { if (pendingKey) { speak(pendingKey); return; } if (!au.src || au.ended) { speak(lineFor()); return; } au.paused ? au.play().catch(() => {}) : au.pause(); };
 $('#b-replay').onclick = () => speak(lineFor());
-$('#b-off').onclick = () => { stopVoice(); S.voice = false; save(); syncVoiceUi(); };
+$('#b-mute').onclick = () => { stopVoice(); pendingKey = ''; S.voice = false; save(); syncVoiceUi(); setStartLbl(); };
 $('#voice-top').onclick = () => $('#voice-pill').onclick();
-$('#voice-pill').onclick = () => { S.guided = true; S.voice = true; save(); syncVoiceUi(); speak(lineFor()); };
+$('#voice-pill').onclick = () => { S.voice = true; save(); syncVoiceUi(); speak(lineFor()); };
 function syncVoiceUi() {
-  const on = S.guided && S.voice;
-  dock.hidden = !on; document.body.classList.toggle('has-dock', on);
-  $('#voice-pill').hidden = on || S.guided === null;
-  $('#voice-top').hidden = on || S.guided === null;
+  dock.hidden = !S.voice; document.body.classList.toggle('has-dock', S.voice);
+  $('#voice-pill').hidden = S.voice; $('#voice-top').hidden = S.voice;
 }
 function lineFor(step = S.step) {
   return { welcome:'welcome', you:'you', pay:'pay', terms:'promise', offer:'offer', pledge:'p' + (S.pi + 1), sign:'sign', kit:'kit', done: S.certified ? 'done' : 'decline' }[step];
@@ -784,19 +817,21 @@ const ibanOk = v => { v = v.replace(/\s+/g, '').toUpperCase(); if (!/^[A-Z]{2}\d
 function focusFirstBad(scope) { const b = scope.querySelector('.field.bad input, .field.bad select'); if (b) b.focus(); }
 
 /* ---------- welcome ---------- */
+const PLAY_IC = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4.5v11l9-5.5z" fill="currentColor"/></svg>';
+const GO_IC = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10m-4-4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function setStartLbl() {
+  const go = heardWelcome || !S.voice || S.seen.length > 1;
+  $('#go-start').innerHTML = go ? `<span>Let's go</span>${GO_IC}` : `${PLAY_IC}<span>Start</span>`;
+}
 function renderWelcome() {
   const first = S.f.first;
   $('#hi-name').textContent = first ? `You're in, ${first}.` : "You're in.";
-  $('#modes').hidden = S.guided === true && S.step === 'welcome' && $('#started').dataset.shown === '1';
+  setStartLbl();
 }
-$('#m-voice').onclick = () => {
-  S.guided = true; S.voice = true; save(); syncVoiceUi();
-  $('#modes').hidden = true; $('#started').hidden = false; $('#started').dataset.shown = '1';
-  speak('welcome');
+$('#go-start').onclick = () => {
+  if (S.voice && !heardWelcome && S.seen.length <= 1) { speak('welcome'); heardWelcome = true; setStartLbl(); return; }
+  go('you');
 };
-$('#m-self').onclick = () => { S.guided = false; S.voice = false; save(); syncVoiceUi(); go('you'); };
-$('#go-start').onclick = () => go('you');
-$('#go-self').onclick = () => { stopVoice(); S.guided = false; S.voice = false; save(); go('you'); };
 
 /* ---------- about you ---------- */
 $('#f-you').addEventListener('submit', e => {
@@ -811,13 +846,25 @@ $('#f-you').addEventListener('submit', e => {
 });
 
 /* ---------- get paid ---------- */
+const isUS = c => /^(us|u\.s\.a?\.?|usa|united states( of america)?)$/i.test((c || '').trim());
 function setBank(b) {
   S.bank = b; save();
   $('#bank-us').setAttribute('aria-pressed', b === 'us'); $('#bank-intl').setAttribute('aria-pressed', b === 'intl');
-  $('#us-bank').hidden = b !== 'us'; $('#intl-bank').hidden = b !== 'intl'; $('#country-row').hidden = b !== 'intl';
-  $('#state-l').textContent = b === 'us' ? 'State' : 'State / region'; $('#zip-l').textContent = b === 'us' ? 'ZIP code' : 'Postal code';
+  $('#us-bank').hidden = b !== 'us'; $('#intl-bank').hidden = b !== 'intl';
   syncAcct();
 }
+function setMethod(m) {
+  S.method = m; save();
+  $$('.method').forEach(x => x.setAttribute('aria-checked', x.dataset.m === m));
+  const w = WALLET[m]; $('#bank-sec').hidden = !!w; $('#wallet-sec').hidden = !w;
+  if (w) {
+    $('#wallet-h').textContent = `Your ${w} account`; $('#w-email-l').textContent = `${w} email`;
+    $('#w-help').textContent = `The email your ${w} account uses. We send your pay there.`;
+    $('#w-cur-f').hidden = m !== 'wise';
+  }
+}
+$$('.method').forEach(x => x.onclick = () => setMethod(x.dataset.m));
+$('#w-cur').addEventListener('input', e => { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z]/g, ''); });
 function syncAcct() { $$('.acct').forEach(c => c.setAttribute('aria-pressed', c.dataset.v === S.acct)); }
 $('#bank-us').onclick = () => setBank('us'); $('#bank-intl').onclick = () => setBank('intl');
 $$('.acct').forEach(c => c.onclick = () => { S.acct = c.dataset.v; save(); syncAcct(); $$('.acct').forEach(x => clearErr(x)); });
@@ -825,7 +872,7 @@ $('#routing').addEventListener('input', e => { e.target.value = e.target.value.r
 ['account', 'account2'].forEach(id => $('#' + id).addEventListener('input', e => { e.target.value = e.target.value.replace(/[^\d]/g, ''); }));
 $('#swift').addEventListener('input', e => { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); });
 $('#currency').addEventListener('input', e => { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z]/g, ''); });
-function renderPay() { setBank(S.bank); $('#pay-sent').hidden = !S.paySentAt; }
+function renderPay() { if (!S.f.country) { S.f.country = 'United States'; $('#country').value = S.f.country; } setBank(S.bank); setMethod(S.method || 'bank'); $('#pay-sent').hidden = !S.paySentAt; }
 let payData = null;
 $('#f-pay').addEventListener('submit', e => {
   e.preventDefault(); let ok = true;
@@ -833,7 +880,15 @@ $('#f-pay').addEventListener('submit', e => {
   ok = need('street', 'Add your street address.') && ok;
   ok = need('city', 'Add your city.') && ok;
   ok = need('state', S.bank === 'us' ? 'Add your state.' : 'Add your state or region.') && ok;
-  ok = need('zip', S.bank === 'us' ? 'Add your ZIP code.' : 'Add your postal code.') && ok;
+  ok = need('zip', 'Add your ZIP or postal code.') && ok;
+  ok = need('country', 'Add your country.') && ok;
+  const W = WALLET[S.method];
+  if (W) {
+    const we = $('#w-email').value.trim(), we2 = $('#w-email2').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(we)) { setErr($('#w-email'), `Add the email on your ${W} account.`); ok = false; }
+    else if (we.toLowerCase() !== we2.toLowerCase()) { setErr($('#w-email2'), "The two emails don't match."); ok = false; }
+    if (S.method === 'wise' && !/^[A-Z]{3}$/.test($('#w-cur').value.trim())) { setErr($('#w-cur'), 'Use the 3-letter code, like EUR or USD.'); ok = false; }
+  } else {
   const firstAcct = $(S.bank === 'us' ? '#us-bank .acct' : '#intl-bank .acct');
   if (!S.acct) { setErr(firstAcct, 'Pick checking or savings.'); ok = false; }
   if (S.bank === 'us') {
@@ -843,22 +898,30 @@ $('#f-pay').addEventListener('submit', e => {
     if (a.length < 4) { setErr($('#account'), 'Add your account number.'); ok = false; }
     else if (a !== a2) { setErr($('#account2'), "The two account numbers don't match."); ok = false; }
   } else {
-    ok = need('country', 'Add your country.') && ok;
     const cur = $('#currency').value.trim(); if (!/^[A-Z]{3}$/.test(cur)) { setErr($('#currency'), 'Use the 3-letter code, like EUR.'); ok = false; }
     const sw = $('#swift').value.trim(); if (!/^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}([A-Z0-9]{3})?$/.test(sw)) { setErr($('#swift'), 'SWIFT codes are 8 or 11 characters.'); ok = false; }
     const ib = $('#iban').value.trim();
     if (!ib) { setErr($('#iban'), 'Add your IBAN or account number.'); ok = false; }
     else if (looksIban(ib) && !ibanOk(ib)) { setErr($('#iban'), "That IBAN doesn't check out. Look at it again."); ok = false; }
   }
+  }
   if (!ok) return focusFirstBad(e.target);
   const intl = S.bank === 'intl', ib = $('#iban').value.replace(/\s+/g, '').toUpperCase();
-  payData = {
-    payee: S.f.payee.trim(), street: S.f.street.trim(), city: S.f.city.trim(),
-    state: intl ? `${S.f.state.trim()}, ${S.f.country.trim()}` : S.f.state.trim(), zip: S.f.zip.trim(),
-    routing: intl ? `International (SWIFT ${$('#swift').value.trim()})` : $('#routing').value.trim(),
-    account: intl ? ib : $('#account').value.trim(), type: S.acct,
-    currency: intl ? $('#currency').value.trim() : '', swift: intl ? $('#swift').value.trim() : '', iban: intl && looksIban(ib) ? ib : ''
-  };
+  const base = { payee: S.f.payee.trim(), street: S.f.street.trim(), city: S.f.city.trim(),
+    state: isUS(S.f.country) ? S.f.state.trim() : `${S.f.state.trim()}, ${S.f.country.trim()}`, zip: S.f.zip.trim() };
+  if (W) {
+    // The payments form has no wallet question, so the method goes in the routing and account columns.
+    // Its Account type question is required with only Checking/Savings, so wallets send Checking.
+    payData = Object.assign(base, { routing: `${W} (not a bank account)`, account: `${W}: ${$('#w-email').value.trim()}`, type: 'Checking',
+      currency: S.method === 'wise' ? $('#w-cur').value.trim() : 'USD', swift: '', iban: '' });
+    S.payMethod = W;
+  } else {
+    payData = Object.assign(base, {
+      routing: intl ? `International (SWIFT ${$('#swift').value.trim()})` : $('#routing').value.trim(),
+      account: intl ? ib : $('#account').value.trim(), type: S.acct,
+      currency: intl ? $('#currency').value.trim() : '', swift: intl ? $('#swift').value.trim() : '', iban: intl && looksIban(ib) ? ib : '' });
+    S.payMethod = intl ? 'Direct deposit (bank outside the US)' : 'Direct deposit (US bank)';
+  }
   go('terms');
 });
 
@@ -885,7 +948,7 @@ $('#terms-go').onclick = async () => {
   const btn = $('#terms-go'); btn.disabled = true; $('#terms-status').textContent = 'Sending to payments…';
   const ok = await sendPay(); btn.disabled = false;
   if (!ok) { $('#terms-status').textContent = "Couldn't reach our payments form. Check your connection and tap again."; return; }
-  payData = null; ['routing', 'account', 'account2', 'iban', 'swift', 'currency'].forEach(id => { $('#' + id).value = ''; });
+  payData = null; ['routing', 'account', 'account2', 'iban', 'swift', 'currency', 'w-email', 'w-email2', 'w-cur'].forEach(id => { $('#' + id).value = ''; });
   S.paySentAt = new Date().toISOString(); save();
   crew(S.certified ? 'Certified' : 'Pay set up', true);
   go(S.certified ? 'done' : 'offer');
@@ -894,11 +957,11 @@ $('#terms-go').onclick = async () => {
 /* ---------- crew record (contact, pledge, kit) ---------- */
 let lastCrew = 0, crewTimer = null, crewPending = null;
 function crewPayload(status) {
-  const ship = S.same ? [S.f.street, [S.f.city, S.f.state, S.f.zip].filter(Boolean).join(', '), S.bank === 'intl' ? S.f.country : ''].filter(Boolean).join('\n')
+  const ship = S.same ? [S.f.street, [S.f.city, S.f.state, S.f.zip].filter(Boolean).join(', '), S.f.country || ''].filter(Boolean).join('\n')
                       : [S.f.s_street, [S.f.s_city, S.f.s_state, S.f.s_zip].filter(Boolean).join(', '), S.f.s_country].filter(Boolean).join('\n');
-  return { sid: S.sid, status, name: `${S.f.first || ''} ${S.f.last || ''}`.trim(), email: S.f.email || '', phone: S.f.phone || '', shoot: S.f.shoot || '', payee: S.f.payee || '',
+  return { sid: S.sid, status, name: `${S.f.first || ''} ${S.f.last || ''}`.trim(), email: S.f.email || '', phone: S.f.phone || '', shoot: S.f.shoot || '', payee: S.f.payee || '', pay_method: S.payMethod || '',
     pledges: S.certified ? PLEDGES.map((p, i) => `${i + 1}. ${p.t}`).join('\n') : '', signature: S.sig || '', certified_at: S.certAt || '',
-    shirt: S.shirt || '', ship_to: S.kitSent ? ship : '', kit: S.kitSent ? 'To ship' : '', guided: S.guided ? 'Voice guided' : 'Self-guided', page: location.href.split('?')[0] };
+    shirt: S.shirt || '', ship_to: S.kitSent ? ship : '', kit: S.kitSent ? 'To ship' : '', guided: S.voice ? 'Voice guided' : 'Muted (self-guided)', page: location.href.split('?')[0] };
 }
 function crew(status, first) {
   if (!CREW_HOOK || !LIVE) { console.info('[preview] crew record not sent:', status); return; }
@@ -969,7 +1032,7 @@ $('#f-sign').addEventListener('submit', e => {
 });
 
 /* ---------- kit ---------- */
-function shipAddr() { return [S.f.street, [S.f.city, S.f.state, S.f.zip].filter(Boolean).join(', '), S.bank === 'intl' ? S.f.country : ''].filter(Boolean).join('\n'); }
+function shipAddr() { return [S.f.street, [S.f.city, S.f.state, S.f.zip].filter(Boolean).join(', '), S.f.country || ''].filter(Boolean).join('\n'); }
 function renderKit() {
   $('#cert-name').textContent = `${S.f.first || ''} ${S.f.last || ''}`.trim() || S.sig;
   $('#cert-meta').textContent = `Member of the Happy Productions network · Certified ${new Date(S.certAt || Date.now()).toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' })} · ${S.certId || ''}`;
@@ -979,7 +1042,7 @@ function renderKit() {
   $('#same-addr').textContent = shipAddr() || 'Add your address on the Get paid step.';
   if (!$('#kitart2').innerHTML) $('#kitart2').innerHTML = teeSvg('tee') + padSvg('pad');
 }
-$('#same').onchange = e => { S.same = e.target.checked; if (!S.same && !S.f.s_country) S.f.s_country = S.bank === 'intl' ? (S.f.country || '') : 'United States'; save(); renderKit(); fillFields(); };
+$('#same').onchange = e => { S.same = e.target.checked; if (!S.same && !S.f.s_country) S.f.s_country = S.f.country || 'United States'; save(); renderKit(); fillFields(); };
 $('#f-kit').addEventListener('submit', e => {
   e.preventDefault(); let ok = true;
   if (!S.shirt) { $('#size-err').hidden = false; ok = false; }
@@ -1044,6 +1107,7 @@ if (!ORDER.includes(S.step)) S.step = 'welcome';
 if (['terms'].includes(S.step) && !payData && !S.paySentAt) S.step = 'pay';
 addEventListener('pagehide', () => { if (crewPending) { clearTimeout(crewTimer); crewPending(); } });
 render();
+if (S.voice) speak(lineFor()); // tries to start Claire right away; falls back to the first tap
 })();
 </script>
 
