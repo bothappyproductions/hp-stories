@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": ["/vo/*", "/media/*", "/certified/vo/*", "/certified/img/*", "/momcozy/*", "/portal-app/*", "/favicon.ico"]
+}

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="same-origin">
+<title>Client portal · Happy Productions</title>
+<link rel="icon" href="/media/hp-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/portal-app/app.css?v=20261118a">
+</head>
+<body>
+<div id="app"><div class="loading" role="status">Opening your portal…</div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog id="who">
+  <form method="dialog">
+    <h2>Who's this from?</h2>
+    <p class="muted">So your producer knows who approved or asked. We'll remember it on this device.</p>
+    <label class="f">Your name<input type="text" id="who-name" autocomplete="name" required></label>
+    <div class="row"><button class="btn" value="cancel" formnovalidate>Cancel</button><button class="btn btn-brand" value="ok">Continue</button></div>
+  </form>
+</dialog>
+<script src="/portal-app/app.js?v=20261118a"></script>
+</body>
+</html>
