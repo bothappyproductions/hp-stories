@@ -385,8 +385,9 @@ function bind(cur) {
   $$('.tile').forEach(t => {
     const id = t.dataset.id, v = D.videos.find(x => x.id === id), form = $('.ask', t);
     $('[data-act="approve"]', t)?.addEventListener('click', async e => {
+      const b = e.currentTarget;
       const from = await whoAmI(); if (!from) return;
-      const b = e.currentTarget; b.disabled = true;
+      b.disabled = true;
       const r = await post('action', { slug: SLUG, action: 'approve_video', id, from });
       if (!r.ok) { b.disabled = false; return toast("That didn't go through. Check your connection and try again."); }
       v.status = 'Approved';
@@ -413,10 +414,11 @@ function bind(cur) {
   if (bar) {
     const id = bar.dataset.id, b = D.briefs.find(x => x.id === id), box = $('.comment-box');
     $('[data-act="approve-brief"]', bar)?.addEventListener('click', async e => {
+      const btn = e.currentTarget;
       const from = await whoAmI(); if (!from) return;
-      e.currentTarget.disabled = true;
+      btn.disabled = true;
       const r = await post('action', { slug: SLUG, action: 'approve_brief', id, from });
-      if (!r.ok) { e.currentTarget.disabled = false; return toast("That didn't go through. Check your connection and try again."); }
+      if (!r.ok) { btn.disabled = false; return toast("That didn't go through. Check your connection and try again."); }
       b.status = 'Approved'; b.approvedBy = from; b.approvedAt = new Date().toISOString();
       toast('Brief approved. Your producer has been told.');
       route();
